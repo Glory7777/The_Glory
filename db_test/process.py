@@ -1,3 +1,6 @@
+#https://qt3b1s62da6s.tistory.com/547 참조사이트
+#https://thesool.com/front/find/M000000082/list.do 크롤링?
+
 import pandas as pd
 import sqlite3
 
