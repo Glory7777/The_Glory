@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Search</title>
+</head>
+<body>
+    <form method="POST" action="{% url 'search_books' %}">
+        {% csrf_token %}
+        <label for="search_query">Search Book:</label>
+        <input type="text" name="search_query" id="search_query" autocomplete="off">
+        <input type="submit" value="Search">
+    </form>
+
+    {% if related_books %}
+    <h3>Related Books:</h3>
+    <ul>
+        {% for book in related_books %}
+        <li>{{ book.name }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+</html>
