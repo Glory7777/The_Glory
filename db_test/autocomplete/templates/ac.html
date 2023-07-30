@@ -1,12 +1,12 @@
+<!-- 참조 튜토리얼 https://www.youtube.com/watch?v=RnFwK_Z_f70&ab_channel=RedEyedCoderClub -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
-    rel="stylesheet" integrity="sha384-0evhe/x+r7ykizdrvuzkmrqm+orbnvfbl6doitfpri4tjfhxawutupfmbp4vmvor" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
     <title>Django datalist example</title>
 </head>
@@ -14,7 +14,7 @@
     <div class="container">
         <div class="row">
             <div class="col-6 mx-auto text-center mt-5">
-                <h2>Django 자동완성</h2>
+                <h2>Django 자동완성</h2> <br/>
                 <input type="text" list="tals" placeholder="전통주 이름" class="form-control">
                 <datalist id="tals">
                     {% for tal in tals%}
