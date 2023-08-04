@@ -5,9 +5,6 @@ from .forms import RegisterForm, LoginForm
 from django.contrib.auth.hashers import make_password
 
 
-def index(request):
-    return render(request, 'index.html', {'email': request.session.get('user')})
-
 # FormView : Get 또는 POST 요청을 처리해주는 비즈니스 로직 라이브러리
 
 

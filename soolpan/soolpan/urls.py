@@ -16,12 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from spUser.views import index, RegisterView, LoginView, logout
+from spUser.views import RegisterView, LoginView, logout
+from DataBase.views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index),
+    path('', index, name='Tal_Search'),
     path('register/', RegisterView.as_view()),
     path('login/', LoginView.as_view()),
-    path('logout/', logout)
+    path('logout/', logout),
+    
 ]

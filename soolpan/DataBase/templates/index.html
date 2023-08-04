@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+<div class="container">
+    <div class="row">
+        <div class="col-6 mx-auto text-center mt-5">
+            <form method="POST" action="{% url 'Tal_Search' %}">
+                {% csrf_token %}
+            <input type="text" list="tals" placeholder="전통주 검색하기" class="form-control" name="search_query" id="search_query"> 
+            <input type="submit" value="Search">
+            <datalist id="tals">
+                {% for tal in tals%}
+                    <option value="{{tal.name}}"></option>
+                {% endfor %}
+            </datalist>
+            </form>
+            {% if tal_search %}
+            <h3>검색 결과:</h3>
+            <ul>
+                {% for tal in tal_search %}
+                <li>{{ tal.id }}{{ tal.name }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+

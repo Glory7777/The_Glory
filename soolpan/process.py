@@ -12,7 +12,7 @@ database = "db.sqlite3"
 conn = sqlite3.connect(database)
 dtype={
     "size": "CharField",
-    "perecent": "IntegerField",
+    "per": "IntegerField",
     "name":"CharField",
     "company" : "CharField",
     "mtrl" : "CharField"
@@ -20,19 +20,19 @@ dtype={
 
 df.to_sql(name='traditional_liq', con=conn, if_exists='replace', dtype=dtype, index=True, index_label="id")
 
-# # Remove duplicates from 'traditional_liq' based on 'id'
-# query = """
-# DELETE FROM traditional_liq 
-# WHERE id NOT IN (
-#     SELECT MIN(id) 
-#     FROM traditional_liq 
-#     GROUP BY 규격, 도수, 전통주명, 제조사, 주원료
-# )
-# """
-# conn.execute(query)
+# Remove duplicates from 'traditional_liq' based on 'id'
+query = """
+DELETE FROM traditional_liq 
+WHERE id NOT IN (
+    SELECT MIN(id) 
+    FROM traditional_liq 
+    GROUP BY size, per, name, company, mtrl
+)
+"""
+conn.execute(query)
 
-# # Drop the temporary table
-# conn.execute('DROP TABLE IF EXISTS temporary_table')
+# Drop the temporary table
+conn.execute('DROP TABLE IF EXISTS temporary_table')
 
 conn.close()
 

@@ -1,0 +1,44 @@
+.nav-bar {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 0;
+    background-color: gray;
+    top: 0; /* 페이지의 상단에 고정 */
+    width: 100%;
+    height: 5%;
+    color: white;
+  }
+  
+  .nav-left {
+    float: left;
+  }
+  
+  .nav-right {
+    float: right;
+  }
+  
+  .nav-right a {
+    color: white;
+    padding: 14px 20px;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  .nav-right a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  .nav-left img {    
+    margin-left: 10;
+    height: 100%;
+    transform-origin: center; /* Set the transform origin to the center */
+    transform: scale(1.0);
+  }
