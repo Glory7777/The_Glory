@@ -1,0 +1,15 @@
+<!-- search.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="search_query" placeholder="책 이름을 입력하세요">
+        <button type="submit">검색</button>
+    </form>
+</body>
+</html>

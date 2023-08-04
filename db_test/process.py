@@ -20,6 +20,7 @@ dtype={
 
 df.to_sql(name='traditional_liq', con=conn, if_exists='replace', dtype=dtype, index=True, index_label="id")
 df.to_sql(name='traditional_liq2', con=conn, if_exists='replace', dtype=dtype, index=True, index_label="id")
+df.to_sql(name='traditional_liq3', con=conn, if_exists='replace', dtype=dtype, index=True, index_label="id")
 
 # Remove duplicates from 'traditional_liq' based on 'id'
 # query = """

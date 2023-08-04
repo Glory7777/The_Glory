@@ -17,13 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from spUser.views import RegisterView, LoginView, logout
-from DataBase.views import index, TalDetail
+from DataBase.views import index, index_v1, tal_detail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index, name='Tal_Search'),
+    path('', index_v1, name='Tal_Search'),
     path('register/', RegisterView.as_view(), name='signup'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', logout, name='logout'),
-    path('detail/<int:pk>/', TalDetail.as_view(), name='detail')
+    path('detail/<int:pk>/', tal_detail, name='detail')
 ]
