@@ -1,7 +1,9 @@
+from django.views.generic import ListView, DetailView
 from django.shortcuts import render
 from .models import Tal
 import random
 # Create your views here.
+#홈화면 검색/Autocomplete 기능 구현
 def index(request):
     tals = Tal.objects.all()
     
@@ -26,3 +28,7 @@ def index(request):
         tal_search = []
     return render(request, 'index.html', {'tals':tals, 'tal_search':tal_search})
 
+class TalDetail(DetailView):
+        template_name="tal_detail.html" #여따가 딱뿌려
+        context_object_name = 'tal_detail' #이름은 Product
+        queryset = Tal.objects.all() #DB에서 싹 가져와서 

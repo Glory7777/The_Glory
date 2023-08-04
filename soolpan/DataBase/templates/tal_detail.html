@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block contents %}
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card" style="width: 100%;">
+            <div class="card-body">
+                <h5 class="card-title">{{ tal_detail.name }}</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">제조사: {{ tal_detail.company }}</li>
+                <li class="list-group-item">원재료: {{ tal_detail.mtrl }}</li>
+                <li class="list-group-item">도  수: {{ tal_detail.per }}%</li>
+                <li class="list-group-item">용  량: {{ tal_detail.size }}</li>        
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 ">
+            <a href="/">Go home</a>
+        </div>
+    </div>
+
+{% endblock %}

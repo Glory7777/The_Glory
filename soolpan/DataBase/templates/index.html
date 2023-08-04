@@ -6,8 +6,10 @@
         <div class="col-6 mx-auto text-center mt-5">
             <form method="POST" action="{% url 'Tal_Search' %}">
                 {% csrf_token %}
-            <input type="text" list="tals" placeholder="전통주 검색하기" class="form-control" name="search_query" id="search_query"> 
-            <input type="submit" value="Search">
+            <div class="input-group">
+                <input type="text" list="tals" placeholder="전통주 검색하기" class="form-control" name="search_query" id="search_query"> 
+                <input type="submit" value="Search">
+            </div>
             <datalist id="tals">
                 {% for tal in tals%}
                     <option value="{{tal.name}}"></option>
@@ -18,7 +20,9 @@
             <h3>검색 결과:</h3>
             <ul>
                 {% for tal in tal_search %}
-                <li>{{ tal.id }}{{ tal.name }}</li>
+                <ul class="list-group list-group-flush">
+                    <a href="detail/{{ tal.id }}"><li class="list-group-item">{{ tal.name }}</li></a>
+                </ul>
                 {% endfor %}
             </ul>
             {% endif %}

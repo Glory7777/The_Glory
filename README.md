@@ -29,4 +29,4 @@ django humanize library
 -  메인페이지 CSS 쉬운부분 - 민경환 
 -  디테일페이지 술소개부분 CSS 빡센부분 - 박영광 
 -  댓글 부분 CSS 중간난이도 - 최종현 
-
+- login, register CSS - 민경환 ㅠ
