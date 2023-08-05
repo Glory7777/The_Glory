@@ -1,53 +1,47 @@
 .nav-bar {
     position: relative;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    -ms-flex-align: center;
     align-items: center;
-    -ms-flex-pack: justify;
     justify-content: space-between;
     padding: 0;
     background-color: gray;
-    top: 0; /* 페이지의 상단에 고정 */
+    top: 0;
     width: 100%;
     height: 5%;
     color: white;
-  }
-  
-  .nav-left {
+}
+
+.nav-left {
     float: left;
-  }
-  .nav-left a {
+}
+
+.nav-left a {
     color: white;
     margin-left: 10px;
     text-align: center;
     text-decoration: none;
-  }
-  .nav-right {
+}
+
+.nav-right {
     float: right;
-  }
-  
-  .nav-right a {
+}
+
+.nav-right a {
     color: white;
     padding: 14px 20px;
     text-align: center;
     text-decoration: none;
-  }
-  
-  .nav-right a:hover {
+}
+
+.nav-right a:hover {
     background-color: #ddd;
     color: black;
-  }
+}
 
-  .nav-left img {    
-    margin-left: 10;
+.nav-left img {
+    margin-left: 10px; /* Corrected the missing unit (e.g., px) for margin value */
     height: 100%;
-    transform-origin: center; /* Set the transform origin to the center */
+    transform-origin: center;
     transform: scale(1.0);
-  }
-  .input-group {
-    display: flex;
-    gap: 10px; /* 간격을 조정하려면 원하는 크기로 변경할 수 있습니다. */
-  }
+}

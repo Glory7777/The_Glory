@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+<style>
+/* 기존 CSS는 그대로 유지하고 아래 내용을 추가합니다. */
+
+.input-group {
+    display: flex;
+    align-items: center;
+    max-width: 600px; /* 더 길게 만들기 */
+    margin: 0 auto;
+    gap: 10px; /* 간격을 조정하려면 원하는 크기로 변경할 수 있습니다. */
+}
+
+.form-control {
+    flex: 1;
+    height: 50px; /* 더 높게 만들기 */
+    padding: 15px; /* 더 두껍게 만들기 */
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #6c63ff;
+}
+
+input[type="submit"] {
+    height: 50px; /* 높이를 검색창과 일치시킵니다. */
+    padding: 0 20px;
+    background-color: #6c63ff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #524dff;
+}
+
+/* 기존 CSS 코드는 그대로 유지합니다. */
+datalist {
+    display: none;
+}
+
+.input-group:hover datalist {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+datalist option {
+    padding: 8px 12px;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+}
+
+datalist option:hover {
+    background-color: #f0f0f0;
+}
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-6 mx-auto text-center mt-5">
+            <form method="POST" id="autoform">
+                {% csrf_token %}
+            <div class="input-group">
+                <input type="text" list="tals" placeholder="전통주 검색하기" class="form-control" name="search_query" id="search_query" autocomplete="off"> 
+                <input type="submit" value="검색">
+            </div>
+            <datalist id="tals">
+                {% for tal in tals%}
+                    <option value="{{tal.name}}" style="font-size: 20px;"></option>
+                {% endfor %}
+            </datalist>
+            </form>
+            
+            {% if form.errors %}
+            <span style="color: red">{{ form.errors.name|join:" " }}</span>
+            {% endif %}
+
+            {% if tal_search %}
+            <h3>검색 결과:</h3>
+            <ul>
+                {% for tal in tal_search %}
+                <ul class="list-group list-group-flush">
+                    <a href="detail/{{ tal.id }}"><li class="list-group-item">{{ tal.name }}</li></a>
+                </ul>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            
+        </div>
+    </div>
+</div>
+{% endblock %}
