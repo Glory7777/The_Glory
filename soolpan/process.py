@@ -5,17 +5,18 @@ import pandas as pd
 import sqlite3
 
 # Read csv file.
-df = pd.read_csv("../API/전통주_API_DATA.csv")
+df = pd.read_csv("../WebCrawling/TheSool_DATA_230805.csv")
 
 # Connect to (create) database.
 database = "db.sqlite3"
 conn = sqlite3.connect(database)
 dtype={
-    "size": "CharField",
-    "per": "IntegerField",
     "name":"CharField",
     "company" : "CharField",
-    "mtrl" : "CharField"
+    "mtrl" : "CharField",
+    "std" : "CharField",
+    "dsc" : "CharField",
+    "img" : "CharField",
 }
 
 df.to_sql(name='traditional_liq', con=conn, if_exists='replace', dtype=dtype, index=True, index_label="id")
@@ -26,7 +27,7 @@ DELETE FROM traditional_liq
 WHERE id NOT IN (
     SELECT MIN(id) 
     FROM traditional_liq 
-    GROUP BY size, per, name, company, mtrl
+    GROUP BY name, company, mtrl, std, dsc, img
 )
 """
 conn.execute(query)
