@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Tal(models.Model): #class 변경 필요 
-        
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=256, blank=True, null=True, verbose_name='제품명')
     company = models.CharField(max_length=256, blank=True, null=True, verbose_name='제조사')
     mtrl = models.CharField(max_length=256, blank=True, null=True, verbose_name='원재료') 
