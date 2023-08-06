@@ -7,5 +7,5 @@
         currentImageIndex = (currentImageIndex + 1) % carouselImages.length;
         carouselImages[currentImageIndex].classList.add('active');
     }
-    setInterval(showNextImage, 5000);
+    setInterval(showNextImage, 10000);
 })();    
