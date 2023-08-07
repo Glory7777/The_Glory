@@ -1,7 +1,7 @@
 from django.views.generic import ListView, DetailView
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Tal
-from .forms import DetailForm
+from .forms import DetailForm, CommentForm
 import random
 # Create your views here.
 #홈화면 검색/Autocomplete 기능 구현
@@ -51,8 +51,21 @@ def index_v1(request):
     return render(request, 'index.html', {'tals':tals, 'form':form})
 
 def tal_detail(request, pk):
-    tal_result = Tal.objects.get(pk=pk)
-    return render(request, 'tal_detail.html', {'tal_detail': tal_result})
+    tal_result = get_object_or_404(Tal,pk=pk)
+    comments=tal_result.comments.all()
+
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            # commit=False : 데이터베이스에 즉시 저장하지 말고 객체를 반환하여 수정을 허용
+            comment.tal = tal_result
+            comment.save()
+            return redirect('detail', pk=tal_result.pk)
+    else:
+        comment_form=CommentForm()
+    
+    return render(request, 'tal_detail.html', {'tal_detail': tal_result, 'comments':comments, 'comment_form':comment_form})
 
 # 이건 작동 안함
 # class TalDetail(DetailView):
