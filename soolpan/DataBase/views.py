@@ -1,7 +1,7 @@
 from django.views.generic import ListView, DetailView
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Tal
-from .forms import DetailForm
+from .forms import DetailForm, CommentForm
 import random
 # Create your views here.
 #홈화면 검색/Autocomplete 기능 구현
@@ -51,8 +51,32 @@ def index_v1(request):
     return render(request, 'index.html', {'tals':tals, 'form':form})
 
 def tal_detail(request, pk):
-    tal_result = Tal.objects.get(pk=pk)
-    return render(request, 'tal_detail.html', {'tal_detail': tal_result})
+    tal_result =  get_object_or_404(Tal,pk=pk)
+
+     #pk=pk인 대상의 정보들을 가져오거나 404
+    comments = tal_result.comments.all() #rel_name comments, 관련된 Comments의 post(rel_name=comments) 값들을 모두 가져온 것을 comments로 해라
+    #이부분 중요
+    #rel_name=comments는 Post 모델에서 Comment 모델과의 ForeignKey로 연결된 역참조 매니저
+    #역참조 매니저를 사용하면 Post 객체와 연결된 모든 댓글 객체를 쿼리셋으로 가져올 수 있음
+    #ForeignKey를 사용하여 모델을 연결하면, 연결된 객체들의 역참조 매니저가 자동으로 생성,
+    #역참조 매니저는 related_name 매개변수를 사용하여 사용자 정의 이름으로 지정
+    #Post 모델과 연결된 모든 댓글을 가져올 때 comments 속성을 사용
+    #post.comments.all()은 post 변수에 할당된 Post 객체와 연결된 모든 댓글 객체들을 가져오는 코드
+    # related_name 은 포스트(글)이 데리고 있는 모든 댓글들을 불러오는 참조 방식이다. 
+
+    if request.method == "POST":
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False) #커밋을 완료하면 수정삭제가 안됨
+            #Commit=false : db안에 즉시 저장하지 말고 객체를 반환하여 수정을 허용
+            comment.post = tal_result
+            comment.save()
+            return redirect("detail", pk=tal_result.pk) #name, body 끌고 오는것 
+    else:
+        comment_form=CommentForm() #내용물이 없는 것을 읽음
+    
+
+    return render(request, 'tal_detail.html', {'tal_detail': tal_result,'comments':comments,'comment_form':comment_form})
 
 # 이건 작동 안함
 # class TalDetail(DetailView):

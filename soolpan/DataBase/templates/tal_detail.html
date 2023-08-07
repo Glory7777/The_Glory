@@ -23,4 +23,32 @@
         </div>
     </div>
 </div>
+<hr/>
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="comment">
+        <h5>&#35; 댓글</h5><br/>
+        {% for comment in comments%}            
+            <p class="comment-name">{{comment.name}} : {{comment.body}}</p> 
+        {% empty %}
+            <p>아직 등록된 댓글이 없습니다.</p>
+        {% endfor %}
+        </div>        
+    </div>
+</div>
+<hr/>
+<div class="row mt-5">
+    <div class="col-12">
+        <h3>Add a Comment</h3>
+        <form method="POST">
+            {% csrf_token %}
+            {{comment_form.as_p}}
+            <!-- models.py 데이터베이스(comment)의 인스턴스 변수로, forms.py를 거쳐 name과 body필드를 p태그로 감싸서 출력  -->
+            <button type="submit" class="btn btn-primary">댓글작성</button>
+        </form>
+    </div>
+    <div class="col-12 mt-2">
+        <button type="submit" class="btn btn-primary" onclick="location.href='/post/'">돌아가기</button>
+    </div>
+</div>
 {% endblock %}
