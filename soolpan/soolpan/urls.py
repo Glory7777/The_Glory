@@ -21,7 +21,7 @@ from DataBase.views import index, index_v1, tal_detail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index_v1, name='Tal_Search'),
+    path('', index, name='Tal_Search'),
     path('register/', RegisterView.as_view(), name='signup'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', logout, name='logout'),
