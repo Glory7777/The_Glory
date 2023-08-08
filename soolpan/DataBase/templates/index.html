@@ -1,5 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block header %}
+<script>
+    function product_detail(id){
+        $.ajax({
+            url:"/api/product/"+id, 
+            success : function(result){
+                $("#product-"+id).popover({
+                    html:true, 
+                    content: result.company + "<br/>" +result.std+"<br/>" +result.dsc //상품 중 이름+가격 가져와서 popover 로 가져옴
+                }).popover('show');
+            }// success
+        }) // ajax
+    
+    }//product_detail
+    
+    function product_leave(id){
+        $("#product-"+id).popover("hide");        
+    }
+    //사용자가 상품 요소에서 벗어났을 때 popover 숨기기
+    $(document).ready(function(){});
+</script>
+{% endblock%}
 {% block contents %}
 <link rel="stylesheet" type="text/css" href="{% static '/css/index.css' %}">
     <div class="container">
@@ -28,7 +50,7 @@
                     <ul>
                         {% for tal in tal_search %}
                             <ul class="list-group list-group-flush">
-                                <a href="detail/{{ tal.id }}"><li class="list-group-item">{{ tal.name }}</li></a>
+                                <a href="detail/{{ tal.id }}"><li class="list-group-item" id="product-{{tal.id}}" onmouseenter="product_detail({{tal.id}});" onmouseleave="product_leave({{tal.id}});">{{ tal.name }}</li></a>
                             </ul>
                         {% endfor %}
                     </ul>
