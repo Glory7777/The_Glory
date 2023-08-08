@@ -1,8 +1,14 @@
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Tal
+from .models import Tal, Comment
 from .forms import DetailForm, CommentForm
 import random
+from .serializers import ProductSerializer, CommentSerializer
+from rest_framework import mixins
+from rest_framework import generics
+from spUser.decorators import login_required, Admin_required
+from django.utils.decorators import method_decorator
+
 # Create your views here.
 #홈화면 검색/Autocomplete 기능 구현
 
@@ -50,34 +56,50 @@ def index_v1(request):
         form=DetailForm()
     return render(request, 'index.html', {'tals':tals, 'form':form})
 
-def tal_detail(request, pk):
-    
+def tal_detail(request, pk):    
     tal_result =  get_object_or_404(Tal,pk=pk)
      #pk=pk인 술의 정보들을 가져오거나 404
      
      #이 술에 달린 댓글들
     comments = tal_result.comments.all() 
-
+   
     if request.method == "POST":
         comment_form = CommentForm(request.POST) #댓글입력할 폼 
+        if not request.session.get('user'): #로그인세션정보가 없을 경우에 로그인 페이지로 돌려보내기
+            return redirect('/login/')
         if comment_form.is_valid():
             comment = comment_form.save(commit=False) #커밋을 완료하면 수정삭제가 안됨
             #Commit=false : db안에 즉시 저장하지 말고 객체를 반환하여 수정을 허용
             comment.post = tal_result
             comment.save()
             return redirect("detail", pk=tal_result.pk) #name, body 끌고 오는것 
-        #추가할 로직
-        #else에 로그인세션정보가 없을 경우에 로그인 페이지로 돌려보내기
+
         #form에 기본 작성자 email을 로그인한 세션 유저를 기본으로 할당 
     else:
-        comment_form=CommentForm() #내용물이 없는 것을 읽음
-    
+        comment_form=CommentForm() #내용물이 없는 것을 읽음    
 
     return render(request, 'tal_detail.html', {'tal_detail': tal_result,'comments':comments,'comment_form':comment_form})
 
-# 이건 작동 안함
-# class TalDetail(DetailView):
-#         template_name="tal_detail.html" #여따가 딱뿌려
-#         context_object_name = 'tal_detail' #이름은 Product
-#         queryset = Tal.objects.get(pk=pk) #DB에서 싹 가져와서 
+class ProductListAPI(generics.GenericAPIView, mixins.ListModelMixin):
+    serializer_class = ProductSerializer
+    def get_queryset(self):                
+        return Tal.objects.all().order_by('id')
+    def get(self, request, *args, **kwargs):        
+        return self.list(request, *args, **kwargs)
+    
+class ProductDetailAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
+    serializer_class = ProductSerializer
 
+    def get_queryset(self):        
+        return Tal.objects.all().order_by('id')
+    def get(self, request, *args, **kwargs):
+        #list() : ListModelMixin에서 제공
+        return self.retrieve(request, *args, **kwargs)
+    
+class CommentListAPI(generics.GenericAPIView, mixins.ListModelMixin):
+    serializer_class = CommentSerializer
+    def get_queryset(self):                
+        return Comment.objects.all().order_by('id')
+    def get(self, request, *args, **kwargs):        
+        return self.list(request, *args, **kwargs)
+        
