@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from spUser.views import RegisterView, LoginView, logout
-from DataBase.views import index, tal_detail, ProductListAPI, ProductDetailAPI, CommentListAPI, CommentDetailAPI
+from DataBase.views import index, tal_detail, ProductListAPI, ProductDetailAPI, CommentListAPI, CommentDetailAPI, CommentGroupAPI
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='Tal_Search'),
@@ -28,5 +28,6 @@ urlpatterns = [
     path('api/product/', ProductListAPI.as_view()),
     path('api/product/<int:pk>/', ProductDetailAPI.as_view()),
     path('api/comment/', CommentListAPI.as_view()),
-    path('api/comment/<int:pk>/', CommentDetailAPI.as_view()),
+    # path('api/comment/<int:pk>/', CommentDetailAPI.as_view()),
+    path('api/comments/', CommentGroupAPI.as_view()),
 ]

@@ -19,7 +19,7 @@ class Tal(models.Model): #class 변경 필요
         verbose_name_plural = "전통주들"
 
 class Comment(models.Model):
-    
+
     post = models.ForeignKey(Tal, related_name="comments",on_delete=models.CASCADE, verbose_name="포스트")  #rel_name을 가지고서 views에서 사용, 역참조
     #포린키는 다:1관계 키, 즉, 1개의 글에 여러개의 댓글이 달림, 1개의 아이디로 여러 글을 쓸 수 있기 위해 사용되는 키
     name = models.ForeignKey(SpUser, related_name="userEmail",on_delete=models.CASCADE, verbose_name="이름")

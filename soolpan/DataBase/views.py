@@ -102,11 +102,35 @@ class CommentListAPI(generics.GenericAPIView, mixins.ListModelMixin):
         return Comment.objects.all().order_by('post')
     def get(self, request, *args, **kwargs):        
         return self.list(request, *args, **kwargs)
-        
+
 class CommentDetailAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
     serializer_class = CommentSerializer
     def get_queryset(self):        
         return Comment.objects.all().order_by('post')
     def get(self, request, *args, **kwargs):
         #list() : ListModelMixin에서 제공
-        return self.retrieve(request, *args, **kwargs)
+        return self.retrieve(request, *args, **kwargs)    
+
+class CommentGroupAPI(generics.GenericAPIView, mixins.ListModelMixin):
+    serializer_class = CommentSerializer
+    
+    def get_queryset(self):
+        post_id = self.request.query_params.get('post', None)
+        queryset = Comment.objects.all()
+        if post_id is not None:
+            queryset = queryset.filter(post=post_id)
+        return queryset.order_by('post')
+    
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+    
+    # http://127.0.0.1:8000/api/comments/?post=2 하면 2번만 그룹바이 됨.
+    
+    #0809 삭제
+#     self.request.query_params는 Django REST Framework에서 HTTP 요청(request)의 쿼리 매개변수(query parameters)에 접근하는 방법 중 하나입니다. HTTP 요청은 URL에 추가적인 데이터를 전달하기 위해 쿼리 매개변수를 사용할 수 있습니다. 예를 들어, /your/api/endpoint/?post=post_id와 같은 URL에서 post=post_id가 쿼리 매개변수입니다.
+
+# self.request는 현재 요청(request)에 대한 정보를 가지고 있는 객체입니다. self.request.query_params를 사용하면 해당 요청의 쿼리 매개변수에 접근할 수 있습니다.
+
+# self.request.query_params.get('post', None)는 post라는 키(key)를 가진 쿼리 매개변수의 값을 가져오는 코드입니다. get() 메서드는 딕셔너리(dict)에서 특정 키의 값을 가져오는 메서드로, 첫 번째 인수로 찾고자 하는 키를 전달하고, 두 번째 인수로 해당 키가 존재하지 않을 때 반환할 기본값(default value)을 지정할 수 있습니다.
+
+# 위의 코드에서는 post라는 키의 값을 가져오려고 하고, 만약 해당 키가 존재하지 않는다면 기본값으로 None을 지정하였습니다. 따라서 post라는 키의 값을 가져올 수 있으면 해당 값이 변수 post_id에 저장되고, 키가 존재하지 않으면 post_id는 None이 될 것입니다.
