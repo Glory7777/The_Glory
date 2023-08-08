@@ -40,21 +40,21 @@ def index(request):
         tal_search = []
     return render(request, 'index.html', {'tals':tals, 'tal_search':tal_search})
 
-def index_v1(request):
-    tals = Tal.objects.all()
-    if request.method == 'POST':
-        form = DetailForm(request.POST)
-        if form.is_valid():
-            search_query = request.POST.get('search_query')
-            if search_query:
-                try:
-                    search = Tal.objects.get(name__exact=search_query)
-                    return redirect('detail', pk=search.pk)
-                except:
-                    form.add_error('name', '해당하는 술을 찾을 수 없습니다.')
-    else:
-        form=DetailForm()
-    return render(request, 'index.html', {'tals':tals, 'form':form})
+# def index_v1(request):
+#     tals = Tal.objects.all()
+#     if request.method == 'POST':
+#         form = DetailForm(request.POST)
+#         if form.is_valid():
+#             search_query = request.POST.get('search_query')
+#             if search_query:
+#                 try:
+#                     search = Tal.objects.get(name__exact=search_query)
+#                     return redirect('detail', pk=search.pk)
+#                 except:
+#                     form.add_error('name', '해당하는 술을 찾을 수 없습니다.')
+#     else:
+#         form=DetailForm()
+#     return render(request, 'index.html', {'tals':tals, 'form':form})
 
 def tal_detail(request, pk):    
     tal_result =  get_object_or_404(Tal,pk=pk)
@@ -99,7 +99,14 @@ class ProductDetailAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
 class CommentListAPI(generics.GenericAPIView, mixins.ListModelMixin):
     serializer_class = CommentSerializer
     def get_queryset(self):                
-        return Comment.objects.all().order_by('id')
+        return Comment.objects.all().order_by('post')
     def get(self, request, *args, **kwargs):        
         return self.list(request, *args, **kwargs)
         
+class CommentDetailAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
+    serializer_class = CommentSerializer
+    def get_queryset(self):        
+        return Comment.objects.all().order_by('post')
+    def get(self, request, *args, **kwargs):
+        #list() : ListModelMixin에서 제공
+        return self.retrieve(request, *args, **kwargs)

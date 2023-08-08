@@ -9,6 +9,14 @@ class DetailForm(forms.ModelForm):
 
 class CommentForm(forms.ModelForm):
     class Meta:
-        model=Comment
-        fields=['name','body']
+        model = Comment
+        fields = ['name', 'body', 'color', 'flavor', 'sweet', 'sour', 'carbon', 'total']
+        widgets = {
+        'color': forms.RadioSelect,
+        'flavor': forms.RadioSelect,
+        'sweet': forms.RadioSelect,
+        'sour': forms.RadioSelect,
+        'carbon': forms.RadioSelect,
+        'total': forms.RadioSelect,
+        }
         

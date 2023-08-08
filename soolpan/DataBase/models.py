@@ -19,11 +19,25 @@ class Tal(models.Model): #class 변경 필요
         verbose_name_plural = "전통주들"
 
 class Comment(models.Model):
+    
     post = models.ForeignKey(Tal, related_name="comments",on_delete=models.CASCADE, verbose_name="포스트")  #rel_name을 가지고서 views에서 사용, 역참조
     #포린키는 다:1관계 키, 즉, 1개의 글에 여러개의 댓글이 달림, 1개의 아이디로 여러 글을 쓸 수 있기 위해 사용되는 키
     name = models.ForeignKey(SpUser, related_name="userEmail",on_delete=models.CASCADE, verbose_name="이름")
     body = models.TextField(verbose_name="댓글")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="작성일")
+    SCORE_CHOICES = (
+        (1, '1점'),
+        (2, '2점'),
+        (3, '3점'),
+        (4, '4점'),
+        (5, '5점'),
+    )
+    color = models.IntegerField(verbose_name="색", null=True, blank=True,choices=SCORE_CHOICES)
+    flavor = models.IntegerField(verbose_name="향", null=True, blank=True,choices=SCORE_CHOICES)
+    sweet = models.IntegerField(verbose_name="당도", null=True, blank=True,choices=SCORE_CHOICES)
+    sour = models.IntegerField(verbose_name="산도", null=True, blank=True,choices=SCORE_CHOICES)
+    carbon = models.IntegerField(verbose_name="탄산감", null=True, blank=True,choices=SCORE_CHOICES)
+    total = models.IntegerField(verbose_name="종합평가", null=True, blank=True,choices=SCORE_CHOICES)
     
     def __str__(self) -> str:
         return f'ID: {self.name}'

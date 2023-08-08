@@ -29,7 +29,13 @@
         <div class="comment">
         <h5>&#35; 댓글</h5><br/>
         {% for comment in comments%}            
-            <p class="comment-name">{{comment.name}} : {{comment.body}}</p> 
+            <p class="comment-name">{{comment.name}} : {{comment.body}} </p>
+            <p class="comment-score-group">색 : {{comment.color}} </p>
+            <p class="comment-score-group">향 : {{comment.flavor}} </p>
+            <p class="comment-score-group">당도 : {{comment.sweet}} </p>
+            <p class="comment-score-group">산도 : {{comment.sour}} </p>
+            <p class="comment-score-group">탄산감 : {{comment.carbon}} </p>
+            <p class="comment-score-group">종합평가 : {{comment.total}} </p>
         {% empty %}
             <p>아직 등록된 댓글이 없습니다.</p>
         {% endfor %}
