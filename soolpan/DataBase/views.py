@@ -9,6 +9,7 @@ from rest_framework import mixins
 from rest_framework import generics
 from spUser.decorators import login_required, Admin_required
 from django.utils.decorators import method_decorator
+from django.http import Http404
 
 # Create your views here.
 #홈화면 검색/Autocomplete 기능 구현
@@ -64,8 +65,9 @@ def tal_detail(request, pk):
      #이 술에 달린 댓글들
     comments = tal_result.comments.all() 
     email = request.session.get('user')
-    user_instance = SpUser.objects.get(email=email)
+    
     if request.method == "POST":
+        user_instance = SpUser.objects.get(email=email)
         comment_form = CommentForm(request.POST) #댓글입력할 폼 
         if not request.session.get('user'): #로그인세션정보가 없을 경우에 로그인 페이지로 돌려보내기
             return redirect('/login/')
@@ -82,6 +84,20 @@ def tal_detail(request, pk):
         comment_form=CommentForm() #내용물이 없는 것을 읽음    
 
     return render(request, 'tal_detail.html', {'tal_detail': tal_result,'comments':comments,'comment_form':comment_form})
+
+def comment_update(requeet, pk):
+    pass
+
+def comment_delete(request, pk):
+    user_id = request.session.get('user')    
+    if not request.session.get('user'):
+        return redirect('/login/')    
+    comment = Comment.objects.get(pk=pk) #유저 정보 관련된 객체만 집어옴
+    if SpUser.objects.get(email=user_id) == comment.name:
+        comment.delete()
+    else:
+        raise Http404("권한이 없습니다.")
+    return redirect('/')
 
 class ProductListAPI(generics.GenericAPIView, mixins.ListModelMixin):
     serializer_class = ProductSerializer

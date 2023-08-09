@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from spUser.views import RegisterView, LoginView, logout
-from DataBase.views import index, tal_detail, ProductListAPI, ProductDetailAPI, CommentListAPI, CommentDetailAPI, CommentGroupAPI
+from DataBase.views import index, tal_detail, ProductListAPI, ProductDetailAPI, CommentListAPI, CommentDetailAPI, CommentGroupAPI, comment_delete
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='Tal_Search'),
@@ -30,4 +30,5 @@ urlpatterns = [
     path('api/comment/', CommentListAPI.as_view()),
     # path('api/comment/<int:pk>/', CommentDetailAPI.as_view()),
     path('api/comments/', CommentGroupAPI.as_view()),
+    path('comment/delete/<int:pk>/', comment_delete, name="comment_delete"),
 ]
