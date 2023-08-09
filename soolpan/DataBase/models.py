@@ -32,12 +32,12 @@ class Comment(models.Model):
         (4, '4점'),
         (5, '5점'),
     )
-    color = models.IntegerField(verbose_name="색", null=True, blank=True,choices=SCORE_CHOICES)
-    flavor = models.IntegerField(verbose_name="향", null=True, blank=True,choices=SCORE_CHOICES)
-    sweet = models.IntegerField(verbose_name="당도", null=True, blank=True,choices=SCORE_CHOICES)
-    sour = models.IntegerField(verbose_name="산도", null=True, blank=True,choices=SCORE_CHOICES)
-    carbon = models.IntegerField(verbose_name="탄산감", null=True, blank=True,choices=SCORE_CHOICES)
-    total = models.IntegerField(verbose_name="종합평가", null=True, blank=True,choices=SCORE_CHOICES)
+    color = models.IntegerField(verbose_name="색", null=True, blank=False,choices=SCORE_CHOICES, default=None)
+    flavor = models.IntegerField(verbose_name="향", null=True, blank=False,choices=SCORE_CHOICES, default=None)
+    sweet = models.IntegerField(verbose_name="당도", null=True, blank=False,choices=SCORE_CHOICES, default=None)
+    sour = models.IntegerField(verbose_name="산도", null=True, blank=False,choices=SCORE_CHOICES, default=None)
+    carbon = models.IntegerField(verbose_name="탄산감", null=True, blank=False,choices=SCORE_CHOICES, default=None)
+    total = models.IntegerField(verbose_name="종합평가", null=True, blank=False,choices=SCORE_CHOICES, default=None)
     
     def __str__(self) -> str:
         return f'ID: {self.name}'

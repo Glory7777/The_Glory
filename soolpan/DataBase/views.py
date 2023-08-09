@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Tal, Comment
 from .forms import DetailForm, CommentForm
+from spUser.models import SpUser
 import random
 from .serializers import ProductSerializer, CommentSerializer
 from rest_framework import mixins
@@ -62,7 +63,8 @@ def tal_detail(request, pk):
      
      #이 술에 달린 댓글들
     comments = tal_result.comments.all() 
-   
+    email = request.session.get('user')
+    user_instance = SpUser.objects.get(email=email)
     if request.method == "POST":
         comment_form = CommentForm(request.POST) #댓글입력할 폼 
         if not request.session.get('user'): #로그인세션정보가 없을 경우에 로그인 페이지로 돌려보내기
@@ -71,6 +73,7 @@ def tal_detail(request, pk):
             comment = comment_form.save(commit=False) #커밋을 완료하면 수정삭제가 안됨
             #Commit=false : db안에 즉시 저장하지 말고 객체를 반환하여 수정을 허용
             comment.post = tal_result
+            comment.name = user_instance
             comment.save()
             return redirect("detail", pk=tal_result.pk) #name, body 끌고 오는것 
 
