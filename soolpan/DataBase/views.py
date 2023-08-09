@@ -61,13 +61,14 @@ def index(request):
 def tal_detail(request, pk):    
     tal_result =  get_object_or_404(Tal,pk=pk)
      #pk=pk인 술의 정보들을 가져오거나 404
-     
      #이 술에 달린 댓글들
-    comments = tal_result.comments.all() 
-    email = request.session.get('user')
-    
+    comments = tal_result.comments.all()    
+    email = request.session.get('user')    
     if request.method == "POST":
-        user_instance = SpUser.objects.get(email=email)
+        try: 
+            user_instance = SpUser.objects.get(email=email)
+        except:
+            return redirect('/login/')
         comment_form = CommentForm(request.POST) #댓글입력할 폼 
         if not request.session.get('user'): #로그인세션정보가 없을 경우에 로그인 페이지로 돌려보내기
             return redirect('/login/')
@@ -78,7 +79,6 @@ def tal_detail(request, pk):
             comment.name = user_instance
             comment.save()
             return redirect("detail", pk=tal_result.pk) #name, body 끌고 오는것 
-
         #form에 기본 작성자 email을 로그인한 세션 유저를 기본으로 할당 
     else:
         comment_form=CommentForm() #내용물이 없는 것을 읽음    
@@ -89,6 +89,7 @@ def comment_update(requeet, pk):
     pass
 
 def comment_delete(request, pk):
+    tal_result =  get_object_or_404(Tal,pk=pk)
     user_id = request.session.get('user')    
     if not request.session.get('user'):
         return redirect('/login/')    
@@ -97,7 +98,7 @@ def comment_delete(request, pk):
         comment.delete()
     else:
         raise Http404("권한이 없습니다.")
-    return redirect('/')
+    return redirect("detail", pk=tal_result.pk)
 
 class ProductListAPI(generics.GenericAPIView, mixins.ListModelMixin):
     serializer_class = ProductSerializer

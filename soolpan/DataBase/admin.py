@@ -7,6 +7,6 @@ class DBAdmin(admin.ModelAdmin):
 admin.site.register(Tal, DBAdmin)
 
 class CmAdmin(admin.ModelAdmin):
-    list_display=('name','body','created_at')
+    list_display=('name','body','created_at','color', 'flavor', 'sweet', 'sour', 'carbon', 'total')
 
 admin.site.register(Comment, CmAdmin)
