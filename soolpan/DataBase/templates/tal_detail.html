@@ -12,21 +12,15 @@
                     {% csrf_token %}
                     {% for field in form %}
                     <div class="form-group">
-                        {% if field.name != 'post' %}
-                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                        {% endif %}
                         <input type="{{ field.field.widget.input_type }}" class="form-control" 
                         id="{{ field.id_for_label }}"  placeholder="{{ field.label }}" name="{{ field.name }}" 
-                        value="{% if field.name == 'post' %}{{ post.id }}{% endif %}"/> 
-                        <!-- product 값 자동 입력 -->
-                    </div>   
-
+                        value="{% if field.name == 'like' %}{{ '1' }}{% else %}{{tal_detail.id}}{% endif %}"/> 
+                    </div>                       
                         {% if field.errors %}
                         <span style="color: red">{{ field.errors }}</span>
                         {% endif %}
                     
-                    {% endfor %}
-                    
+                    {% endfor %}                    
                     <button type="submit" class="btn btn-primary"> 즐겨찾기 </button>
                 </form>
             </li>
@@ -38,12 +32,6 @@
                 <li class="list-group-item">상세설명: {{ tal_detail.dsc }}</li>        
                 <li class="list-group-item"><img src="{{tal_detail.img}}" alt=""></li>        
             </ul>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-12 ">
-            <a href="/">Go home</a>
         </div>
     </div>
 </div>

@@ -85,7 +85,6 @@ class TalDetailView(DetailView):
         email = self.request.session.get('user')
         if not email:
             return redirect('/login/')
-
         try:
             user_instance = SpUser.objects.get(email=email)
         except SpUser.DoesNotExist:

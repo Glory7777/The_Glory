@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from spUser.views import RegisterView, LoginView, logout
 from DataBase.views import index, ProductListAPI, ProductDetailAPI, CommentListAPI, CommentDetailAPI, CommentGroupAPI, comment_delete, TalDetailView
-from favorite.views import FavoriteCreate
+from favorite.views import FavoriteCreate, FavoriteList
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='Tal_Search'),
@@ -33,4 +33,5 @@ urlpatterns = [
     path('api/comments/', CommentGroupAPI.as_view()),
     path('comment/delete/<int:pk>/', comment_delete, name="comment_delete"),
     path('favorite/create', FavoriteCreate.as_view()),
+    path('favorite/', FavoriteList.as_view()),
 ]
