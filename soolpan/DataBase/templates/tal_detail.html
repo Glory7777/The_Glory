@@ -49,9 +49,11 @@
             <p class="comment-score-group">탄산감 : {{comment.carbon}} </p>
             <p class="comment-score-group">종합평가 : {{comment.total}} </p>
             <button type="button" class="btn btn-danger" onclick="location.href='/comment/delete/{{comment.id}}/'">삭제하기</button>
+            
         {% empty %}
             <p>아직 등록된 댓글이 없습니다.</p>
         {% endfor %}
+        
         </div>        
     </div>
 </div>
@@ -65,9 +67,6 @@
             <!-- models.py 데이터베이스(comment)의 인스턴스 변수로, forms.py를 거쳐 name과 body필드를 p태그로 감싸서 출력  -->
             <button type="submit" class="btn btn-primary">댓글작성</button>
         </form>
-    </div>
-    <div class="col-12 mt-2">
-        <button type="submit" class="btn btn-primary" onclick="location.href='/'">돌아가기</button>
     </div>
 </div>
 {% endblock %}

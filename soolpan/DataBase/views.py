@@ -71,12 +71,12 @@ class TalDetailView(DetailView):
         tal_result = self.object
         comments = tal_result.comments.all()
         comment_form = CommentForm()
-
         context['comments'] = comments
         context['comment_form'] = comment_form
 
         favorite_form = FavoriteForm(request=self.request)
         context['form'] = favorite_form
+
         return context
 
     def post(self, request, *args, **kwargs):
@@ -101,6 +101,7 @@ class TalDetailView(DetailView):
         context = self.get_context_data()
         context['comment_form'] = comment_form
         return self.render_to_response(context)
+
 
 # def tal_detail(request, pk):
 #     tal_result = get_object_or_404(Tal, pk=pk)
