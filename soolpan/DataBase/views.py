@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Tal, Comment
 from .forms import DetailForm, CommentForm
+from favorite.models import Favorite
 from favorite.forms import FavoriteForm
 from spUser.models import SpUser
 import random
@@ -73,9 +74,13 @@ class TalDetailView(DetailView):
         comment_form = CommentForm()
         context['comments'] = comments
         context['comment_form'] = comment_form
-
         favorite_form = FavoriteForm(request=self.request)
         context['form'] = favorite_form
+        
+        email = self.request.session.get('user')
+        user_instance = SpUser.objects.get(email=email)
+        search = Favorite.objects.get(post=tal_result, name=user_instance)
+        context['search'] = search
 
         return context
 
@@ -100,8 +105,8 @@ class TalDetailView(DetailView):
 
         context = self.get_context_data()
         context['comment_form'] = comment_form
-        return self.render_to_response(context)
 
+        return self.render_to_response(context)
 
 # def tal_detail(request, pk):
 #     tal_result = get_object_or_404(Tal, pk=pk)

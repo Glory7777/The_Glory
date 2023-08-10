@@ -33,14 +33,16 @@ class FavoriteCreate(FormView):
             post_id=post_id, name__email=user_email).first()
 
         if existing_favorite:
+            
             if existing_favorite.like == 0:
                 existing_favorite.like = 1
                 existing_favorite.register_date = timezone.now()
                 existing_favorite.save()
+
             elif existing_favorite.like == 1:
                 existing_favorite.like = 0
                 existing_favorite.save()
-
+                
         else:
             # Create a new Favorite object
             tal = Tal.objects.get(pk=post_id)
@@ -76,3 +78,4 @@ class FavoriteList(ListView):
         queryset = Favorite.objects.filter(
             name__email=self.request.session.get('user')).order_by('-register_date')  # DB에서 싹 가져와서
         return queryset
+

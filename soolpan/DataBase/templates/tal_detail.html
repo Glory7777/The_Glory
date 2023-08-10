@@ -8,8 +8,9 @@
                 <h5 class="card-title">{{ tal_detail.name }}</h5>
             </div>
             <li class="list-group-item">
+                <!-- 즐겨찾기용 부분 -->
                 <form action="/favorite/create" method="POST">
-                    {% csrf_token %}
+                    {% csrf_token %}                    
                     {% for field in form %}
                     <div class="form-group">
                         <input type="{{ field.field.widget.input_type }}" class="form-control" 
@@ -21,8 +22,13 @@
                         {% endif %}
                     
                     {% endfor %}                    
+                    {% if search.like == 1 %}
+                    <button type="submit" class="btn btn-warning"> 즐겨찾기 취소</button>
+                    {% else %}
                     <button type="submit" class="btn btn-primary"> 즐겨찾기 </button>
+                    {% endif %}
                 </form>
+                <!-- 즐겨찾기용 부분 -->
             </li>
             
             <ul class="list-group list-group-flush">
