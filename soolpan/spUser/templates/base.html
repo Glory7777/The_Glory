@@ -29,16 +29,16 @@ integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0
         </div>
         <div class="nav-right">
           <!-- 오른쪽에 위치할 요소들 -->
-          <a href="#">Ratings</a>
-          <a href="#">Community</a>
-          <a href="#">Events</a>
-          <a href="#">Forums</a>
+          <a href="#">주류평가</a>
+          <a href="#">커뮤니티</a>
+          <a href="#">이벤트</a>
+          <a href="#">포럼</a>
           {% if request.session.user %}
           <a href="/favorite/">나의 주막</a>
-          <a href="/logout/">Log Out</a>
+          <a href="/logout/">로그아웃</a>
           {% else %}
-          <a href="/login/">Log In</a>          
-          <a href="/register/">Sign Up</a>
+          <a href="/login/">로그인</a>          
+          <a href="/register/">회원가입</a>
           {% endif %}
         </div>
       </div>
