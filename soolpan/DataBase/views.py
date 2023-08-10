@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Tal, Comment
 from .forms import DetailForm, CommentForm
+from favorite.forms import FavoriteForm
 from spUser.models import SpUser
 import random
 from .serializers import ProductSerializer, CommentSerializer
@@ -60,32 +61,74 @@ def index(request):
 #     return render(request, 'index.html', {'tals':tals, 'form':form})
 
 
-def tal_detail(request, pk):
-    tal_result = get_object_or_404(Tal, pk=pk)
-    # pk=pk인 술의 정보들을 가져오거나 404
-    # 이 술에 달린 댓글들
-    comments = tal_result.comments.all()
-    email = request.session.get('user')
-    if request.method == "POST":
+class TalDetailView(DetailView):
+    model = Tal
+    template_name = 'tal_detail.html'
+    context_object_name = 'tal_detail'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tal_result = self.object
+        comments = tal_result.comments.all()
+        comment_form = CommentForm()
+
+        context['comments'] = comments
+        context['comment_form'] = comment_form
+
+        favorite_form = FavoriteForm(request=self.request)
+        context['form'] = favorite_form
+        return context
+
+    def post(self, request, *args, **kwargs):
+        tal_result = self.get_object()
+
+        email = self.request.session.get('user')
+        if not email:
+            return redirect('/login/')
+
         try:
             user_instance = SpUser.objects.get(email=email)
-        except:
+        except SpUser.DoesNotExist:
             return redirect('/login/')
-        comment_form = CommentForm(request.POST)  # 댓글입력할 폼
-        if not request.session.get('user'):  # 로그인세션정보가 없을 경우에 로그인 페이지로 돌려보내기
-            return redirect('/login/')
+
+        comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
-            comment = comment_form.save(commit=False)  # 커밋을 완료하면 수정삭제가 안됨
-            # Commit=false : db안에 즉시 저장하지 말고 객체를 반환하여 수정을 허용
+            comment = comment_form.save(commit=False)
             comment.post = tal_result
             comment.name = user_instance
             comment.save()
-            return redirect("detail", pk=tal_result.pk)  # name, body 끌고 오는것
-        # form에 기본 작성자 email을 로그인한 세션 유저를 기본으로 할당
-    else:
-        comment_form = CommentForm()  # 내용물이 없는 것을 읽음
+            return redirect("detail", pk=tal_result.pk)
 
-    return render(request, 'tal_detail.html', {'tal_detail': tal_result, 'comments': comments, 'comment_form': comment_form})
+        context = self.get_context_data()
+        context['comment_form'] = comment_form
+        return self.render_to_response(context)
+
+# def tal_detail(request, pk):
+#     tal_result = get_object_or_404(Tal, pk=pk)
+#     # pk=pk인 술의 정보들을 가져오거나 404
+#     # 이 술에 달린 댓글들
+#     comments = tal_result.comments.all()
+#     email = request.session.get('user')
+#     if request.method == "POST":
+#         try:
+#             user_instance = SpUser.objects.get(email=email)
+#         except:
+#             return redirect('/login/')
+#         comment_form = CommentForm(request.POST)  # 댓글입력할 폼
+#         if not request.session.get('user'):  # 로그인세션정보가 없을 경우에 로그인 페이지로 돌려보내기
+#             return redirect('/login/')
+#         if comment_form.is_valid():
+#             comment = comment_form.save(commit=False)  # 커밋을 완료하면 수정삭제가 안됨
+#             # Commit=false : db안에 즉시 저장하지 말고 객체를 반환하여 수정을 허용
+#             comment.post = tal_result
+#             comment.name = user_instance
+#             comment.save()
+#             return redirect("detail", pk=tal_result.pk)  # name, body 끌고 오는것
+#         # form에 기본 작성자 email을 로그인한 세션 유저를 기본으로 할당
+#     else:
+#         comment_form = CommentForm()  # 내용물이 없는 것을 읽음
+
+#     return render(request, 'tal_detail.html', {'tal_detail': tal_result, 'comments': comments, 'comment_form': comment_form})
 
 
 def comment_update(requeet, pk):

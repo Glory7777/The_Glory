@@ -19,9 +19,8 @@ from django.utils.decorators import method_decorator
 # @method_decorator(login_required, name='dispatch')
 class FavoriteCreate(FormView):
     form_class = FavoriteForm
-    success_url = "/favorite/"
+    success_url = "/"
 
-    # 폼의 데이터 유효성 검사
     def form_valid(self, form):
         tal = Tal.objects.get(pk=form.data.get('post'))  # pk에 있는 상품정보 끌어옴
         fav = Favorite(name=SpUser.objects.get(email=self.request.session.get('user')),
@@ -43,6 +42,7 @@ class FavoriteCreate(FormView):
         kw.update({'request': self.request})
         # 세션을 kw에 포함시킴
         return kw
+
 
 # @method_decorator(login_required, name='dispatch')
 # class OrderList(ListView):
