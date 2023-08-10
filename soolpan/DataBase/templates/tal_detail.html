@@ -7,6 +7,30 @@
             <div class="card-body">
                 <h5 class="card-title">{{ tal_detail.name }}</h5>
             </div>
+            <li class="list-group-item">
+                <form action="/favorite/create" method="POST">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="form-group">
+                        {% if field.name != 'post' %}
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {% endif %}
+                        <input type="{{ field.field.widget.input_type }}" class="form-control" 
+                        id="{{ field.id_for_label }}"  placeholder="{{ field.label }}" name="{{ field.name }}" 
+                        value="{% if field.name == 'post' %}{{ post.id }}{% endif %}"/> 
+                        <!-- product 값 자동 입력 -->
+                    </div>   
+
+                        {% if field.errors %}
+                        <span style="color: red">{{ field.errors }}</span>
+                        {% endif %}
+                    
+                    {% endfor %}
+                    
+                    <button type="submit" class="btn btn-primary"> 즐겨찾기 </button>
+                </form>
+            </li>
+            
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">제조사: {{ tal_detail.company }}</li>
                 <li class="list-group-item">원재료: {{ tal_detail.mtrl }}</li>
@@ -55,7 +79,7 @@
         </form>
     </div>
     <div class="col-12 mt-2">
-        <button type="submit" class="btn btn-primary" onclick="location.href='/post/'">돌아가기</button>
+        <button type="submit" class="btn btn-primary" onclick="location.href='/'">돌아가기</button>
     </div>
 </div>
 {% endblock %}
