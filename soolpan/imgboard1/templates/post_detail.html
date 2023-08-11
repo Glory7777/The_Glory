@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block contents%}
+    <style>
+            body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            }
+            .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            }
+
+            .post-form {
+            background: white;
+            margin: 2em auto;
+            padding: 2em;
+            max-width: 500px;
+            box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);
+            }
+            .post-form input[type="text"],
+            .post-form textarea {
+            width: 100%;
+            height: auto;
+            padding: 0.5em;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 1em;
+            font-weight: 600;
+            font-size: 16px;
+            border: none;
+            }
+            .post-form textarea {
+                height: 300px;
+                border: none;
+            }
+            .post-form input[type="file"] {
+            border: none;
+            margin-bottom: 1em;
+            }           
+            
+            h1{
+            text-align: center;
+            }
+            .a-center{
+            text-align: center;
+            }       
+            img{
+                width: 103%;
+            }     
+            .detail {
+                text-align: right;
+            }
+            .post-info{
+                text-align: right;
+            }
+            .post-author{
+                font-size: 14px;
+                font-weight: 600;
+            }
+            .post-date{
+                font-size: 14px;
+                color: darkgray;
+            }
+    </style>
+<div class="row mt-5"> 
+    <div class="col-12">
+            <div class="container">
+            <h1> Detail Post</h1>
+            <form method="POST" class="post-form" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p></p>
+                <input type="text" name="title" value="{{ post.title }}" readonly>
+                
+                <div class="post-info"><a class="post-author">{{ post.author }} </a> <a class="post-date"> {{post.published_date|date:'Y-m-d H:i'}}</a></div><br/>
+                
+                {% if post.image %}
+                    <!-- 각 포스트에 연결된 이미지의 URL을 동적으로 지정 -->
+                    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid">
+                {% endif %}
+                
+                <textarea name="text" readonly>{{ post.text}} </textarea>
+                {% comment %} <input type="fiel" name="image"><br/>
+                <button type="submit" class="save btn btn-default">Save</button> {% endcomment %}
+                <div class="detail">
+                    {% if post.is_author %}
+                    <a href="{% url 'post_edit' pk=post.pk %}" class="detail edit">Edit</a>
+                    <a></a>
+                    <a href="{% url 'post_delete' pk=post.pk %}" class="detail delete">Delete</a>
+                    {% endif %}               
+                </div>
+            </form>
+                <div class="a-center">
+                    <a href="{% url 'post_list' %}">Back to Post List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock%}     

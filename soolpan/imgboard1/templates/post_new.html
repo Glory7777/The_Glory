@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+{% block contents%}
+
+<style>
+h1 {
+    text-align: center;
+}
+.post-form p {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    }
+    .container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    }
+    .post-form {
+    background: white;
+    margin: 2em auto;
+    padding: 2em;
+    max-width: 500px;
+    box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);
+    }
+    .save {
+    display: inline-block;
+    padding: 10px 20px;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    }
+    .save:hover {
+    background-color: #0056b3;
+    }
+    h1{
+    text-align: center;
+    }
+    .a-center{
+    text-align: center;
+    }
+    .post-form {
+            background: white;
+            margin: 2em auto;
+            padding: 2em;
+            max-width: 500px;
+            box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);
+            }
+    .post-form input[type="text"],
+    .post-form textarea {
+    width: 100%;
+    padding: 0.5em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 1em;
+    }
+    .post-form input[type="file"] {
+    border: none;
+    margin-bottom: 1em;
+    }
+    .navbar-expand-lg{
+      background-color: midnightblue;
+      color:white;
+     }
+     .navbar-brand{
+      color:white;
+      font-weight: bolder;
+      text-align: left;
+     }
+
+</style>
+    <br/>
+    <div>
+        <p></p>
+        <h1>Write Post</h1>
+        <form method="POST" class="post-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+        </form>
+        <div class="a-center">
+        <a href="{% url 'post_list' %}">Back to Post List</a>
+        </div>
+    </div>
+
+{% endblock%}     

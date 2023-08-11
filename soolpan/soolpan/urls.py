@@ -15,10 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from spUser.views import RegisterView, LoginView, logout
 from DataBase.views import (index, ProductListAPI, ProductDetailAPI, CommentListAPI, CommentDetailAPI, CommentGroupAPI,comment_update ,comment_delete, TalDetailView)
 from favorite.views import FavoriteCreate, FavoriteList
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='Tal_Search'),
@@ -35,4 +37,6 @@ urlpatterns = [
     path('comment/update/<int:pk>/', comment_update, name="comment_update"),
     path('favorite/create', FavoriteCreate.as_view()),
     path('favorite/', FavoriteList.as_view()),
+    path('imgboard1/', include('imgboard1.urls'))
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # media 경로 추가
