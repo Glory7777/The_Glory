@@ -37,7 +37,10 @@
                 <li class="list-group-item">용량/도수: {{ tal_detail.std }}</li>
                 <li class="list-group-item">상세설명: {{ tal_detail.dsc }}</li>        
                 <li class="list-group-item"><img src="{{tal_detail.img}}" alt=""></li>        
+                
             </ul>
+            {{ graph_html | safe }}
+
         </div>
     </div>
 </div>

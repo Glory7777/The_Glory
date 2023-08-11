@@ -13,6 +13,14 @@ from spUser.decorators import login_required, Admin_required
 from django.utils.decorators import method_decorator
 from django.http import Http404
 from django.utils import timezone
+from pandas import json_normalize
+from urllib.request import Request, urlopen
+import pandas as pd
+import json
+import plotly.express as px
+import plotly.graph_objects as go
+from django.urls import reverse
+from django.contrib.sites.shortcuts import get_current_site
 # Create your views here.
 # 홈화면 검색/Autocomplete 기능 구현
 
@@ -89,11 +97,14 @@ class TalDetailView(DetailView):
         except Favorite.DoesNotExist:
             context['search'] = None
 
+        # 다음의 메소드를 호출하여 그래프 HTML을 생성
+        graph_html = self.graph_view(self.object.pk)
+        context['graph_html'] = graph_html
+
         return context
 
     def post(self, request, *args, **kwargs):
         tal_result = self.get_object()
-
         email = self.request.session.get('user')
         if not email:
             return redirect('/login/')
@@ -101,7 +112,6 @@ class TalDetailView(DetailView):
             user_instance = SpUser.objects.get(email=email)
         except SpUser.DoesNotExist:
             return redirect('/login/')
-
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
@@ -114,7 +124,46 @@ class TalDetailView(DetailView):
         context['comment_form'] = comment_form
 
         return self.render_to_response(context)
+    
+    def graph_view(self, pk):
+        try:        
+            df1 = pd.DataFrame()
+            current_site = get_current_site(self.request) #현재 페이지 도메인 가져오기(127.0.0.1:8000 변경 대응)
+            path = reverse('comments_api') #api기본주소 가져오기
+            api = f"http://{current_site}{path}?post={pk}" #API주소 
+            response = urlopen(api)
+            json_api = response.read().decode("utf-8")
+            json_file = json.loads(json_api)
+            json_normalized = json_normalize(json_file)
+            df1 = pd.concat([df1, json_normalized])
+            df2 = df1[['color', 'flavor', 'sweet','sour','carbon','total']]
+            df2_mean = df2.mean() 
 
+            fig = px.line_polar(df2_mean, r=df2_mean.values, theta=df2_mean.index, line_close=True)
+            fig.update_traces(fill='toself')
+
+            # 각 노드에 수치 표시를 위해 텍스트 레이블 추가
+            for i, value in enumerate(df2_mean.values):
+                fig.add_trace(go.Scatterpolar(
+                    r=[value + 0.1],  # 텍스트 레이블을 원의 중심에서 약간 떨어트리기 위한 값
+                    theta=[df2_mean.index[i]],
+                    text=[f'{value:.2f}'],  # 소수점 둘째 자리까지 표시
+                    mode='text',
+                    textfont=dict(size=8),
+                ))
+
+            fig.update_layout(
+                polar=dict(
+                    radialaxis=dict(
+                    visible=True,
+                    range=[0, 5]
+                    )),
+                showlegend=False
+            )
+            graph_html = fig.to_html(full_html=False, default_height=500, default_width=700)
+            return graph_html
+        except:
+            pass
 # def tal_detail(request, pk):
 #     tal_result = get_object_or_404(Tal, pk=pk)
 #     # pk=pk인 술의 정보들을 가져오거나 404
@@ -250,3 +299,4 @@ class CommentGroupAPI(generics.GenericAPIView, mixins.ListModelMixin):
 # self.request.query_params.get('post', None)는 post라는 키(key)를 가진 쿼리 매개변수의 값을 가져오는 코드입니다. get() 메서드는 딕셔너리(dict)에서 특정 키의 값을 가져오는 메서드로, 첫 번째 인수로 찾고자 하는 키를 전달하고, 두 번째 인수로 해당 키가 존재하지 않을 때 반환할 기본값(default value)을 지정할 수 있습니다.
 
 # 위의 코드에서는 post라는 키의 값을 가져오려고 하고, 만약 해당 키가 존재하지 않는다면 기본값으로 None을 지정하였습니다. 따라서 post라는 키의 값을 가져올 수 있으면 해당 값이 변수 post_id에 저장되고, 키가 존재하지 않으면 post_id는 None이 될 것입니다.
+

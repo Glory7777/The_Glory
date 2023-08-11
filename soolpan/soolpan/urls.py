@@ -21,6 +21,7 @@ from DataBase.views import (index, ProductListAPI, ProductDetailAPI, CommentList
 from favorite.views import FavoriteCreate, FavoriteList
 from django.conf import settings
 from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='Tal_Search'),
@@ -32,11 +33,11 @@ urlpatterns = [
     path('api/product/<int:pk>/', ProductDetailAPI.as_view()),
     path('api/comment/', CommentListAPI.as_view()),
     # path('api/comment/<int:pk>/', CommentDetailAPI.as_view()),
-    path('api/comments/', CommentGroupAPI.as_view()),
+    path('api/comments/', CommentGroupAPI.as_view(), name="comments_api"),
     path('comment/delete/<int:pk>/', comment_delete, name="comment_delete"),
     path('comment/update/<int:pk>/', comment_update, name="comment_update"),
     path('favorite/create', FavoriteCreate.as_view()),
     path('favorite/', FavoriteList.as_view()),
-    path('imgboard1/', include('imgboard1.urls'))
+    path('imgboard1/', include('imgboard1.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # media 경로 추가
