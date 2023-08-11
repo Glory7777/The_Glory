@@ -79,8 +79,12 @@ class TalDetailView(DetailView):
         
         email = self.request.session.get('user')
         user_instance = SpUser.objects.get(email=email)
-        search = Favorite.objects.get(post=tal_result, name=user_instance)
-        context['search'] = search
+
+        try:
+            search = Favorite.objects.get(post=tal_result, name=user_instance)
+            context['search'] = search
+        except Favorite.DoesNotExist:
+            context['search'] = None
 
         return context
 
