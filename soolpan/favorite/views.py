@@ -38,7 +38,7 @@ class FavoriteCreate(FormView):
                 existing_favorite.like = 1
                 existing_favorite.register_date = timezone.now()
                 existing_favorite.save()
-
+                
             elif existing_favorite.like == 1:
                 existing_favorite.like = 0
                 existing_favorite.save()

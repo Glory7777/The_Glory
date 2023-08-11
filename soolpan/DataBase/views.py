@@ -12,7 +12,7 @@ from rest_framework import generics
 from spUser.decorators import login_required, Admin_required
 from django.utils.decorators import method_decorator
 from django.http import Http404
-
+from django.utils import timezone
 # Create your views here.
 # 홈화면 검색/Autocomplete 기능 구현
 
@@ -75,14 +75,17 @@ class TalDetailView(DetailView):
         context['comments'] = comments
         context['comment_form'] = comment_form
         favorite_form = FavoriteForm(request=self.request)
-        context['form'] = favorite_form
-        
+        context['form'] = favorite_form        
         email = self.request.session.get('user')
-        user_instance = SpUser.objects.get(email=email)
+        context['email'] = email
 
         try:
-            search = Favorite.objects.get(post=tal_result, name=user_instance)
-            context['search'] = search
+            try:
+                user_instance = SpUser.objects.get(email=email)
+                search = Favorite.objects.get(post=tal_result, name=user_instance)
+                context['search'] = search
+            except:
+                pass
         except Favorite.DoesNotExist:
             context['search'] = None
 
@@ -140,22 +143,45 @@ class TalDetailView(DetailView):
 #     return render(request, 'tal_detail.html', {'tal_detail': tal_result, 'comments': comments, 'comment_form': comment_form})
 
 
-def comment_update(requeet, pk):
-    pass
+def comment_update(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    tal_result = comment.post_id
+    email = request.session.get('user')
+    if not request.session.get('user'):
+        return redirect('/login/')
+    if SpUser.objects.get(email=email) == comment.name:
+        pass
+    else:
+        raise Http404("권한이 없습니다.")    
 
+    if request.method == "POST":
+        form = CommentForm( request.POST, instance=comment )
+        if form.is_valid():
+            comment = form.save(commit=False)
+            spuser= SpUser.objects.get(email=email)
+            comment.name = spuser
+            comment.created_at = timezone.now()
+            comment.save()
+            return redirect('detail', pk=tal_result)
+    else:
+        form=CommentForm(instance=comment)
+    return render(request, 'tal_update.html', {'form':form,'comment':comment})
+    
 
 def comment_delete(request, pk):
 
     user_id = request.session.get('user')
+    
     if not request.session.get('user'):
         return redirect('/login/')
     comment = Comment.objects.get(pk=pk)  # 유저 정보 관련된 객체만 집어옴
     tal_result = comment.post_id
+
     if SpUser.objects.get(email=user_id) == comment.name:
         comment.delete()
-
     else:
         raise Http404("권한이 없습니다.")
+    
     return redirect("detail", pk=tal_result)
 
 

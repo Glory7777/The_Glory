@@ -54,8 +54,12 @@
             <p class="comment-score-group">산도 : {{comment.sour}} </p>
             <p class="comment-score-group">탄산감 : {{comment.carbon}} </p>
             <p class="comment-score-group">종합평가 : {{comment.total}} </p>
+            <hr/>
+            {% if email == comment.name.email %}
             <button type="button" class="btn btn-danger" onclick="location.href='/comment/delete/{{comment.id}}/'">삭제하기</button>
+            <button type="button" class="btn btn-success" onclick="location.href='/comment/update/{{comment.id}}/'">수정하기</button>
             
+            {% endif %}
         {% empty %}
             <p>아직 등록된 댓글이 없습니다.</p>
         {% endfor %}
