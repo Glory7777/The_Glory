@@ -15,14 +15,9 @@ def post_list(request):
     post=Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     page = int(request.GET.get('p', 1))
     pagnator=Paginator(post, 6)
-    posts = pagnator.get_page(page)
-     # Get the user ID of the logged-in user from the request session
-     
+    posts = pagnator.get_page(page)    
     email = request.session.get('user')
-    # Create a list to store whether each post is authored by the logged-in user
-    for post in posts:
-        post.email = email
-        post.is_author = (post.author == post.email)
+   
     return render(request, "post_list.html", {"posts":posts, "email":email})
 
 def post_new(request):
@@ -50,11 +45,9 @@ def post_detail(request, pk):
         posts = get_object_or_404(Post, pk=pk)
     except Post.DoesNotExist:
         raise Http404('게시글을 찾을 수 없습니다.')
-    logged_in_user_id = request.session.get('user')
-    # Create a list to store whether each post is authored by the logged-in user
-    
-    posts.is_author = (posts.author.id == logged_in_user_id)
-    return render(request, "post_detail.html", {'post':posts})
+    email = request.session.get('user')
+
+    return render(request, "post_detail.html", {'post':posts, "email":email})
 
 
 def post_edit(request, pk):

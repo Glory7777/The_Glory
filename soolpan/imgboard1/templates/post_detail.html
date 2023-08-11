@@ -85,7 +85,7 @@
                 {% comment %} <input type="fiel" name="image"><br/>
                 <button type="submit" class="save btn btn-default">Save</button> {% endcomment %}
                 <div class="detail">
-                    {% if post.is_author %}
+                    {% if  post.author.email == email  %}
                     <a href="{% url 'post_edit' pk=post.pk %}" class="detail edit">Edit</a>
                     <a></a>
                     <a href="{% url 'post_delete' pk=post.pk %}" class="detail delete">Delete</a>

@@ -87,15 +87,10 @@
           <p class="card-text">{{ post.text|linebreaksbr|truncatewords:5}}</p>
         </div>
         <div class="card-footer text-muted">
-          {% if post.author == post.email %}
+          {% if post.author.email == email %}
           <a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-primary">Edit</a>
           <a href="{% url 'post_delete' pk=post.pk %}" class="btn btn-danger">Delete</a>
           {% endif %}
-          {{post.author}}
-          {{post.email}}
-          {{email}}
-          {{post.is_author}}
-
         </div>
       </div>
     </div>
