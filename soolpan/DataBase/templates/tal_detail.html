@@ -6,7 +6,7 @@
         <div class="card" style="width: 100%;">
             <div class="card-body">
                 <h5 class="card-title">{{ tal_detail.name }}</h5>
-                <div>좋아요: {{tal_detail.like}}</div>
+                <div>❤️ {{tal_detail.like}}</div>
             </div>
             
             <li class="list-group-item">
@@ -25,9 +25,9 @@
                     
                     {% endfor %}                    
                     {% if search.like == 1 %}
-                    <button type="submit" class="btn btn-warning"> 즐겨찾기 취소</button>
+                    <button type="submit" class="btn btn-warning"> 💔</button>
                     {% else %}
-                    <button type="submit" class="btn btn-primary"> 즐겨찾기 </button>
+                    <button type="submit" class="btn btn-primary"> ❤️ </button>
                     {% endif %}
                 </form>
                 <!-- 즐겨찾기용 부분 -->
