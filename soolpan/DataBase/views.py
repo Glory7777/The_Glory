@@ -108,6 +108,13 @@ class TalDetailView(DetailView):
         #아래의 그래프 리턴한 값 수신하여 렌더할 컨텍스트에 추가
         graph_html = self.graph_view(self.object.pk)
         context['graph_html'] = graph_html
+        
+        #코멘트용 그래프 
+        graph_comments = []
+        for comment in comments:
+            graph_html_comment = self.graph_view_comment(comment.id)
+            graph_comments.append(graph_html_comment)
+        context['comments_and_graphs'] = zip(comments, graph_comments)
 
         #전체 컨텍스트 리턴
         return context
@@ -176,34 +183,46 @@ class TalDetailView(DetailView):
         except:
             pass
 
-    
-# def tal_detail(request, pk):
-#     tal_result = get_object_or_404(Tal, pk=pk)
-#     # pk=pk인 술의 정보들을 가져오거나 404
-#     # 이 술에 달린 댓글들
-#     comments = tal_result.comments.all()
-#     email = request.session.get('user')
-#     if request.method == "POST":
-#         try:
-#             user_instance = SpUser.objects.get(email=email)
-#         except:
-#             return redirect('/login/')
-#         comment_form = CommentForm(request.POST)  # 댓글입력할 폼
-#         if not request.session.get('user'):  # 로그인세션정보가 없을 경우에 로그인 페이지로 돌려보내기
-#             return redirect('/login/')
-#         if comment_form.is_valid():
-#             comment = comment_form.save(commit=False)  # 커밋을 완료하면 수정삭제가 안됨
-#             # Commit=false : db안에 즉시 저장하지 말고 객체를 반환하여 수정을 허용
-#             comment.post = tal_result
-#             comment.name = user_instance
-#             comment.save()
-#             return redirect("detail", pk=tal_result.pk)  # name, body 끌고 오는것
-#         # form에 기본 작성자 email을 로그인한 세션 유저를 기본으로 할당
-#     else:
-#         comment_form = CommentForm()  # 내용물이 없는 것을 읽음
+    def graph_view_comment(self, id):
+        try:
+            df1 = pd.DataFrame() #빈 데이터프레임 만들기
+            current_site = get_current_site(self.request) #현재 페이지 도메인 가져오기(127.0.0.1:8000 변경 대응)
+            path = reverse('comment_api') #api기본주소 가져오기
+            api = f"http://{current_site}{path}{id}" #API주소 
+            response = urlopen(api) #response 수신
+            json_api = response.read().decode("utf-8") #utf-8로 디코딩
+            json_file = json.loads(json_api) #json수신
+            json_normalized = json_normalize(json_file) #데이터 프레임으로 변경
+            df1 = pd.concat([df1, json_normalized]) #df1에 수신 내용 추가
+            df2 = df1[['total', 'color', 'flavor', 'sweet','sour','carbon']] #필요 컬럼만 추출
+            df2_mean = df2.mean()
+            fig = px.line_polar(df2_mean, r=df2_mean.values, theta=df2_mean.index, line_close=True) #레이더 그래프 그리기
+            fig.update_traces(fill='toself')
 
-#     return render(request, 'tal_detail.html', {'tal_detail': tal_result, 'comments': comments, 'comment_form': comment_form})
-
+            # 각 꼭짓점에 텍스트 입력
+            for i, value in enumerate(df2_mean.values):
+                fig.add_trace(go.Scatterpolar(
+                    r=[value + 0.1],  # 텍스트 레이블을 원의 중심에서 약간 떨어트리기 위한 값
+                    theta=[df2_mean.index[i]],
+                    text=[f'{value:.2f}'],  # 소수점 둘째 자리까지 표시
+                    mode='text',
+                    textfont=dict(size=8),
+                ))
+            #레이아웃
+            fig.update_layout( 
+                polar=dict(
+                    radialaxis=dict(
+                    visible=True,
+                    range=[0, 5]
+                    )),
+                showlegend=False
+            )
+            #그래프를 html로 발신, 기본 사이즈 설정
+            graph_html_comment = fig.to_html(full_html=False, default_height=300, default_width=500)
+            #데이터 리턴 --> 위의 get context에서 내용 수신
+            return graph_html_comment
+        except:
+            pass
 
 def comment_update(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
