@@ -22,6 +22,11 @@ class Favorite(models.Model):
             return self.post.img.url
         return None
     
+    def get_tal_like(self):
+        if self.post and hasattr(self.post, 'like'):
+            return self.post.like
+        return None
+    
     class Meta:
         db_table = "favorite_database"
         verbose_name = "관심주류"

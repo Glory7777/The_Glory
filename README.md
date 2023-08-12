@@ -59,5 +59,5 @@ django humanize library
 - 코멘트 페이지네이터, 개인그래프 추가 작업(종현)
 - 공유기능 추가 --> (영광)
 - detail 확정 --> css 시작(영광)
-- favorite 에 이미지 추가 및 링크 (경환) 후 css (몰루)
+- favorite 에 이미지 추가 및 링크 (경환) (완료) 후 css (몰루)
 - 네비바에 하위 게시판 이름 뜨는 JavaScript(Jq) 구현 (관심있는사람 알아서 말하고 시작)

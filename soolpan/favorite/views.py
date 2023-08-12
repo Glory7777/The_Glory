@@ -33,22 +33,29 @@ class FavoriteCreate(FormView):
             post_id=post_id, name__email=user_email).first()
 
         if existing_favorite:
-            
+            tal = Tal.objects.get(pk=post_id)
+
             if existing_favorite.like == 0:
                 existing_favorite.like = 1
                 existing_favorite.register_date = timezone.now()
                 existing_favorite.save()
+                tal.like = tal.like + 1 
+                tal.save()
                 
             elif existing_favorite.like == 1:
                 existing_favorite.like = 0
                 existing_favorite.save()
-                
+                tal.like = tal.like - 1
+                tal.save()                
+
         else:
             # Create a new Favorite object
             tal = Tal.objects.get(pk=post_id)
             user = SpUser.objects.get(email=user_email)
             fav = Favorite(name=user, post=tal, like=like)
             fav.save()
+            tal.like = tal.like + 1 
+            tal.save()
 
         return HttpResponseRedirect(reverse('detail', args=[post_id]))
 

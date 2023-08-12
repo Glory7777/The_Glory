@@ -9,7 +9,8 @@ class Tal(models.Model): #class 변경 필요
     std = models.CharField(max_length=256, blank=True, null=True, verbose_name='용량/도수')
     dsc = models.CharField(max_length=512, blank=True, null=True, verbose_name='상세설명')
     img = models.CharField(max_length=256, blank=True, null=True, verbose_name='이미지')
-    
+    like = models.IntegerField(blank=True, verbose_name="전체 like Count", default=0)
+
     def __str__(self):
         return self.name
     
