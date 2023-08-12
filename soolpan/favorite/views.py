@@ -34,7 +34,8 @@ class FavoriteCreate(FormView):
 
         if existing_favorite:
             tal = Tal.objects.get(pk=post_id)
-
+                
+                #취소했던 좋아요를 다시 좋아하는 로직
             if existing_favorite.like == 0:
                 existing_favorite.like = 1
                 existing_favorite.register_date = timezone.now()
@@ -42,6 +43,7 @@ class FavoriteCreate(FormView):
                 tal.like = tal.like + 1 
                 tal.save()
                 
+                #좋아요를 취소할 때 로직
             elif existing_favorite.like == 1:
                 existing_favorite.like = 0
                 existing_favorite.save()
@@ -49,7 +51,7 @@ class FavoriteCreate(FormView):
                 tal.save()                
 
         else:
-            # Create a new Favorite object
+            # 나의 주막에 신규 등록
             tal = Tal.objects.get(pk=post_id)
             user = SpUser.objects.get(email=user_email)
             fav = Favorite(name=user, post=tal, like=like)

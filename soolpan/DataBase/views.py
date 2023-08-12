@@ -155,6 +155,13 @@ class TalDetailView(DetailView):
             df2 = df1[['total', 'color', 'flavor', 'sweet','sour','carbon']] #필요 컬럼만 추출
             df2_mean = df2.mean()  #추출 데이터들의 평균값
 
+            df2_mean.index = df2_mean.index.map(lambda x: '총점' if x == 'total' else x)
+            df2_mean.index = df2_mean.index.map(lambda x: '색' if x == 'color' else x)
+            df2_mean.index = df2_mean.index.map(lambda x: '당도' if x == 'sweet' else x)
+            df2_mean.index = df2_mean.index.map(lambda x: '산미' if x == 'sour' else x)
+            df2_mean.index = df2_mean.index.map(lambda x: '향' if x == 'flavor' else x)
+            df2_mean.index = df2_mean.index.map(lambda x: '탄산감' if x == 'carbon' else x)
+
             fig = px.line_polar(df2_mean, r=df2_mean.values, theta=df2_mean.index, line_close=True) #레이더 그래프 그리기
             fig.update_traces(fill='toself')
 
@@ -196,6 +203,12 @@ class TalDetailView(DetailView):
             df1 = pd.concat([df1, json_normalized]) #df1에 수신 내용 추가
             df2 = df1[['total', 'color', 'flavor', 'sweet','sour','carbon']] #필요 컬럼만 추출
             df2_mean = df2.mean()
+            df2_mean.index = df2_mean.index.map(lambda x: '총점' if x == 'total' else x)
+            df2_mean.index = df2_mean.index.map(lambda x: '색' if x == 'color' else x)
+            df2_mean.index = df2_mean.index.map(lambda x: '당도' if x == 'sweet' else x)
+            df2_mean.index = df2_mean.index.map(lambda x: '산미' if x == 'sour' else x)
+            df2_mean.index = df2_mean.index.map(lambda x: '향' if x == 'flavor' else x)
+            df2_mean.index = df2_mean.index.map(lambda x: '탄산감' if x == 'carbon' else x)
             fig = px.line_polar(df2_mean, r=df2_mean.values, theta=df2_mean.index, line_close=True) #레이더 그래프 그리기
             fig.update_traces(fill='toself')
 
