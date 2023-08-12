@@ -21,6 +21,7 @@
     //사용자가 상품 요소에서 벗어났을 때 popover 숨기기
     $(document).ready(function(){});
 </script>
+
 {% endblock%}
 {% block contents %}
 <link rel="stylesheet" type="text/css" href="{% static '/css/index.css' %}">
@@ -59,6 +60,21 @@
         <div class="carousel-container">
             <img class="carousel-image active" src="{% static '/photo1.png'%}" >
             <img class="carousel-image" src="{% static '/photo2.png'%}" >             
+        </div>
+        
+        <div class="container">            
+            <div class="row">
+                {% for best in best5 %}
+                <div class="col-md-3">
+                    <div class="card" style="margin: 10px;">
+                        <a href="detail/{{ best.id }}"><img src="{{ best.img }}" class="card-img-top" alt="{{ best.name }}" style="max-width: 100%; height: 150px; object-fit: contain;"></a>
+                        <div class="card-body">
+                            <a href="detail/{{ best.id }}"><p class="card-text" style="text-align: center;">{{ forloop.counter }}. {{ best.name }}</p></a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 

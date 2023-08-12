@@ -30,7 +30,7 @@ from django.contrib.sites.shortcuts import get_current_site
 
 def index(request):
     tals = Tal.objects.all()
-
+    
     if request.method == 'POST':
         search_query = request.POST.get('search_query')
         if search_query:
@@ -51,7 +51,10 @@ def index(request):
             tal_search = []
     else:
         tal_search = []
-    return render(request, 'index.html', {'tals': tals, 'tal_search': tal_search})
+    like = tals.order_by('-like')
+    best5 = like[:4]
+
+    return render(request, 'index.html', {'tals': tals, 'tal_search': tal_search, 'best5': best5})
 
 # def index_v1(request):
 #     tals = Tal.objects.all()
