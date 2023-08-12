@@ -7,6 +7,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{ tal_detail.name }}</h5>
             </div>
+            
             <li class="list-group-item">
                 <!-- 즐겨찾기용 부분 -->
                 <form action="/favorite/create" method="POST">
@@ -58,6 +59,13 @@
             <p class="comment-score-group">탄산감 : {{comment.carbon}} </p>
             <p class="comment-score-group">종합평가 : {{comment.total}} </p>
             <hr/>
+
+            {% if comment.pk in comment_graphs %}
+            <div>
+                {{ comment_graphs|safe }}
+            </div>
+            {% endif %}
+            
             {% if email == comment.name.email %}
             <button type="button" class="btn btn-danger" onclick="location.href='/comment/delete/{{comment.id}}/'">삭제하기</button>
             <button type="button" class="btn btn-success" onclick="location.href='/comment/update/{{comment.id}}/'">수정하기</button>

@@ -31,8 +31,8 @@ urlpatterns = [
     path('detail/<int:pk>/', TalDetailView.as_view(), name='detail'),
     path('api/product/', ProductListAPI.as_view()),
     path('api/product/<int:pk>/', ProductDetailAPI.as_view()),
-    path('api/comment/', CommentListAPI.as_view()),
-    # path('api/comment/<int:pk>/', CommentDetailAPI.as_view()),
+    path('api/comment/', CommentListAPI.as_view(), name="comment_api"),
+    path('api/comment/<int:pk>/', CommentDetailAPI.as_view()), #개별 코멘트 데이터 API
     path('api/comments/', CommentGroupAPI.as_view(), name="comments_api"),
     path('comment/delete/<int:pk>/', comment_delete, name="comment_delete"),
     path('comment/update/<int:pk>/', comment_update, name="comment_update"),
