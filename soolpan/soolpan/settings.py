@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'DataBase',
     'favorite',
     'imgboard1',
-    'hexagraph'
 ]
 
 MIDDLEWARE = [

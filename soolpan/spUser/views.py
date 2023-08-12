@@ -37,7 +37,7 @@ class LoginView(FormView):
     def form_valid(self, form):
         self.request.session['user'] = form.data.get('email')  # 오버라이딩하고 넘긴다
         return super().form_valid(form)
-
+    
 
 def logout(request):
     if request.session.get('user'):  # 로그인 여부 확인
