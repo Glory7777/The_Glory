@@ -50,7 +50,6 @@ class FavoriteCreate(FormView):
             fav = Favorite(name=user, post=tal, like=like)
             fav.save()
 
-        # 주문건수 만큼 재고 감소
         return HttpResponseRedirect(reverse('detail', args=[post_id]))
 
     # 유효하지 않을 경우

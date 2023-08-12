@@ -15,11 +15,13 @@
                 {% for fav in fav_list %}
                 {% if fav.like == 1 %}
                 <tr>
-                    <th scope="row">{{ fav.post }}</th>
-                    <th>{{ fav.register_date|date:'Y-m-d H:i' }}</th>
+                    <th scope="row"><a href="/detail/{{fav.post_id}}/">{{ fav.post }}</a></th>
+                    <th><img src="{{fav.post.img}}" style="height: 300px;"></th>
                 </tr>
+                
                 {% endif %}
                 {% endfor %}
+                
             </tbody>
         </table>
     </div>
