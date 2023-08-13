@@ -1,7 +1,3 @@
-{% extends 'base.html' %}
-
-{% block contents %}
-<style>
 /* 기존 CSS는 그대로 유지하고 아래 내용을 추가합니다. */
 
 .input-group {
@@ -72,39 +68,23 @@ datalist option {
 datalist option:hover {
     background-color: #f0f0f0;
 }
-</style>
-<div class="container">
-    <div class="row">
-        <div class="col-6 mx-auto text-center mt-5">
-            <form method="POST" id="autoform">
-                {% csrf_token %}
-            <div class="input-group">
-                <input type="text" list="tals" placeholder="전통주 검색하기" class="form-control" name="search_query" id="search_query" autocomplete="off"> 
-                <input type="submit" value="검색">
-            </div>
-            <datalist id="tals">
-                {% for tal in tals%}
-                    <option value="{{tal.name}}" style="font-size: 20px;"></option>
-                {% endfor %}
-            </datalist>
-            </form>
-            
-            {% if form.errors %}
-            <span style="color: red">{{ form.errors.name|join:" " }}</span>
-            {% endif %}
+.carousel-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            width: 100%;
+        }
 
-            {% if tal_search %}
-            <h3>검색 결과:</h3>
-            <ul>
-                {% for tal in tal_search %}
-                <ul class="list-group list-group-flush">
-                    <a href="detail/{{ tal.id }}"><li class="list-group-item">{{ tal.name }}</li></a>
-                </ul>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            
-        </div>
-    </div>
-</div>
-{% endblock %}
+.carousel-image {
+    max-width: 100%;
+    height: auto;
+    display: none;
+}
+
+.active {
+    display: block;
+}
+.row{
+    margin-top: 130px;
+}

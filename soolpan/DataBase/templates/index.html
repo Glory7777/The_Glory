@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base1.html' %}
 {% load static %}
 {% block header %}
 <script>
@@ -21,12 +21,11 @@
     //사용자가 상품 요소에서 벗어났을 때 popover 숨기기
     $(document).ready(function(){});
 </script>
-
+<link rel="stylesheet" type="text/css" href="{% static '/css/index.css' %}">
 {% endblock%}
 {% block contents %}
-<link rel="stylesheet" type="text/css" href="{% static '/css/index.css' %}">
-    <div class="container">
-        
+
+    <div class="container">        
         <div class="row">
             <div class="col-6 mx-auto text-center mt-5">
                 <form method="POST" id="autoform">
@@ -47,36 +46,58 @@
                 {% endif %}
 
                 {% if tal_search %}
-                    <ul>
-                        {% for tal in tal_search %}
-                            <ul class="list-group list-group-flush">
-                                <a href="detail/{{ tal.id }}"><li class="list-group-item" id="product-{{tal.id}}" onmouseenter="product_detail({{tal.id}});" onmouseleave="product_leave({{tal.id}});">{{ tal.name }}</li></a>
-                            </ul>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
+                <div class="row">
+                    {% for tal in tal_search %}
+                        <div class="col-md-6">
+                            <a href="detail/{{ tal.id }}">
+                                <div class="list-group-item" id="product-{{ tal.id }}" onmouseenter="product_detail({{ tal.id }});" onmouseleave="product_leave({{ tal.id }});">
+                                    {{ tal.name }}
+                                </div>
+                            </a>
+                        </div>
+                        {% if forloop.counter|divisibleby:2 %}
+                            </div><div class="row">
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
             </div>
         </div>
-        <div class="carousel-container">
-            <img class="carousel-image active" src="{% static '/photo1.png'%}" >
-            <img class="carousel-image" src="{% static '/photo2.png'%}" >             
-        </div>
         
-        <div class="container">            
+        
+        <div class="container">
             <div class="row">
-                {% for best in best5 %}
-                <div class="col-md-3">
-                    <div class="card" style="margin: 10px;">
-                        <a href="detail/{{ best.id }}"><img src="{{ best.img }}" class="card-img-top" alt="{{ best.name }}" style="max-width: 100%; height: 150px; object-fit: contain;"></a>
-                        <div class="card-body">
-                            <a href="detail/{{ best.id }}"><p class="card-text" style="text-align: center;">{{ forloop.counter }}. {{ best.name }}</p></a>
+                <div class="col-md-6">
+                    <div class="card-container">
+                        <h2 class="section-title">베스트 4</h2>
+                        <div class="sub-card-group">
+                            {% for best in best5 %}
+                                <div class="sub-card">
+                                    <a href="detail/{{ best.id }}"><img src="{{ best.img }}" alt="{{ best.name }}"></a>
+                                    <div class="sub-card-text">
+                                        <a href="detail/{{ best.id }}">{{ forloop.counter }}. {{ best.name }}</a>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
-                {% endfor %}
+                
+                <div class="col-md-6">
+                    <div class="card-container">
+                        <h2 class="section-title">베스트 4</h2>
+                        <div class="sub-card-group">
+                            {% for best in best5 %}
+                                <div class="sub-card">
+                                    <a href="detail/{{ best.id }}"><img src="{{ best.img }}" alt="{{ best.name }}"></a>
+                                    <div class="sub-card-text">
+                                        <a href="detail/{{ best.id }}">{{ forloop.counter }}. {{ best.name }}</a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-
-    <script type="text/javascript" src="/static/carousel.js"> </script>
 {% endblock %}

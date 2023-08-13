@@ -41,12 +41,12 @@ def index(request):
             total_objects = search.count()
 
             # If the total number of objects is less than 10, get all objects
-            if total_objects <= 10:
+            if total_objects <= 5:
                 tal_search = search
 
             else:
                 # Randomly select 10 objects
-                tal_search = random.sample(list(search), 10)
+                tal_search = random.sample(list(search), 4)
         else:
             tal_search = []
     else:
