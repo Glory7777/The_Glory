@@ -9,8 +9,6 @@ import random
 from .serializers import ProductSerializer, CommentSerializer
 from rest_framework import mixins
 from rest_framework import generics
-from spUser.decorators import login_required, Admin_required
-from django.utils.decorators import method_decorator
 from django.http import Http404
 from django.utils import timezone
 from pandas import json_normalize
@@ -21,6 +19,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from django.urls import reverse
 from django.contrib.sites.shortcuts import get_current_site
+from django.db.models import Avg
 # Create your views here.
 # 홈화면 검색/Autocomplete 기능 구현
 
@@ -51,11 +50,22 @@ def index(request):
             tal_search = []
     else:
         tal_search = []
+
     like = tals.order_by('-like')
     best5 = like[:4]
-
-    return render(request, 'index.html', {'tals': tals, 'tal_search': tal_search, 'best5': best5})
-
+    
+    top_comments = Comment.objects.values('post_id').annotate(avg_total=Avg('total')).order_by('-avg_total')[:4]
+    top_comment_ids = [item['post_id'] for item in top_comments]
+    
+    top_comments_queryset = Comment.objects.filter(post_id__in=top_comment_ids)
+    tal_objects_for_top_comments = Tal.objects.filter(comments__in=top_comments_queryset).distinct()
+    return render(request, 'index.html', {
+        'tals': tals,
+        'tal_search': tal_search,
+        'best5': best5,
+        'top_comments': top_comments_queryset,
+        'tal_objects_for_top_comments': tal_objects_for_top_comments,
+    })
 # def index_v1(request):
 #     tals = Tal.objects.all()
 #     if request.method == 'POST':
