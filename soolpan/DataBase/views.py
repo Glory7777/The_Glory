@@ -126,6 +126,10 @@ class TalDetailView(DetailView):
             graph_comments.append(graph_html_comment)
         context['comments_and_graphs'] = zip(comments, graph_comments)
 
+        #주소 리턴 
+        path = self.page_share(self.object.pk)
+        context['page_path']=path
+        
         #전체 컨텍스트 리턴
         return context
 
@@ -248,6 +252,12 @@ class TalDetailView(DetailView):
             return graph_html_comment
         except:
             pass
+
+    def page_share(self, id):
+        current_site = get_current_site(self.request) #현재 페이지 도메인 가져오기(127.0.0.1:8000 변경 대응)
+        path = reverse('path_detail') #api기본주소 가져오기
+        detail_path = f"http://{current_site}{path}{id}" 
+        return detail_path
 
 def comment_update(request, pk):
     comment = get_object_or_404(Comment, pk=pk)

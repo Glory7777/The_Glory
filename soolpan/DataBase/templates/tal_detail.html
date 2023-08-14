@@ -7,6 +7,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{ tal_detail.name }}</h5>
                 <div>❤️ {{tal_detail.like}}</div>
+                <div>{{page_path}}</div>
             </div>
             
             <li class="list-group-item">
@@ -25,9 +26,9 @@
                     
                     {% endfor %}                    
                     {% if search.like == 1 %}
-                    <button type="submit" class="btn btn-warning"> 💔</button>
+                    <button type="submit" class="btn btn-warning">💔</button>
                     {% else %}
-                    <button type="submit" class="btn btn-primary"> ❤️ </button>
+                    <button type="submit" class="btn btn-primary">❤️</button>
                     {% endif %}
                 </form>
                 <!-- 즐겨찾기용 부분 -->

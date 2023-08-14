@@ -41,5 +41,6 @@ urlpatterns = [
     path('favorite/', FavoriteList.as_view()),
     path('imgboard1/', include('imgboard1.urls')),
     path('product/', ProductList.as_view()),
+    path('detail/', TalDetailView.as_view(), name='path_detail'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # media 경로 추가
