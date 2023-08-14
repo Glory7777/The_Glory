@@ -13,7 +13,6 @@
                     <th scope="col">용량/도수</th>
                     <th scope="col">상세설명</th>
                     <th scope="col">이미지</th>
-                    <th scope="col">전체 like count</th>
                 </tr>
             </thead>
             <tbody class="text-dark">
@@ -24,12 +23,29 @@
                     <th>{{ product.mtrl }}</th>
                     <th>{{ product.std }}</th>
                     <th>{{ product.dsc }}</th>
-                    <th><img src="{{product.img}}" alt=""></th>
-                    <th>{{ product.like }}</th>
+                    <th><img src="{{product.img}}" alt="" style="height: 200;"></th>
                 </tr>
                 {% endfor %}
+                <!-- 페이지네이션 표시 -->
             </tbody>
         </table>
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
     </div>
 </div>
 {% endblock %}
