@@ -93,6 +93,8 @@ class FavoriteList(ListView):
     # bcuser__email : Order모델에서 사용자 이메일이 지금 세션의 사용자와 일치하는 대상들을 필터해서 가져옴
     def get_queryset(self, **kwargs):
         queryset = Favorite.objects.filter(
-            name__email=self.request.session.get('user')).order_by('-register_date')  # DB에서 싹 가져와서
+            name__email=self.request.session.get('user'),
+            like=1
+        ).order_by('-register_date')
         return queryset
 
