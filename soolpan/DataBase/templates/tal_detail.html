@@ -6,8 +6,10 @@
         <div class="card" style="width: 100%;">
             <div class="card-body">
                 <h5 class="card-title">{{ tal_detail.name }}</h5>
+                <!-- 현재 전체 좋아요 합 -->
                 <div>❤️ {{tal_detail.like}}</div>
-                <div>{{page_path}}</div>
+                <!-- 클립보드 주소 복사 -->
+                <button type="button" class="btn btn-success" id="copyButton" value="{{page_path}}">📋</button>
             </div>
             
             <li class="list-group-item">
@@ -31,28 +33,29 @@
                     <button type="submit" class="btn btn-primary">❤️</button>
                     {% endif %}
                 </form>
-                <!-- 즐겨찾기용 부분 -->
+                <!-- 즐겨찾기용 부분 끝-->
             </li>
-            
+            <!-- 상세설명 부분 -->
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">제조사: {{ tal_detail.company }}</li>
                 <li class="list-group-item">원재료: {{ tal_detail.mtrl }}</li>
                 <li class="list-group-item">용량/도수: {{ tal_detail.std }}</li>
                 <li class="list-group-item">상세설명: {{ tal_detail.dsc }}</li>        
-                <li class="list-group-item"><img src="{{tal_detail.img}}" alt=""></li>        
-                
+                <li class="list-group-item"><img src="{{tal_detail.img}}" alt=""></li>                       
             </ul>
+            <!-- 상세설명 평균그래프 부분 -->
             {{ graph_html | safe }}
 
         </div>
     </div>
 </div>
 <hr/>
+<!-- 댓글 전체 내용 -->
 <div class="row mt-5">
     <div class="col-12">
         <div class="comment">
         <h5>&#35; 댓글</h5><br/>
-        {% for comment, graph_comments in comments_and_graphs %}         
+        {% for comment, graph_comments in comments_and_graphs %}        
             
             <p class="comment-name">{{comment.name}} : {{comment.body}} </p>
             <p class="comment-score-group">색 : {{comment.color}} </p>
@@ -61,24 +64,24 @@
             <p class="comment-score-group">산도 : {{comment.sour}} </p>
             <p class="comment-score-group">탄산감 : {{comment.carbon}} </p>
             <p class="comment-score-group">종합평가 : {{comment.total}} </p>
+            <!-- 코멘트별 그래프 / 반드시 for문 안에 있어야 함-->
             {{ graph_comments | safe }}
+            <!-- 코멘트별 그래프 끝 -->
             {% if email == comment.name.email %}
             <button type="button" class="btn btn-danger" onclick="location.href='/comment/delete/{{comment.id}}/'">삭제하기</button>
             <button type="button" class="btn btn-success" onclick="location.href='/comment/update/{{comment.id}}/'">수정하기</button>            
             {% endif %}
             
-
             <hr/>
         {% empty %}
             <p>아직 등록된 댓글이 없습니다.</p>
         {% endfor %}
             
-
-
         </div>        
     </div>
 </div>
 <hr/>
+<!-- 댓글 작성 폼 -->
 <div class="row mt-5">
     <div class="col-12">
         <h3>Add a Comment</h3>
@@ -90,4 +93,30 @@
         </form>
     </div>
 </div>
+
+<script>
+    document.getElementById("copyButton").addEventListener("click", function() {
+        // Get the value from the button's 'value' attribute
+        var pagePath = this.value;
+
+        // Create a temporary input element to hold the text
+        var tempInput = document.createElement("input");
+        tempInput.value = pagePath;
+
+        // Append the input element to the body
+        document.body.appendChild(tempInput);
+
+        // Select the text inside the input element
+        tempInput.select();
+
+        // Copy the selected text to the clipboard
+        document.execCommand("copy");
+
+        // Remove the temporary input element
+        document.body.removeChild(tempInput);
+
+        // Optionally, provide feedback to the user
+        alert("현재 페이지의 주소가 클립보드에 복사되었습니다.\n\n" + "주소: "+ pagePath);
+    });
+</script>
 {% endblock %}

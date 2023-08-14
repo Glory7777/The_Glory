@@ -252,7 +252,7 @@ class TalDetailView(DetailView):
             return graph_html_comment
         except:
             pass
-
+    
     def page_share(self, id):
         current_site = get_current_site(self.request) #현재 페이지 도메인 가져오기(127.0.0.1:8000 변경 대응)
         path = reverse('path_detail') #api기본주소 가져오기
