@@ -32,7 +32,9 @@ class ProductList(ListView):
         search_query = self.request.GET.get('search_query')
         
         if search_query:
-            queryset = queryset.filter(Q(name__icontains=search_query))
+            queryset = queryset.filter(
+                Q(name__icontains=search_query) | Q(dsc__icontains=search_query)
+            )
         
         return queryset
         
