@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 {% load humanize %}
 {% block contents %}
+<style>
+    .table-container {
+        display: flex;
+        justify-content: space-between;
+    }  
+  </style>
+
 <div class="row mt-5">
     <div class="col-12">
         <div class="card" style="width: 100%;">
@@ -55,32 +62,79 @@
     <div class="col-12">
         <div class="comment">
         <h5>&#35; 댓글</h5><br/>
-        {% for comment, graph_comments in comments_and_graphs %}        
+        <!-- 직렬로 for문 돌림(페이지네이터 작동하고 높이 조절 이슈 있음.) -->
+        <div class="table-container">
+            <div class="table">
+                <table>
+                    <tr>
+                        <th>그래프</th>
+                    </tr>
+                    {% for comment in comments_graph %}
+                    <tr>    
+                        <td style="height: 350px;">{{ comment | safe }}</td>    
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
             
-            <p class="comment-name">{{comment.name}} : {{comment.body}} </p>
-            <p class="comment-score-group">색 : {{comment.color}} </p>
-            <p class="comment-score-group">향 : {{comment.flavor}} </p>
-            <p class="comment-score-group">당도 : {{comment.sweet}} </p>
-            <p class="comment-score-group">산도 : {{comment.sour}} </p>
-            <p class="comment-score-group">탄산감 : {{comment.carbon}} </p>
-            <p class="comment-score-group">종합평가 : {{comment.total}} </p>
-            <!-- 코멘트별 그래프 / 반드시 for문 안에 있어야 함-->
-            {{ graph_comments | safe }}
-            <!-- 코멘트별 그래프 끝 -->
-            {% if email == comment.name.email %}
-            <button type="button" class="btn btn-danger" onclick="location.href='/comment/delete/{{comment.id}}/'">삭제하기</button>
-            <button type="button" class="btn btn-success" onclick="location.href='/comment/update/{{comment.id}}/'">수정하기</button>            
-            {% endif %}
-            
-            <hr/>
-        {% empty %}
-            <p>아직 등록된 댓글이 없습니다.</p>
-        {% endfor %}
-            
+            <div class="table">
+                <table>
+                    <tr>
+                        <th>코멘트</th>
+                    </tr>
+                    {% for comment in comments_write %}
+                    <tr>
+                        <td style="height: 350px;">{{ comment.name }}: {{ comment.body }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+          </div>   
+
         </div>        
     </div>
 </div>
 <hr/>
+<div>
+<!-- Pagination -->
+{% if comments_write.has_other_pages %}
+  <nav aria-label="Comment navigation">
+    <ul class="pagination justify-content-center">
+      {% if comments_write.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page=1" aria-label="First">
+            <span aria-hidden="true">&laquo;&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ comments_write.previous_page_number }}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+      {% endif %}
+
+      {% for page in comments_write.paginator.page_range %}
+        <li class="page-item {% if page == comments_write.number %}active{% endif %}">
+          <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+        </li>
+      {% endfor %}
+
+      {% if comments_write.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ comments_write.next_page_number }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ comments_write.paginator.num_pages }}" aria-label="Last">
+            <span aria-hidden="true">&raquo;&raquo;</span>
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}
+</div>
 <!-- 댓글 작성 폼 -->
 <div class="row mt-5">
     <div class="col-12">

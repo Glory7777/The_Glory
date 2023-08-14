@@ -20,6 +20,7 @@ import plotly.graph_objects as go
 from django.urls import reverse
 from django.contrib.sites.shortcuts import get_current_site
 from django.db.models import Avg
+from django.core.paginator import Paginator
 # Create your views here.
 # 홈화면 검색/Autocomplete 기능 구현
 
@@ -87,12 +88,14 @@ class TalDetailView(DetailView):
     model = Tal
     template_name = 'tal_detail.html'
     context_object_name = 'tal_detail'
+    paginate_by = 4
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         tal_result = self.object
         #코멘트 데이터 
-        comments = tal_result.comments.all()
+        comments = tal_result.comments.all().order_by('-id')
+        
         context['comments'] = comments #pagnator 기능 추가일..듯?
         #코멘트 입력하는 폼
         comment_form = CommentForm()       
@@ -124,12 +127,22 @@ class TalDetailView(DetailView):
         for comment in comments:
             graph_html_comment = self.graph_view_comment(comment.id)
             graph_comments.append(graph_html_comment)
-        context['comments_and_graphs'] = zip(comments, graph_comments)
+        # context['comments_and_graphs'] = zip(comments, graph_comments) #zip하면 html깨짐
 
         #주소 리턴 
         path = self.page_share(self.object.pk)
         context['page_path']=path
         
+        # Paginator 객체 생성
+        paginator = Paginator(comments, self.paginate_by)  # 3 comments per page
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        context['comments_write'] = page_obj #정상작동
+
+        paginator = Paginator(graph_comments, self.paginate_by)  # 3 comments per page
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        context['comments_graph'] = page_obj #정상작동
         #전체 컨텍스트 리턴
         return context
 
@@ -247,7 +260,7 @@ class TalDetailView(DetailView):
                 showlegend=False
             )
             #그래프를 html로 발신, 기본 사이즈 설정
-            graph_html_comment = fig.to_html(full_html=False, default_height=300, default_width=500)
+            graph_html_comment = fig.to_html(full_html=False, default_height=300, default_width=300)
             #데이터 리턴 --> 위의 get context에서 내용 수신
             return graph_html_comment
         except:

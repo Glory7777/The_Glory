@@ -30,7 +30,7 @@ body {
 }
 
 .card:hover {
-    transform: scale(1.1); /* 호버 시 카드 크기 약간 확대 */
+    transform: scale(1.05); /* 호버 시 카드 크기 약간 확대 */
 }
 
 .card-img-top {
@@ -57,7 +57,7 @@ body {
 
 .pagination a,
 .pagination span.current {
-    padding: 3px 8px;
+    padding: 6px 10px;
     /* border: 1px solid #ccc; */
     text-decoration: none;
     color: #333;
@@ -66,9 +66,9 @@ body {
 }
 
 .pagination a{
-    font-size: 20;
+    font-size: 35;
     padding: 0;
-    margin: 0,0,0,0;    
+    margin: 0,0,0,0 ;    
 
 }
 /* .pagination a:hover {
@@ -88,9 +88,6 @@ body {
     border-color: #f5f5f5;
 }
 
-.page-button{
-    padding-top: 10px;
-}
     </style>
 {% endblock %}
 {% block contents %}
@@ -111,12 +108,40 @@ body {
         </div>
         {% endfor %}
     </div>
+    <div class="row mt-5">
+        <div class="col-12">
+            <nav>
+                <ul class="pagination justify-content-center">
+                    {% if posts.has_previous %}
+                    <li class="page-item">
+                        <a href="?p={{posts.previous_page_number}}" class="page-link">이전으로</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled" >
+                        <a href="#" class="page-link">이전으로</a>
+                    </li>
+                    {%  endif %}
+                    <li class="page-item active">
+                        <a class="page-link" href="#">{{posts.number}} / {{posts.paginator.num_pages}}</a>
+                    </li>
+                    {% if posts.has_next %}
+                    <li class="page-item">
+                        <a href="?p={{posts.next_page_number}}" class="page-link">다음으로</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled" >
+                        <a href="#" class="page-link">다음으로</a>
+                    </li>
+                    {%  endif %}
+                </ul>
+            </nav>
+        </div>
         
     <div class="pagination mt-3">
         <span class="step-links">
             {% if page_obj.has_previous %}
-                <a href="?page=1" class="page-button">&laquo;⏪</a>
-                <!-- <a href="?page={{ page_obj.previous_page_number }}" class="page-button">⬅️</a> -->
+                <a href="?page=1">&laquo;⏪</a>
+                <a href="?page={{ page_obj.previous_page_number }}">⬅️</a>
             {% endif %}
 
             <span class="current">
@@ -124,8 +149,8 @@ body {
             </span>
 
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}" class="page-button">➡️</a>
-                <!-- <a href="?page={{ page_obj.paginator.num_pages }}" class="page-button">⏩&raquo;</a> -->
+                <a href="?page={{ page_obj.next_page_number }}">➡️</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">⏩&raquo;</a>
             {% endif %}
         </span>
     </div>

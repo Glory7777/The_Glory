@@ -80,7 +80,6 @@ class FavoriteList(ListView):
         context = super().get_context_data(**kwargs)
         # Paginator 객체 생성
         paginator = Paginator(self.object_list, self.paginate_by)
-
         # URL에서 'page' 매개변수를 사용하여 현재 페이지 번호 가져오기
         page_number = self.request.GET.get('page')
 

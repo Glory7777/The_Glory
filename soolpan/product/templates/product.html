@@ -1,5 +1,21 @@
-{% extends "base.html" %}
+{% extends "base1.html" %}
 {% load humanize %}
+{% load static %}
+{% block header %}
+<style>
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 세로 중앙 정렬을 위해 */
+    background-image: url('/static/막걸리_사진5.jpg'); /* 원하는 배경 이미지로 변경 */
+    background-size: cover;
+    /* background-repeat: no-repeat; 이미지 반복 방지 */
+    background-position: center;
+}
+
+    </style>
+{% endblock %}
 {% block contents %}
 <div class="row mt-5">
     <div class="col-12">
@@ -29,12 +45,17 @@
                 <!-- 페이지네이션 표시 -->
             </tbody>
         </table>
+
+        
         <div>
             <form method="GET" action="{% url 'product_list' %}">
+                {% csrf_token %}      
                 <input type="text" name="search_query" placeholder="검색어를 입력하세요">
                 <button type="submit">검색</button>
             </form>
         </div>
+
+
         <div class="pagination">
             <span class="step-links">
                 {% if page_obj.has_previous %}
