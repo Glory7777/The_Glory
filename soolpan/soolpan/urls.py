@@ -21,6 +21,7 @@ from DataBase.views import (index, ProductListAPI, ProductDetailAPI, CommentList
 from favorite.views import FavoriteCreate, FavoriteList
 from django.conf import settings
 from django.conf.urls.static import static
+from product.views import ProductList
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -39,5 +40,6 @@ urlpatterns = [
     path('favorite/create', FavoriteCreate.as_view()),
     path('favorite/', FavoriteList.as_view()),
     path('imgboard1/', include('imgboard1.urls')),
+    path('product/', ProductList.as_view()),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # media 경로 추가

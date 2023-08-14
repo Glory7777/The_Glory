@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block contents %}
+<div class="row mt-5">
+    <div class="col-12">
+        <table class="table table-light">
+            <thead class="thead-light">
+                <tr>
+                    <!--scope="col" : 헤더 셀이 어떤 테이블 셀을 명시함 -->
+                    <th scope="col">제품명</th>
+                    <th scope="col">제조사</th>
+                    <th scope="col">원재료</th>
+                    <th scope="col">용량/도수</th>
+                    <th scope="col">상세설명</th>
+                    <th scope="col">이미지</th>
+                    <th scope="col">전체 like count</th>
+                </tr>
+            </thead>
+            <tbody class="text-dark">
+                {% for product in product_list %}
+                <tr>
+                    <th><a id="product-{{product.id}}" href="/detail/{{ product.id }}">{{ product.name }}</a></th>
+                    <th>{{ product.company }}</th>
+                    <th>{{ product.mtrl }}</th>
+                    <th>{{ product.std }}</th>
+                    <th>{{ product.dsc }}</th>
+                    <th><img src="{{product.img}}" alt=""></th>
+                    <th>{{ product.like }}</th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
