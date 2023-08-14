@@ -29,6 +29,12 @@
                 <!-- 페이지네이션 표시 -->
             </tbody>
         </table>
+        <div>
+            <form method="GET" action="{% url 'product_list' %}">
+                <input type="text" name="search_query" placeholder="검색어를 입력하세요">
+                <button type="submit">검색</button>
+            </form>
+        </div>
         <div class="pagination">
             <span class="step-links">
                 {% if page_obj.has_previous %}
@@ -46,6 +52,7 @@
                 {% endif %}
             </span>
         </div>
+
     </div>
 </div>
 {% endblock %}
