@@ -1,29 +1,130 @@
-{% extends "base.html" %}
+{% extends "base1.html" %}
+{% load static %}
 {% load humanize %}
+{% block header %}
+<style>
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 세로 중앙 정렬을 위해 */
+    background-image: url('/static/막걸리_사진2.jpg'); /* 원하는 배경 이미지로 변경 */
+    background-size: cover;
+    /* background-repeat: no-repeat; 이미지 반복 방지 */
+    background-position: center;
+}
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 95%;
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    background-color: rgba(255, 255, 255, 0.8);        
+    max-width: calc(100% - 20px);
+    align-items: center; /* 수직 가운데 정렬 */
+    transition: transform 0.3s ease; /* 호버 시 애니메이션 효과 */
+    padding-top: 10px;
+    text-align: center;
+}
 
+.card:hover {
+    transform: scale(1.05); /* 호버 시 카드 크기 약간 확대 */
+}
+
+.card-img-top {
+    flex-grow: 1;
+    object-fit: contain;
+    height: 144.13px;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;       
+    
+}
+.card-title{
+    font-size: 15px;
+    font-weight: 800;
+}
+
+/* Pagination styling */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.pagination a,
+.pagination span.current {
+    padding: 6px 10px;
+    /* border: 1px solid #ccc; */
+    text-decoration: none;
+    color: #333;
+    margin: 0 3px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination a{
+    font-size: 35;
+    padding: 0;
+    margin: 0,0,0,0 ;
+    
+}
+/* .pagination a:hover {
+    background-color: #f5f5f5;
+} */
+
+.pagination span.current {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.pagination a.disabled {
+    pointer-events: none;
+    color: #999;
+    background-color: #f5f5f5;
+    border-color: #f5f5f5;
+}
+
+    </style>
+{% endblock %}
 {% block contents %}
-<div class="row mt-5">
-    <div class="col-12">
-        <table class="table table-light">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">제품명</th>
-                    <th scope="col">이미지</th>
-                </tr>
-            </thead>
-            <tbody class="text-dark">
-                {% for fav in fav_list %}
-                {% if fav.like == 1 %}
-                <tr>
-                    <th scope="row"><a href="/detail/{{fav.post_id}}/">{{ fav.post }}</a></th>
-                    <th><img src="{{fav.post.img}}" style="height: 300px;"></th>
-                </tr>
-                
-                {% endif %}
-                {% endfor %}
-                
-            </tbody>
-        </table>
+
+<div class="container mt-5">
+    <div class="row">
+        {% for fav in fav_list %}
+        <!-- 각각의 제품 카드 표시 -->
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <a href="/detail/{{fav.post_id}}/">
+                    <img src="{{fav.post.img}}" class="card-img-top" alt="{{ fav.post }}">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title"><a href="/detail/{{fav.post_id}}/">{{ fav.post }}</a></h5>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-</div>
+
+    <div class="pagination mt-3">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo;⏪</a>
+                <a href="?page={{ page_obj.previous_page_number }}">⬅️</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">➡️</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">⏩&raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
 {% endblock %}

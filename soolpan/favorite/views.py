@@ -1,9 +1,3 @@
-from typing import Any, Dict
-from django import http
-from django.db import IntegrityError
-from django.db.models.query import QuerySet
-from django.http import HttpResponse
-from django.db import transaction
 from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
 from django.views.generic import ListView
@@ -17,6 +11,7 @@ from django.utils import timezone
 # 데코레이터
 from spUser.decorators import login_required, Admin_required
 from django.utils.decorators import method_decorator
+from django.core.paginator import Paginator
 # Create your views here.
 
 
@@ -79,7 +74,22 @@ class FavoriteCreate(FormView):
 class FavoriteList(ListView):
     template_name = "favorite_list.html"
     context_object_name = 'fav_list'
+    paginate_by = 8  # 페이지당 아이템 수 설정
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Paginator 객체 생성
+        paginator = Paginator(self.object_list, self.paginate_by)
+
+        # URL에서 'page' 매개변수를 사용하여 현재 페이지 번호 가져오기
+        page_number = self.request.GET.get('page')
+
+        # 현재 페이지의 Page 객체 가져오기
+        page_obj = paginator.get_page(page_number)
+
+        # context에 페이지 객체 추가
+        context['page_obj'] = page_obj
+        return context
     # model = Order 주문된 제품만 가져오므로 쿼리를 통해서 가져옴
     # bcuser__email : Order모델에서 사용자 이메일이 지금 세션의 사용자와 일치하는 대상들을 필터해서 가져옴
     def get_queryset(self, **kwargs):

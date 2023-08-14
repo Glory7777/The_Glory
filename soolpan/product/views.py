@@ -23,7 +23,6 @@ class ProductList(ListView):
 
         # context에 페이지 객체 추가
         context['page_obj'] = page_obj
-
         context['search_query'] = self.request.GET.get('search_query', '')
         return context
     
@@ -34,7 +33,6 @@ class ProductList(ListView):
         if search_query:
             queryset = queryset.filter(
                 Q(name__icontains=search_query) | Q(dsc__icontains=search_query)
-            )
-        
+            )        
         return queryset
         
