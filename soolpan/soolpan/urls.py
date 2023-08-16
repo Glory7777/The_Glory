@@ -22,7 +22,7 @@ from favorite.views import FavoriteCreate, FavoriteList
 from django.conf import settings
 from django.conf.urls.static import static
 from product.views import ProductList
-
+from mlmodel.views import PredictionView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='Tal_Search'),
@@ -42,5 +42,6 @@ urlpatterns = [
     path('imgboard1/', include('imgboard1.urls')),
     path('product/', ProductList.as_view(), name="product_list"),
     path('detail/', TalDetailView.as_view(), name='path_detail'),
+    path('recommend/', PredictionView.as_view(), name='recommend')
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # media 경로 추가

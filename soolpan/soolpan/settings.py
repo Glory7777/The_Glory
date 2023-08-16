@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'DataBase',
     'favorite',
     'imgboard1',
-    'product'
+    'product',
+    'mlmodel'
 ]
 
 MIDDLEWARE = [

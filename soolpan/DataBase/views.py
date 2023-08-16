@@ -138,11 +138,13 @@ class TalDetailView(DetailView):
         page_number = self.request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         context['comments_write'] = page_obj #정상작동
-
+        # 페이지네이터 그래프
         paginator = Paginator(graph_comments, self.paginate_by)  # 3 comments per page
         page_number = self.request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         context['comments_graph'] = page_obj #정상작동
+        
+
         #전체 컨텍스트 리턴
         return context
 
