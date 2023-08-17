@@ -3,7 +3,7 @@ import json
 import requests
 
 # OpenAI API 키 설정
-openai.api_key = "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"
+openai.api_key = ""
 
 def get_Liqueur_info(name):
     """Describe the description about a given liqueur name"""
