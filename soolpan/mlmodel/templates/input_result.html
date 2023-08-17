@@ -3,14 +3,29 @@
 {% block header %}
 <title>주류 추천 서비스</title>
 <style>
+.radio-group{
+    text-align: center;
+}
 
-.radio-group>div>div {
+tr>td>div>div{
     display: inline-block;
     margin-right: 20px;
+    width: 10%;
 }
+
+tbody > tr > td:nth-child(1){
+    width: 35%;
+    text-align: center;
+    font-size: 20px;
+}
+
+table td{
+        height: 60px; /* 적절한 높이 값으로 변경하세요 */
+}
+
+
 /* 공통 스타일 */
 body {
-
     margin: 0;
     padding: 0;    
     display: flex;
@@ -30,6 +45,10 @@ body {
     padding: 20px;
     border-radius: 10px;
     /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); */
+}
+
+form {
+    text-align: center;
 }
 
 .left-side,
@@ -67,6 +86,7 @@ button[type="submit"] {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-top: 10px;
 }
 
 button[type="submit"]:hover {
@@ -107,46 +127,51 @@ p{
 {% block contents %}
    <div class="container">
         <div class="left-side">
-            <h2>주류 추천 서비스</h2>
+            <h2 style="text-align: center;">주류 추천 서비스</h2>
             <br/>
             <form method="post">
                 {% csrf_token %}
                 <div class="radio-group">
-                    <!-- <label>{{ form.input_0.label_tag }}</label> -->
-                    색 {{ form.input_0 }}
-                </div>
-                <div class="radio-group">
-                    <!-- <label>{{ form.input_1.label_tag }}</label> -->
-                    탄산감 {{ form.input_1 }}
-                </div>
-                <div class="radio-group">
-                    <!-- <label>{{ form.input_2.label_tag }}</label> -->
-                    향 {{ form.input_2 }}
-                </div>
-                <div class="radio-group">
-                    <!-- <label>{{ form.input_3.label_tag }}</label> -->
-                    산미 {{ form.input_3 }}
-                </div>
-                <div class="radio-group">
-                    <!-- <label>{{ form.input_4.label_tag }}</label> -->
-                    당도 {{ form.input_4 }}
+                    <table>
+                        <tr>
+                            <td>색</td>
+                            <td>{{ form.input_0 }}</td>
+                        </tr>
+                        <tr>
+                            <td>탄산감</td>
+                            <td>{{ form.input_1 }}</td>
+                        </tr>
+                        <tr>
+                            <td>향</td>
+                            <td>{{ form.input_2 }}</td>
+                        </tr>
+                        <tr>
+                            <td>산미</td>
+                            <td>{{ form.input_3 }}</td>
+                        </tr>
+                        <tr>
+                            <td>당도</td>
+                            <td>{{ form.input_4 }}</td>
+                        </tr>
+                    </table>
                 </div>
                 <!-- 나머지 form 입력 항목도 동일하게 추가 -->
+                <p></p>
                 <button type="submit">추천받기</button>
             </form>
         </div>
         
         <div class="right-side">
-            <h2>추천 결과</h2>
+            <h2 style="text-align: center;">추천 주류</h2>
             <br/>
             {% if predicted_tal %}
             <a href="{% url 'path_detail' %}{{predicted_tal.id}}">
                 <div class="result-image-container">
                     <img src="{{ predicted_tal.img }}" alt="추천 이미지" class="result-image">
                 </div>
-                <p>제품명: {{ predicted_tal.name }}</p>
-                <p>제조사: {{ predicted_tal.company }}</p>
-                <p>용량/도수: {{ predicted_tal.std }}</p>
+                <p>제품명 :  {{ predicted_tal.name }}</p>
+                <p>제조사 :  {{ predicted_tal.company }}</p>
+                <p>용량/도수 :  {{ predicted_tal.std }}</p>
             </a>
             {% endif %}
         </div>
