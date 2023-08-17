@@ -29,6 +29,8 @@ class PredictionView(View):
             predicted_tal_pk = prediction[0]
             predicted_tal = get_object_or_404(Tal, pk=predicted_tal_pk)
 
-            return render(request, self.template_name, {'form': form, 'predicted_tal': predicted_tal})
+            font_path = "/static/fonts/otf/BMDOHYEON_otf.otf"
+
+            return render(request, self.template_name, {'form': form, 'predicted_tal': predicted_tal, 'font_path': font_path})
 
         return render(request, self.template_name, {'form': form})
