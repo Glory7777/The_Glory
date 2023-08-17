@@ -63,49 +63,18 @@ body {
 .page-button{
     padding-top: 10px;
 }
+.row {
+  position: absolute;
+  top: 5%;
+  
+}
+
     </style>
 {% endblock %}
 
 {% block contents %}
 <div class="row mt-5">
-    <div class="col-12">
-        
-        <div>
-            <form method="GET" action="{% url 'product_list' %}">
-                {% csrf_token %}
-                <div class="input-group">
-                    <input type="text" name="search_query" placeholder="검색어를 입력하세요"> 
-                    <input type="submit" value="검색">
-                </div>
-            </form>
-        </div>
-
-        <table class="table table-light">
-            <thead class="thead-light">
-                <tr>
-                    <!--scope="col" : 헤더 셀이 어떤 테이블 셀을 명시함 -->
-                    <th scope="col">제품명</th>
-                    <th scope="col">제조사</th>
-                    <th scope="col">원재료</th>
-                    <th scope="col">용량/도수</th>
-                    <th scope="col">상세설명</th>
-                    <th scope="col">이미지</th>
-                </tr>
-            </thead>
-            <tbody class="text-dark">
-                {% for product in product_list %}
-                <tr>
-                    <th><a id="product-{{product.id}}" href="/detail/{{ product.id }}">{{ product.name }}</a></th>
-                    <th>{{ product.company }}</th>
-                    <th>{{ product.mtrl }}</th>
-                    <th>{{ product.std }}</th>
-                    <th>{{ product.dsc }}</th>
-                    <th><img src="{{product.img}}" alt="" style="height: 200;"></th>
-                </tr>
-                {% endfor %}
-                <!-- 페이지네이션 표시 -->
-            </tbody>
-        </table>
+    <div class="col-12">  
 
         <div id="content">
             <div class="inner">
