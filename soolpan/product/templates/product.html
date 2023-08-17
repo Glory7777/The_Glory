@@ -2,23 +2,84 @@
 {% load humanize %}
 {% load static %}
 {% block header %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/detail_common.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/detail_layout.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/detail_respond.css' %}">
+
 <style>
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh; /* 세로 중앙 정렬을 위해 */
-    background-image: url('/static/막걸리_사진5.jpg'); /* 원하는 배경 이미지로 변경 */
+    /* background-image: url('/static/막걸리_사진5.jpg'); 원하는 배경 이미지로 변경 */
     background-size: cover;
     /* background-repeat: no-repeat; 이미지 반복 방지 */
     background-position: center;
 }
+/* Pagination styling */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 16px;
+}
 
+.pagination a,
+.pagination span.current {
+    padding: 3px 8px;
+    /* border: 1px solid #ccc; */
+    text-decoration: none;
+    color: #333;
+    margin: 0 3px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination a{
+    font-size: 20;
+    padding: 0;
+    margin: 0,0,0,0;    
+
+}
+/* .pagination a:hover {
+    background-color: #f5f5f5;
+} */
+
+.pagination span.current {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.pagination a.disabled {
+    pointer-events: none;
+    color: #999;
+    background-color: #f5f5f5;
+    border-color: #f5f5f5;
+}
+
+.page-button{
+    padding-top: 10px;
+}
     </style>
 {% endblock %}
+
 {% block contents %}
 <div class="row mt-5">
     <div class="col-12">
+        
+        <div>
+            <form method="GET" action="{% url 'product_list' %}">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" name="search_query" placeholder="검색어를 입력하세요"> 
+                    <input type="submit" value="검색">
+                </div>
+            </form>
+        </div>
+
         <table class="table table-light">
             <thead class="thead-light">
                 <tr>
@@ -46,30 +107,113 @@ body {
             </tbody>
         </table>
 
+        <div id="content">
+            <div class="inner">
+              <h2 class="title">자세히 알아보기</h2>
+            <div class="tab-content">
+            <div id="tab1">
+              <div class="product-list">
+                {% for product in product_list %}
+                <ul>
+                  <li class="item">
+                    <div class="thumb">
+                      <div class="img">
+                        <span>
+                            <img src="{{product.img}}" alt="" style="height: 200;">
+                        </span>
+                      </div>
+                    </div>
+                    <dl class="detail">
+                      <dt>
+                        <div class="title-area">
+                            <div id="product-{{product.id}}">
+                                <a href="/detail/{{ product.id }}">{{ product.name }}</a>
+                            </div>
+                        </div>
+                        <div class="label-list">
+                          <ul>
+                            <li>❤️ {{product.like}}</li>
+                              <button type="button" class="btn btn-success" id="copyButton" value="{{page_path}}">📋</button>
+                              <li class="list-group-item">
+                                <form action="/favorite/create" method="POST">
+                                {% csrf_token %}                    
+                                {% for field in form %}
+                                <div class="form-group">
+                                  <input type="{{ field.field.widget.input_type }}" class="form-control" 
+                                  id="{{ field.id_for_label }}"  placeholder="{{ field.label }}" name="{{ field.name }}" 
+                                  value="{% if field.name == 'like' %}{{ '1' }}{% else %}{{tal_detail.id}}{% endif %}"/> 
+                                </div>                       
+                                {% if field.errors %}
+                                <span style="color: red">{{ field.errors }}</span>
+                                {% endif %}
+                                {% endfor %}                    
+                                {% if search.like == 1 %}
+                                <button type="submit" class="btn btn-warning">💔</button>
+                                {% else %}
+                                <button type="submit" class="btn btn-primary">❤️</button>
+                                {% endif %}
+                                </form>
+                              </li>
+                            </li>
+                          </ul>
+                        </div>
+                      </dt>
+                      <dd>
+                        <ul>
+                          <li>
+                            <div class="subject">제조사</div>
+                            <div class="info">{{ product.company }}</div>
+                          </li>
+                          <li>
+                            <div class="subject">주원료</div>
+                            <div class="info"> {{ product.mtrl }}</div>
+                          </li>
+                          <li>
+                            <div class="subject">용량/도수</div>
+                            <div class="info">  {{ product.std }} </div>
+                          </li>
+                          <li>
+                            <div class="subject">제품특징</div>
+                            <div class="info no-line">
+                              <span class="el-3line">
+                                {{ product.dsc }}
+                              </span>
+                            </div>
+                          </li>
+                        </ul>
+                      </dd>
+                    </dl>
+                  </li>
+                </ul>
+                {% endfor %}
+              </div>
+            </div>
+        </div>
         
         <div>
             <form method="GET" action="{% url 'product_list' %}">
-                {% csrf_token %}      
-                <input type="text" name="search_query" placeholder="검색어를 입력하세요">
-                <button type="submit">검색</button>
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" name="search_query" placeholder="검색어를 입력하세요"> 
+                    <input type="submit" value="검색">
+                </div>
             </form>
         </div>
-
-
-        <div class="pagination">
+        
+        <div class="pagination mt-3">
             <span class="step-links">
                 {% if page_obj.has_previous %}
-                    <a href="?page=1">&laquo; first</a>
-                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    <a href="?page=1" class="page-button">⏪</a>
+                    <a href="?page={{ page_obj.previous_page_number }}" class="page-button">⬅️</a>
                 {% endif %}
-
+    
                 <span class="current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
                 </span>
-
+    
                 {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}">next</a>
-                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    <a href="?page={{ page_obj.next_page_number }}" class="page-button">➡️</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}" class="page-button">⏩</a>
                 {% endif %}
             </span>
         </div>
