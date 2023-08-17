@@ -1,0 +1,89 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 세로 중앙 정렬을 위해 */
+    background-image: url('/static/막걸리_사진2.jpg'); /* 원하는 배경 이미지로 변경 */
+    background-size: cover;
+    /* background-repeat: no-repeat; 이미지 반복 방지 */
+    background-position: center;
+}
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 95%;
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    background-color: rgba(255, 255, 255, 0.8);        
+    max-width: calc(100% - 20px);
+    align-items: center; /* 수직 가운데 정렬 */
+    transition: transform 0.3s ease; /* 호버 시 애니메이션 효과 */
+    padding-top: 10px;
+    text-align: center;
+}
+
+.card:hover {
+    transform: scale(1.1); /* 호버 시 카드 크기 약간 확대 */
+}
+
+.card-img-top {
+    flex-grow: 1;
+    object-fit: contain;
+    height: 144.13px;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;       
+    
+}
+.card-title{
+    font-size: 15px;
+    font-weight: 800;
+}
+
+/* Pagination styling */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.pagination a,
+.pagination span.current {
+    padding: 3px 8px;
+    /* border: 1px solid #ccc; */
+    text-decoration: none;
+    color: #333;
+    margin: 0 3px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination a{
+    font-size: 20;
+    padding: 0;
+    margin: 0,0,0,0;    
+
+}
+/* .pagination a:hover {
+    background-color: #f5f5f5;
+} */
+
+.pagination span.current {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.pagination a.disabled {
+    pointer-events: none;
+    color: #999;
+    background-color: #f5f5f5;
+    border-color: #f5f5f5;
+}
+
+.page-button{
+    padding-top: 10px;
+}
+   
