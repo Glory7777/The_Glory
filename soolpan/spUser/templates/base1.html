@@ -22,6 +22,7 @@ integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0
   font-style: normal;
   src: url('/static/fonts/otf/BMEULJIRO.otf') format('opentype');
 }
+
 body{
   font-family: 'BM';
 }
@@ -43,7 +44,7 @@ body{
           <a href="/product">주류평가</a>
           <a href="/imgboard1/">커뮤니티</a>
           <a href="/recommend/">추천서비스</a>
-          <a href="#">포럼</a>
+          <a href="/chatbot">챗봇</a>
           {% if request.session.user %}
           <a href="/favorite/">나의 주막</a>
           <a href="/logout/">로그아웃</a>
@@ -52,12 +53,16 @@ body{
           <a href="/register/">회원가입</a>
           {% endif %}
         </div>
-      </div>
+      </div>    
+    
+
     
     <div class="container">
         {% block contents %}
         {% endblock %}
     </div>
+
+
 </body>
 
 </html>
