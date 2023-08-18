@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'imgboard1',
     'product',
     'mlmodel',
-    'chatbot'
+    
 ]
 
 MIDDLEWARE = [

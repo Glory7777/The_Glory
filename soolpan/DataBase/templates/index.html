@@ -63,7 +63,65 @@
     }
     //사용자가 상품 요소에서 벗어났을 때 popover 숨기기
     $(document).ready(function(){});</script>
+    <style>
+        .chat-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    overflow: hidden;
+}
 
+.chat-header {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.chat-messages {
+    padding: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.assistant {
+    background-color: #f4f4f4;
+}
+
+.user-input-form {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+}
+
+.user-input-form input[type="text"] {
+    flex-grow: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.user-input-form button {
+    margin-left: 5px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+    </style>
 <link rel="stylesheet" type="text/css" href="{% static '/css/index.css' %}">
 {% endblock%}
 {% block contents %}
@@ -141,6 +199,25 @@
                     </div>
                 </div>
             </div>
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h5 style="text-align: center;">주류정보 챗봇</h5>
+                </div>
+                <div class="chat-messages">
+                    {% if response %}
+                        <div class="message assistant">
+                            {{ response }}
+                        </div>
+                    {% else %}
+                        <p></p>
+                    {% endif %}
+                </div>
+                <form method="post" class="user-input-form">
+                    {% csrf_token %}
+                    {{ form.user_input }}
+                    <button type="submit">Send</button>
+                </form>
+            </div> 
         </div>
 
 {% endblock %}
