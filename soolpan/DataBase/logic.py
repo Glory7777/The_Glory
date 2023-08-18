@@ -2,13 +2,24 @@ import openai
 import json
 import requests
 import os
+from django.urls import reverse
+from django.contrib.sites.shortcuts import get_current_site
+
 
 # OpenAI API 키 설정
 openai.api_key = os.getenv('API_KEY')
 
+global_api_url = None #전역변수 지정
+
+def return_api_url(api_url):
+    global global_api_url  # 전역 변수 사용 선언
+    global_api_url = api_url #전역 변수 할당
+    return global_api_url #전역 변수로 api 리턴
+
 def get_Liqueur_info(name):
     """Describe the description about a given liqueur name"""
-    api_url = "http://127.0.0.1:8000/api/product/"
+    
+    api_url = return_api_url(global_api_url) #전역변수 입력 후 api데이터 호출(정상적동 확인완료)
     api_params = {}
 
     headers = {

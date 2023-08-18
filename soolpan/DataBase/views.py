@@ -21,7 +21,7 @@ from django.urls import reverse
 from django.contrib.sites.shortcuts import get_current_site
 from django.db.models import Avg
 from django.core.paginator import Paginator
-from .logic import run_conversation
+from .logic import run_conversation, return_api_url
 # Create your views here.
 # 홈화면 검색/Autocomplete 기능 구현
 
@@ -29,17 +29,25 @@ from .logic import run_conversation
 # 교체는 url에서 index 부분 교체해서 사용하면 됨 (다른 것 수정할 필요 없음)
 
 
+
 def index(request):
     form = UserInputForm(request.POST)
     response = None
     tal_search = []
-
+    
+    #API주소 설정하기
+    current_site = get_current_site(request) #현재 페이지 도메인 가져오기(127.0.0.1:8000 변경 대응)
+    path = reverse('productListapi') #api기본주소 가져오기
+    api_url = f"http://{current_site}{path}" #API주소 확정
+    
     if request.method == 'POST':
         if 'user_input' in request.POST:
             form = UserInputForm(request.POST)
             if form.is_valid():
                 user_input = form.cleaned_data['user_input']
-                response = run_conversation(user_input)
+                return_api_url(api_url) #api주소를 전역변수에 저장하는 메소드
+                response = run_conversation(user_input) 
+                #api정보를 get하는 get_Liqueur_info에서 저장된 전역변수를 api호출할 때 반드시 사용하게 조치
         
         elif 'search_query' in request.POST:
             search_query = request.POST['search_query']

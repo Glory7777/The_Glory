@@ -31,7 +31,7 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', logout, name='logout'),
     path('detail/<int:pk>/', TalDetailView.as_view(), name='detail'),
-    path('api/product/', ProductListAPI.as_view()),
+    path('api/product/', ProductListAPI.as_view(), name='productListapi'),
     path('api/product/<int:pk>/', ProductDetailAPI.as_view()),
     path('api/comment/', CommentListAPI.as_view(), name="comment_api"),
     path('api/comment/<int:pk>/', CommentDetailAPI.as_view(), name="comment_detail_api"), #개별 코멘트 데이터 API
