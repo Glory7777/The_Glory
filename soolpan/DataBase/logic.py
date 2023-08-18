@@ -4,7 +4,7 @@ import requests
 import os
 
 # OpenAI API 키 설정
-openai.api_key = "os.getenv('API_KEY')"
+openai.api_key = os.getenv('API_KEY')
 
 def get_Liqueur_info(name):
     """Describe the description about a given liqueur name"""
