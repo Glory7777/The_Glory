@@ -201,7 +201,7 @@
             </div>
             <div class="chat-container">
                 <div class="chat-header">
-                    <h5 style="text-align: center;">챗봇 고장남(수정중)</h5>
+                    <h5 style="text-align: center;">주류설명 챗봇</h5>
                 </div>
                 <div class="chat-messages">
                     {% if response %}
@@ -209,7 +209,7 @@
                             {{ response }}
                         </div>
                     {% else %}
-                        <p id="search-status"> </p>
+                        <p id="search-status" style="text-align: center;"> 주류의 이름을 물어보세요! </p>
                     {% endif %}
                 </div>
                 <form method="post" class="user-input-form" onsubmit="showSearchStatus()">
