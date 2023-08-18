@@ -28,87 +28,88 @@ from .logic import run_conversation
 # index와 index_v1의 차이 --> 검색 후 클릭해서 이동하냐 or 바로 이동하고 없을 경우 에레메시지
 # 교체는 url에서 index 부분 교체해서 사용하면 됨 (다른 것 수정할 필요 없음)
 
-def index(request):
-    form = UserInputForm(request.POST)
-    response = None
-    tals = Tal.objects.all()
-    tal_search = []
-    best5 = []
-
-    if request.method == 'POST':
-        if form.is_valid():
-            user_input = form.cleaned_data['user_input']
-            response = run_conversation(user_input)
-
-            search_query = request.POST.get('search_query')
-            if search_query:
-                search = Tal.objects.filter(name__icontains=search_query)
-                total_objects = search.count()
-
-                if total_objects <= 5:
-                    tal_search = search
-                else:
-                    tal_search = random.sample(list(search), 4)
-
-        # Process your other form data or actions here
-
-    like = tals.order_by('-like')
-    best5 = like[:4]
-
-    top_comments = Comment.objects.values('post_id').annotate(avg_total=Avg('total')).order_by('-avg_total')[:4]
-    top_comment_ids = [item['post_id'] for item in top_comments]
-
-    top_comments_queryset = Comment.objects.filter(post_id__in=top_comment_ids)
-    tal_objects_for_top_comments = Tal.objects.filter(comments__in=top_comments_queryset).distinct()
-
-    return render(request, 'index.html', {
-        'form': form,
-        'response': response,
-        'tals': tals,
-        'tal_search': tal_search,
-        'best5': best5,
-        'top_comments': top_comments_queryset,
-        'tal_objects_for_top_comments': tal_objects_for_top_comments,
-    })
 # def index(request):
-#     tals = Tal.objects.all()
+#     form = UserInputForm(request.POST)
+#     response = None
     
+#     tals = Tal.objects.all()
+#     tal_search = []
+#     best5 = []
+
 #     if request.method == 'POST':
-#         search_query = request.POST.get('search_query')
-#         if search_query:
-#             # Assuming you already have the queryset tal_search
-#             search = Tal.objects.filter(name__icontains=search_query)
+#         if form.is_valid():
+#             user_input = form.cleaned_data['user_input']
+#             response = run_conversation(user_input)
 
-#             # Get the total number of objects in the queryset
-#             total_objects = search.count()
+#             search_query = form.cleaned_data['search_query']
+#             if search_query:
+#                 search = Tal.objects.filter(name__icontains=search_query)
+#                 total_objects = search.count()
 
-#             # If the total number of objects is less than 10, get all objects
-#             if total_objects <= 5:
-#                 tal_search = search
+#                 if total_objects <= 5:
+#                     tal_search = search
+#                 else:
+#                     tal_search = random.sample(list(search), 4)
 
-#             else:
-#                 # Randomly select 10 objects
-#                 tal_search = random.sample(list(search), 4)
-#         else:
-#             tal_search = []
-#     else:
-#         tal_search = []
+#         # Process your other form data or actions here
 
 #     like = tals.order_by('-like')
 #     best5 = like[:4]
-    
+
 #     top_comments = Comment.objects.values('post_id').annotate(avg_total=Avg('total')).order_by('-avg_total')[:4]
 #     top_comment_ids = [item['post_id'] for item in top_comments]
-    
+
 #     top_comments_queryset = Comment.objects.filter(post_id__in=top_comment_ids)
 #     tal_objects_for_top_comments = Tal.objects.filter(comments__in=top_comments_queryset).distinct()
+
 #     return render(request, 'index.html', {
+#         'form': form,
+#         'response': response,
 #         'tals': tals,
 #         'tal_search': tal_search,
 #         'best5': best5,
 #         'top_comments': top_comments_queryset,
 #         'tal_objects_for_top_comments': tal_objects_for_top_comments,
 #     })
+def index(request):
+    tals = Tal.objects.all()
+    
+    if request.method == 'POST':
+        search_query = request.POST.get('search_query')
+        if search_query:
+            # Assuming you already have the queryset tal_search
+            search = Tal.objects.filter(name__icontains=search_query)
+
+            # Get the total number of objects in the queryset
+            total_objects = search.count()
+
+            # If the total number of objects is less than 10, get all objects
+            if total_objects <= 5:
+                tal_search = search
+
+            else:
+                # Randomly select 10 objects
+                tal_search = random.sample(list(search), 4)
+        else:
+            tal_search = []
+    else:
+        tal_search = []
+
+    like = tals.order_by('-like')
+    best5 = like[:4]
+    
+    top_comments = Comment.objects.values('post_id').annotate(avg_total=Avg('total')).order_by('-avg_total')[:4]
+    top_comment_ids = [item['post_id'] for item in top_comments]
+    
+    top_comments_queryset = Comment.objects.filter(post_id__in=top_comment_ids)
+    tal_objects_for_top_comments = Tal.objects.filter(comments__in=top_comments_queryset).distinct()
+    return render(request, 'index.html', {
+        'tals': tals,
+        'tal_search': tal_search,
+        'best5': best5,
+        'top_comments': top_comments_queryset,
+        'tal_objects_for_top_comments': tal_objects_for_top_comments,
+    })
 # def index_v1(request):
 #     tals = Tal.objects.all()
 #     if request.method == 'POST':

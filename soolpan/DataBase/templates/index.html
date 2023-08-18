@@ -131,12 +131,12 @@
                 <form method="POST" id="autoform">
                     {% csrf_token %}
                     <div class="input-group">
-                        <input type="search" list="tals" placeholder="전통주 검색하기" class="form-control" name="search_query" id="search_query" autocomplete="off"> 
+                        <input type="search" list="tals" placeholder="전통주 검색하기" class="form-control" name="search_query" id="search_query" autocomplete="off">
                         <input type="submit" value="검색">
                     </div>
                     <datalist id="tals">
                         {% for tal in tals %}
-                            <option value="{{tal.name}}" style="font-size: 20px;"></option>
+                            <option value="{{ tal.name }}" style="font-size: 20px;"></option>
                         {% endfor %}
                     </datalist>
                 </form>
@@ -201,7 +201,7 @@
             </div>
             <div class="chat-container">
                 <div class="chat-header">
-                    <h5 style="text-align: center;">주류정보 챗봇</h5>
+                    <h5 style="text-align: center;">챗봇 고장남(수정중)</h5>
                 </div>
                 <div class="chat-messages">
                     {% if response %}
@@ -209,15 +209,21 @@
                             {{ response }}
                         </div>
                     {% else %}
-                        <p></p>
+                        <p id="search-status"> </p>
                     {% endif %}
                 </div>
-                <form method="post" class="user-input-form">
+                <form method="post" class="user-input-form" onsubmit="showSearchStatus()">
                     {% csrf_token %}
                     {{ form.user_input }}
                     <button type="submit">Send</button>
                 </form>
-            </div> 
-        </div>
+            </div>
+            
+            <script>
+                function showSearchStatus() {
+                    var searchStatus = document.getElementById("search-status");
+                    searchStatus.innerText = "검색 중...";
+                }
+            </script>
 
 {% endblock %}
