@@ -7,11 +7,13 @@ import os
 from DataBase.models import Tal
 
 
+
 class PredictionView(View):
     template_name = 'input_result.html'
 
     def get(self, request):
         form = InputForm()
+
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):
@@ -34,3 +36,4 @@ class PredictionView(View):
             return render(request, self.template_name, {'form': form, 'predicted_tal': predicted_tal, 'font_path': font_path})
 
         return render(request, self.template_name, {'form': form})
+    

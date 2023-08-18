@@ -57,3 +57,5 @@ class LoginForm(forms.Form):
                 self.add_error("password", "비밀번호가 틀렸습니다.")
             # else: 여기서 할 수 없음
             #     self.user_id = shopuser.id
+
+

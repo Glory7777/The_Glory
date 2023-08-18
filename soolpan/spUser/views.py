@@ -44,3 +44,6 @@ def logout(request):
         del (request.session['user'])  # 세션값 제거
 
     return redirect('/')
+
+
+
