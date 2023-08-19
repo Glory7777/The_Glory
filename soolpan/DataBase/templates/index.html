@@ -125,6 +125,8 @@
 <link rel="stylesheet" type="text/css" href="{% static '/css/index.css' %}">
 {% endblock%}
 {% block contents %}
+
+
     <div class="container">        
         <div class="row">
             <div class="col-6 mx-auto text-center mt-5">
@@ -209,21 +211,33 @@
                             {{ response }}
                         </div>
                     {% else %}
-                        <p id="search-status" style="text-align: center;"> 주류의 이름을 물어보세요! </p>
+                        <p id="search-status" style="text-align: center;">주류의 이름을 물어보세요! </p>
                     {% endif %}
                 </div>
                 <form method="post" class="user-input-form" onsubmit="showSearchStatus()">
                     {% csrf_token %}
                     {{ form.user_input }}
-                    <button type="submit">Send</button>
+                    <button type="submit" id="sendButton">Send</button>
                 </form>
             </div>
             
             <script>
-                function showSearchStatus() {
-                    var searchStatus = document.getElementById("search-status");
-                    searchStatus.innerText = "검색 중...";
-                }
+
+ function showSearchStatus() {
+    var searchStatus = document.getElementById("search-status");
+
+    setTimeout(function() {
+        searchStatus.innerText = "검색 중.";
+    }, 1000); // 1초 딜레이
+    
+    setTimeout(function() {
+        searchStatus.innerText = "검색 중..";
+    }, 2000); // 2초 딜레이
+    
+    setTimeout(function() {
+        searchStatus.innerText = "검색 중...";
+    }, 3000); // 3초 딜레이
+};
             </script>
 
 {% endblock %}
