@@ -211,8 +211,9 @@
                             {{ response }}
                         </div>
                     {% else %}
-                        <p id="search-status" style="text-align: center;">주류의 이름을 물어보세요! </p>
+                        <p id="search-status" style="text-align: center;"></p>
                     {% endif %}
+                        <p id="search-status1" style="text-align: center;">주류의 이름을 물어보세요! </p>
                 </div>
                 <form method="post" class="user-input-form" onsubmit="showSearchStatus()">
                     {% csrf_token %}
@@ -224,8 +225,7 @@
             <script>
 
  function showSearchStatus() {
-    var searchStatus = document.getElementById("search-status");
-
+    var searchStatus = document.getElementById("search-status1");
     setTimeout(function() {
         searchStatus.innerText = "검색 중.";
     }, 1000); // 1초 딜레이
@@ -237,6 +237,10 @@
     setTimeout(function() {
         searchStatus.innerText = "검색 중...";
     }, 3000); // 3초 딜레이
+    
+    setTimeout(function() {
+        searchStatus.innerText = " ";
+    }, 4000); // 3초 딜레이
 };
             </script>
 
