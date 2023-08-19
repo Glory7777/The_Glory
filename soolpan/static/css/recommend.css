@@ -65,6 +65,11 @@ form {
     background-color: rgba(255, 255, 255, 0.95);
     border-radius: 10px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.right-side:hover {
+    transform: scale(1.1)  translateX(40px); /* 호버 시 카드 크기 약간 확대 */
 }
 
 /* 폼 스타일 */
@@ -107,12 +112,15 @@ button[type="submit"]:hover {
     margin-bottom: 10px;
     background-color: white; /* Add this line for a white background */
 }
+
+
 a:hover {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     transform: scale(1.05); /* Add scaling effect on hover */
     text-decoration: none; /* Remove underline on hover */
     color: black;
 }
+
 p{
     color: black; 
 }
