@@ -9,8 +9,19 @@
 {% endblock%}
 {% block contents %}
 
-<style>
-  <style type="text/css">.fancybox-margin{margin-right:0px;}</style><meta http-equiv="origin-trial" content="AymqwRC7u88Y4JPvfIF2F37QKylC04248hLCdJAsh8xgOfe/dVJPV3XS3wLFca1ZMVOtnBfVjaCMTVudWM//5g4AAAB7eyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGV0YWdtYW5hZ2VyLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjk1MTY3OTk5LCJpc1RoaXJkUGFydHkiOnRydWV9">
+  <style type="text/css"> .fancybox-margin{margin-right:0px;} 
+  .item .plot-container {
+    position: relative;
+    left: -150px;
+    top: -150px;
+
+  }
+   .main-svg{
+    border: 1px solid black;
+    transform: scale(0.95); /* 크기 스케일링 */
+  }
+  </style>
+  <meta http-equiv="origin-trial" content="AymqwRC7u88Y4JPvfIF2F37QKylC04248hLCdJAsh8xgOfe/dVJPV3XS3wLFca1ZMVOtnBfVjaCMTVudWM//5g4AAAB7eyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGV0YWdtYW5hZ2VyLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjk1MTY3OTk5LCJpc1RoaXJkUGFydHkiOnRydWV9">
   </style>
 
   <body>
@@ -73,7 +84,7 @@
                     {% if search.like == 1 %}
                     <button type="submit" class="btn btn-warning">💔</button>
                     {% else %}
-                    <button type="submit" class="btn btn-primary">❤️</button>
+                    <button type="submit" class="btn btn-success">❤️</button>
                     {% endif %}
 
                     
@@ -134,95 +145,38 @@
 <h5>&#35; 댓글</h5><br/>
 <li class="item">
   <div class="thumb">
+    {% for comment in comments_graph %}
     <div class="img">
-      <span>
-        {% for comment in comments_graph %}
-        <td style="height: 350px;">{{ comment | safe }}</td>  
-        {% endfor %} 
+      <span>        
+        <td style="height: 350px;">{{ comment | safe }}</td>          
       </span>
-    </div>
-    
-  </div>
-  
-  <dl class="detail">
+    </div> 
+    {% endfor %}       
+</div>
+
+  {% for comment in comments_write %}
+  <dl class="detail">    
     <dt>
-      <div class="title-area">
-        {% for comment in comments_write %}
+      <div class="title-area">        
         <div class="name" onclick="">{{ comment.name}}</div>
-      </div>
-      
-        
-       
-</li>
-          
-        </ul>
-      </div>
+      </div>        
     </dt>
-
-
     <dd>
       <ul>
         <li>
           <div class="subject">댓글 내용</div>
           <div class="info">{{ comment.body }}</div>
-        </li>
-        
-        </li>
+        </li>    
       </ul>
     </dd>
   </dl>
-</li>
 {% endfor %}
-
+</li> 
 </ul>
 
 </div>
 
 </div>
-
-
-
-<!-- 댓글 전체 내용 -->
-<div class="row mt-5">
-  <div class="col-12">
-      <div class="comment">
-      <h5>&#35; 댓글</h5><br/>
-      <!-- 직렬로 for문 돌림(페이지네이터 작동하고 높이 조절 이슈 있음.) -->
-      <div class="table-container">
-          <div class="table">
-              <table>
-                  <tr>
-                      <th>그래프</th>
-                  </tr>
-                  {% for comment in comments_graph %}
-                  <tr>    
-                      <td style="height: 350px;">{{ comment | safe }}</td>    
-                  </tr>
-                  {% endfor %}
-              </table>
-          </div>
-          
-          <div class="table">
-              <table>
-                  <tr>
-                      <th>코멘트</th>
-                  </tr>
-                  {% for comment in comments_write %}
-                  <tr>
-                      <td style="height: 350px;">{{ comment.name }}: {{ comment.body }}</td>
-                  </tr>
-                  {% endfor %}
-              </table>
-          </div>
-        </div>   
-
-      </div>        
-  </div>
-</div>
-<hr/>
-<div>
-
-
 
 <!-- Pagination -->
 {% if comments_write.has_other_pages %}
