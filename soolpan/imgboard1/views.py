@@ -22,7 +22,7 @@ def post_list(request):
 
 def post_new(request):
     if not request.session.get('user'):
-        return redirect('/user/login/')
+        return redirect('/login/')
     
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
