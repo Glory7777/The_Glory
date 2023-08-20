@@ -117,16 +117,9 @@ def run_conversation(input):
                 messages=messages,
             )  # get a new response from GPT where it can see the function response
             assistant_reply = second_response['choices'][0]['message']['content']
-            
-            #예외처리
-            except_words =["sorry", "I", "you", "thank", "and", "or"]
             if assistant_reply == "":
                 assistant_reply = "요청하신 정보를 찾을 수 없습니다. 다른 질문을 해주세요!"
-            else:
-                for word in except_words:
-                    if word in assistant_reply.lower():
-                        assistant_reply = "요청하신 정보를 찾을 수 없습니다. 다른 질문을 해주세요!"
-                        break    
+            
             return assistant_reply
     
     except:
