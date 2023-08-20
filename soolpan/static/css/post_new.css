@@ -1,0 +1,50 @@
+h1{
+    color: black;
+    text-align: center;
+    font-size: 50px;
+}
+
+.btn-custom {
+    background-color: yellowgreen; /* 변경하고자 하는 색상으로 수정 */
+    color: white; /* 버튼 텍스트 색상 */
+}
+
+
+.btn-custom2 {
+    background-color: skyblue; /* 변경하고자 하는 색상으로 수정 */
+    color: white; /* 버튼 텍스트 색상 */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    background-image: url('/static/막걸리_사진3.jpg');
+    background-position: 30% 90%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-card {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: auto;
+    height: auto;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+input{
+  font-family: Arial, sans-serif;
+}

@@ -1,95 +1,32 @@
 {% extends "base1.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/post_edit.css' %}">
+{% endblock %}
+
 {% block contents%}
-<style>
-    body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    }
-
-    .container {
-    width: 80%;
-    margin: auto;
-    overflow: hidden;
-    }
-
-    .post-form {
-    background: white;
-    margin: 2em auto;
-    padding: 2em;
-    max-width: 500px;
-    box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);
-    }
-
-    .save {
-    display: inline-block;
-    padding: 10px 20px;
-    color: white;
-    background-color: #007BFF;
-    border: none;
-    border-radius: 4px;
-    text-decoration: none;
-    }
-
-    .save:hover {
-    background-color: #0056b3;
-    }
-
-    .return {
-    display: inline-block;
-    padding: 10px 20px;
-    color: white;
-    background-color: crimson;
-    border: none;
-    border-radius: 4px;
-    text-decoration: none;
-    }
-
-    .return:hover {
-    background-color: darkred;
-    }
-
-    h1{
-    text-align: center;
-    }
-    
-    .a-center{
-    text-align: center;
-    }
-    .post-form {
-            background: white;
-            margin: 2em auto;
-            padding: 2em;
-            max-width: 500px;
-            box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);
-            }
-    .post-form input[type="text"],
-    .post-form textarea {
-    width: 100%;
-    padding: 0.5em;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 1em;
-    }
-    .post-form input[type="file"] {
-    border: none;
-    margin-bottom: 1em;
-    }
-</style>
-
-<div class="row mt-5"> 
-    <div class="col-12">
-            <h1> Edit Post</h1>
-        <form method="POST" class="post-form" enctype="multipart/form-data" > 
-          {% csrf_token %}          
-          {{ form.as_p}}
-
-            <button type="submit" class="save btn btn-primary">수정하기</button>
-            <button type="button" class="return btn btn-danger" onclick="location.href='/imgboard1/'">돌아가기</button>
-        </form>
+<div class="form-container">
+    <div class="form-card">
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <h1>글수정</h1>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12">
+                <form method="POST" action=".">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <br/>
+                    <div>
+                        <button type="submit" class="save btn btn-custom">수정하기</button>
+                        <button type="button" class="return btn btn-custom2" onclick="location.href='/imgboard1/'">돌아가기</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
-{% endblock%}     
-
-<!-- field.name => forms.py 의 변수방 이름 -->
+{% endblock%}

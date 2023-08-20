@@ -1,79 +1,19 @@
 {% extends "base1.html" %}
 {% load static %}
+{% load humanize %}
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/post_list.css' %}">
+{% endblock %}
+
 {% block contents%}
-
-
-<style> 
-  .container>h2 {
-    text-align: center;
-    
-  }
-  .card-title {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  .card {
-    /* Add some space between cards */
-    margin-bottom: 20px;
-  }
-
-  .btn-new-post {
-    /* Add margin to create space between the title and the button */
-    margin-top: 30px;
-    /* Float the button to the right */
-    float: right;
-    margin-bottom: 30px;
-  }
-  .clearfix::after {
-    /* Use clearfix to clear the float */
-    content: "";
-    display: table;
-    clear: both;
-  }
-  .btn {
-    margin-left: 10px;
-    
-  }
-  .writer{
-    text-align: right;
-    font-size: 13px;
-    font-weight: bold;
-    color: dimgray;
-  }
-  .date{
-    text-align: right;
-    font-size: 8px;
-    margin-top: -15px;
-    color: darkgray;
-  }
-  
-  .navbar-expand-lg{
-      background-color: midnightblue;
-      color:white;
-  }
-  .navbar-brand{
-      color:white;
-      font-weight: bolder;
-      text-align: left;
-  }
-  .blank{
-    height: 100px;
-  }
-</style>
-
-<body>
-
-<br/>
-<div class="blank">
-  
-</div>
 <div class="container">
   <h2 class="mt-4 mb-3">주류게시판</h2>
   <div class="clearfix">
-    <a href="{% url 'post_new' %}" class="btn btn-success btn-new-post">New Post</a> 
-    <a href="{% url 'Tal_Search' %}" class="btn btn-warning btn-new-post">Home</a> 
+    <div class="float-right">
+      <a href="{% url 'post_new' %}" class="btn btn-custom mb-5">글작성</a> 
+      <a href="{% url 'Tal_Search' %}" class="btn btn-custom2 mb-5">돌아가기</a>
+    </div>   
   </div>
-  <div></div>
   <div class="row">
     {% for post in posts %}
     <div class="col-md-4 d-flex">
@@ -94,8 +34,8 @@
         </div>
         <div class="card-footer text-muted">
           {% if post.author.email == email %}
-          <a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-primary">Edit</a>
-          <a href="{% url 'post_delete' pk=post.pk %}" class="btn btn-danger">Delete</a>
+          <a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-primary">수정</a>
+          <a href="{% url 'post_delete' pk=post.pk %}" class="btn btn-danger">삭제</a>
           {% endif %}
         </div>
       </div>
@@ -131,8 +71,5 @@
             </ul>
         </nav>
     </div>
-</div>     
-
-</body>
-</html>
-{% endblock%}     
+</div>
+{% endblock%}
