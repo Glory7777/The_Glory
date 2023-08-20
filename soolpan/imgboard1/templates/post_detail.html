@@ -28,16 +28,14 @@
                     <input type="fiel" name="image"><br/>
                     <button type="submit" class="save btn btn-default">저장</button>
                     {% endcomment %}
-                    <div class="detail">
+                    <div class="float-right">
                         {% if  post.author.email == email  %}
                         <a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-primary">수정</a>
                         <a href="{% url 'post_delete' pk=post.pk %}" class="btn btn-danger">삭제</a>
-                        {% endif %}               
+                        {% endif %}
+                        <button type="button" class="return btn btn-custom2" onclick="location.href='/imgboard1/'">돌아가기</button>
                     </div>
                 </form>
-                <div class="a-center">
-                    <button type="button" class="return btn btn-custom2" onclick="location.href='/imgboard1/'">돌아가기</button>
-                </div>
             </div>
         </div>
     </div>
