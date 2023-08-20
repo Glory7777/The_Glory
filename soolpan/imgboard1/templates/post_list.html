@@ -4,7 +4,7 @@
 
 
 <style> 
-  h1 {
+  .container>h2 {
     text-align: center;
     
   }
@@ -56,13 +56,19 @@
       font-weight: bolder;
       text-align: left;
   }
+  .blank{
+    height: 100px;
+  }
 </style>
 
 <body>
 
 <br/>
+<div class="blank">
+  
+</div>
 <div class="container">
-  <h1 class="mt-4 mb-3">주류게시판</h1>
+  <h2 class="mt-4 mb-3">주류게시판</h2>
   <div class="clearfix">
     <a href="{% url 'post_new' %}" class="btn btn-success btn-new-post">New Post</a> 
     <a href="{% url 'Tal_Search' %}" class="btn btn-warning btn-new-post">Home</a> 
