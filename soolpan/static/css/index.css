@@ -19,7 +19,7 @@ body {
     height: 100vh; /* 세로 중앙 정렬을 위해 */
     background-image: url('../막걸리_사진1.jpg'); /* 원하는 배경 이미지로 변경 */
     background-size: cover;
-    /* background-repeat: no-repeat; 이미지 반복 방지 */
+    background-repeat: no-repeat; 
     background-position: center;
 }
 

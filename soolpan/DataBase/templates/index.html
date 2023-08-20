@@ -63,7 +63,7 @@
     }
     //사용자가 상품 요소에서 벗어났을 때 popover 숨기기
     $(document).ready(function(){});</script>
-    <style>
+<style>
 .chat-container {
     position: fixed;
     bottom: 70px;
@@ -120,6 +120,9 @@
     background-color: #007bff;
     color: #fff;
     cursor: pointer;
+}
+.blank{
+    height: 200px;
 }
     </style>
 <link rel="stylesheet" type="text/css" href="{% static '/css/index.css' %}">
@@ -221,7 +224,9 @@
                     <button type="submit" id="sendButton">Send</button>
                 </form>
             </div>
-            
+        <div class="blank">
+            <p class="blank"></p>
+        </div>
 <script>
 //챗봇 검색시 검색 상황 표시
  function showSearchStatus() {
