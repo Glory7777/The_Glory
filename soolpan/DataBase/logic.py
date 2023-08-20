@@ -4,7 +4,7 @@ import requests
 import os
 from django.urls import reverse
 from django.contrib.sites.shortcuts import get_current_site
-
+import Levenshtein
 
 # OpenAI API 키 설정
 openai.api_key = os.getenv('API_KEY')
@@ -29,14 +29,15 @@ def get_Liqueur_info(name):
 
     response = requests.get(api_url, params=api_params, headers=headers)
     api_data = response.json()
-
-    for data in api_data:
-        if data['name'] == name:
+    threshold = 1
+    for data in api_data:     
+        if Levenshtein.distance(data['name'], name) <= threshold:
             liqueur_info ={
                 "name": name,
                 "description": data['dsc']
             }    
             return json.dumps(liqueur_info, ensure_ascii=False)
+        
     else:
         liqueur_info ={
             "name": None,
