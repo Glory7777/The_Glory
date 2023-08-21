@@ -2,6 +2,15 @@
     text-align: center;
 }
 
+tr>td>div, tr>td>div>fieldset, label {
+    padding: 0;
+    margin: 0;
+    vertical-align: top;
+}
+tr > td:nth-child(2){
+    width: 45%;
+    text-align: right;
+}
 tr>td>div>div{
     display: inline-block;
     margin-right: 20px;
@@ -10,7 +19,7 @@ tr>td>div>div{
 
 tbody > tr > td:nth-child(1){
     width: 35%;
-    text-align: center;
+    text-align: right;
     font-size: 20px;
 }
 
