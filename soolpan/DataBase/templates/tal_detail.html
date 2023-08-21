@@ -1,19 +1,17 @@
 {% extends "base1.html" %}
 {% load static %}
 {% load humanize %}
-
 {% block header %}
+
 <link rel="stylesheet" type="text/css" href="{% static 'css/detail_new.css' %}">
 <style>
 
 </style>
 {% endblock %} 
 {% block contents %}
-<div class="blank">  
-</div>
 
+<div class="container">  
 <h1 style="text-align: center; margin-bottom: 50px;">상세설명</h1>
-
 <table border="0" style="width: 100%;">
   <tr>
 
@@ -51,7 +49,7 @@
 
   <tr>
 
-    <td style="width: 250px; height: 300px; object-fit: contain; text-align: center;"><img src="{{tal_detail.img}}" alt="" style="height: 250px;"></td>
+    <td style="width: 200px; height: 300px; object-fit: contain; text-align: center;"><img src="{{tal_detail.img}}" alt="" style="height: 250px;"></td>
 
     <td style="width: 620px; height: 300px;">
       <table class="small_table" style="width: 100%;" border="0">        
@@ -78,7 +76,7 @@
 
   </tr>
 </table>
-
+</div>
 
 <!-- 댓글 전체 내용 -->
 <div class="row mt-5">

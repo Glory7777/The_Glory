@@ -54,7 +54,7 @@ label {margin-right:30px;}
 .btn-del {margin-left:5px;}
 
 /* title 관련 */
-h2.title {padding:70px 0 60px;font-size:36px;color:#333;font-weight:400;text-align:center;}
+h2.title {padding:70px 0 60px;color:#333;font-weight:400;text-align:center;}
 h3.title {margin:35px 0 10px;padding-left:24px;position:relative;font-size:20px;color:#333;font-weight:400;}
 h3.title:before {position:absolute;left:0;top:8px;content:"";display:block;width:14px;height:14px;border-radius:14px;background-color:#981a4a;}
 h3.title:after {position:absolute;left:4px;top:12px;content:"";display:block;width:6px;height:6px;border-radius:6px;background-color:#fff;}

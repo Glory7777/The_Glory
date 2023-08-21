@@ -62,67 +62,29 @@
         $("#score-"+id).popover("hide");        
     }
     //사용자가 상품 요소에서 벗어났을 때 popover 숨기기
-    $(document).ready(function(){});</script>
-<style>
-.chat-container {
-    position: fixed;
-    bottom: 70px;
-    right: 20px;
-    width: 300px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    overflow: hidden;
-}
+    $(document).ready(function(){});
+    
+    //챗봇 검색시 검색 상황 표시
+ function showSearchStatus() {
+    var searchStatus = document.getElementById("search-status1");
+    setTimeout(function() {
+        searchStatus.innerText = "검색 중.";
+    }, 1000); // 1초 딜레이
+    
+    setTimeout(function() {
+        searchStatus.innerText = "검색 중..";
+    }, 2000); // 2초 딜레이
+    
+    setTimeout(function() {
+        searchStatus.innerText = "검색 중...";
+    }, 3000); // 3초 딜레이
+    
+    setTimeout(function() {
+        searchStatus.innerText = " ";
+    }, 5000); // 5초 딜레이
+};
+    </script>
 
-.chat-header {
-    background-color: #f0f0f0;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-}
-
-.chat-messages {
-    padding: 10px;
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.message {
-    margin-bottom: 10px;
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-
-.assistant {
-    background-color: #f4f4f4;
-}
-
-.user-input-form {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-top: 1px solid #ccc;
-}
-
-.user-input-form input[type="text"] {
-    flex-grow: 1;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
-
-.user-input-form button {
-    margin-left: 5px;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 3px;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-}
-
-    </style>
 <link rel="stylesheet" type="text/css" href="{% static '/css/index.css' %}">
 {% endblock%}
 {% block contents %}
@@ -224,26 +186,5 @@
         <div class="blank">
             <p class="blank"></p>
         </div>
-<script>
-//챗봇 검색시 검색 상황 표시
- function showSearchStatus() {
-    var searchStatus = document.getElementById("search-status1");
-    setTimeout(function() {
-        searchStatus.innerText = "검색 중.";
-    }, 1000); // 1초 딜레이
-    
-    setTimeout(function() {
-        searchStatus.innerText = "검색 중..";
-    }, 2000); // 2초 딜레이
-    
-    setTimeout(function() {
-        searchStatus.innerText = "검색 중...";
-    }, 3000); // 3초 딜레이
-    
-    setTimeout(function() {
-        searchStatus.innerText = " ";
-    }, 5000); // 5초 딜레이
-};
-            </script>
 
 {% endblock %}

@@ -1,5 +1,6 @@
 /* 기본 스타일 */
 
+
 body > div.container > div > div.container{
     position: relative;
 }
@@ -16,7 +17,7 @@ body {
     height: 100vh; /* 세로 중앙 정렬을 위해 */
     background-image: url('../막걸리_사진1.jpg'); /* 원하는 배경 이미지로 변경 */
     background-size: cover;
-    /* background-repeat: no-repeat;  */
+    background-repeat: no-repeat; 
     background-position: center;
 }
 
@@ -150,4 +151,65 @@ input[type="submit"]:hover {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
+}
+
+.chat-container {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.chat-header {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.chat-messages {
+    padding: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.assistant {
+    background-color: #f4f4f4;
+}
+
+.user-input-form {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+}
+
+.user-input-form input[type="text"] {
+    flex-grow: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.user-input-form button {
+    margin-left: 5px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+.blank{
+    height: 100px;
 }

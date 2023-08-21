@@ -1,5 +1,6 @@
-.blank {    
-    height: 100;
+.container {           
+    position: relative;
+    top: 50px;
   }
   .td_graph>div {    
     text-align: right;
