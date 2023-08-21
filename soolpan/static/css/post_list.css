@@ -1,12 +1,13 @@
 .row{
     position: relative;
-    top: 5%;
+    top: 10%;
 }
 
 h2{
     color: white;
     text-align: center;
-    font-size: 50px;
+    font-size: 40px;
+    margin-top: 50px;
 }
 
 .btn-custom {
