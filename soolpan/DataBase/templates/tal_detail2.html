@@ -107,6 +107,14 @@
                 <br>
                 {{ comment.body }}
               </td>
+              <td>
+                <div>
+                  {% if comment.name.email == email %}
+                  <a href="{% url 'comment_update' pk=comment.pk %}" class="btn btn-primary">수정</a>
+                  <a href="{% url 'comment_delete' pk=comment.pk %}" class="btn btn-danger">삭제</a>
+                  {% endif %}
+                </div>
+              </td>
             </tr>
             {% endfor %}
           </table>
