@@ -3,7 +3,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh; /* 세로 중앙 정렬을 위해 */
-    background-image: url('/static/막걸리_사진2.jpg'); /* 원하는 배경 이미지로 변경 */
+    background-image: url('/static/fav_list.jpg'); /* 원하는 배경 이미지로 변경 */
     background-size: cover;
     /* background-repeat: no-repeat; 이미지 반복 방지 */
     background-position: center;

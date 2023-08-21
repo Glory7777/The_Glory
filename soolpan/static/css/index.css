@@ -4,20 +4,20 @@
 body > div.container > div > div.container{
     position: relative;
 }
-.row{
-    margin-bottom: 30px;
-}
+
 .col-md-6{
-    margin-bottom: 10;
+    margin-bottom: 7px;
+    margin-top: 7px;
 }
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh; /* 세로 중앙 정렬을 위해 */
-    background-image: url('../막걸리_사진1.jpg'); /* 원하는 배경 이미지로 변경 */
+    background-image: url('../index.jpg'); /* 원하는 배경 이미지로 변경 */
     background-size: cover;
-    background-repeat: no-repeat; 
+    /* background-repeat: no-repeat;  */
     background-position: center;
 }
 
@@ -29,6 +29,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     max-width: 500px; /* 너비 제한을 위해 */
     width: 100%;
+    max-height: 200px;
 }
 
 .input-group {

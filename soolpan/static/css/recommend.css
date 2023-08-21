@@ -37,7 +37,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url('/static/막걸리_사진5.jpg');
+    background-image: url('/static/recommend.jpg');
     background-size: cover;
     background-position: center;
 }
