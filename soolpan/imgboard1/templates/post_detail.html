@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block contents%}
+<div style="margin-top: 70px;"></div>
 <div class="form-container">
     <div class="form-card">
         <div class="row">
@@ -23,7 +24,10 @@
                     <!-- 각 포스트에 연결된 이미지의 URL을 동적으로 지정 -->
                     <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid">
                     {% endif %}
-                    <p class="card-text">{{ post.text|linebreaksbr}}</p>
+                    <div class="card-text-scroll">
+                        <p class="card-text">{{ post.text|linebreaksbr}}</p>
+                    </div>
+                    
                     {% comment %} 
                     <input type="fiel" name="image"><br/>
                     <button type="submit" class="save btn btn-default">저장</button>
@@ -40,4 +44,5 @@
         </div>
     </div>
 </div>
+<div style="margin-top: 70px;"></div>
 {% endblock%}
