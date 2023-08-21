@@ -151,48 +151,49 @@
 <!-- 댓글 작성 폼 -->
 <div class="row mt-5">
   <div class="col-12">
-    <h3>댓글 작성</h3>
-      <form method="POST">
-        {% csrf_token %}
-        <div class="table-container" style="display: flex; justify-content: space-between;">
-          <div class="left-side" style="width:50%;">
-            <br>
-            <p>{{ comment_form.body }}</p>
-          </div>
-          <div class="right-side" style="width:60%;">
-            <table>
-              <tr>
-                <td>색</td>
-                <td>{{ comment_form.color }}</td>
-              </tr>
-              <tr>
-                <td>탄산감</td>
-                <td>{{ comment_form.carbon }}</td>
-              </tr>
-              <tr>
-                <td>향</td>
-                <td>{{ comment_form.flavor }}</td>
-              </tr>
-              <tr>
-                <td>산미</td>
-                <td>{{ comment_form.sour }}</td>
-              </tr>
-              <tr>
-                <td>당도</td>
-                <td>{{ comment_form.sweet }}</td>
-              </tr>
-              <tr>
-                <td>종합평가</td>
-                <td>{{ comment_form.total }}</td>
-              </tr>
-            </table>
-            <div class="float-right">
-              <button type="submit" class="btn btn-primary">댓글작성</button>
-            </div>
+    <form method="POST">
+      {% csrf_token %}
+      <div class="table-container" style="display: flex; justify-content: space-between;">
+        <div class="left-side" style="width:50%;">
+          <br>
+          <h3>댓글 작성</h3>
+          <br>
+          <p>{{ comment_form.body }}</p>
+          <div class="float-right">
+            <button type="submit" class="btn btn-primary">댓글작성</button>
           </div>
         </div>
-      </form>
-    </div>
+        <div class="right-side" style="width:60%;">
+          <table>
+            <tr>
+              <td>색</td>
+              <td>{{ comment_form.color }}</td>
+            </tr>
+            <tr>
+              <td>탄산감</td>
+              <td>{{ comment_form.carbon }}</td>
+            </tr>
+            <tr>
+              <td>향</td>
+              <td>{{ comment_form.flavor }}</td>
+            </tr>
+            <tr>
+              <td>산미</td>
+              <td>{{ comment_form.sour }}</td>
+            </tr>
+            <tr>
+              <td>당도</td>
+              <td>{{ comment_form.sweet }}</td>
+            </tr>
+            <tr>
+              <td>종합평가</td>
+              <td>{{ comment_form.total }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
 <div style="margin-top: 70px;"></div>
 
