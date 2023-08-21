@@ -20,6 +20,11 @@ class CommentForm(forms.ModelForm):
         'carbon': forms.RadioSelect,
         'total': forms.RadioSelect,
         }
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name in self.fields:
+            self.fields[field_name].required = True
 
 class UserInputForm(forms.Form):
     user_input = forms.CharField(label='검색어', widget=forms.TextInput(attrs={'placeholder': '검색하고 싶은 술 이름을 입력해주세요.'}))

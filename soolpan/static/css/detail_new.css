@@ -55,3 +55,11 @@ button[type="button"] {
 button[type="submit"]:hover {
     background-color: #0056b3;
 }
+input, label, fieldset{
+  margin: 0;
+  padding: 0;
+  vertical-align: top;
+}
+textarea{
+  width: 100%;
+}
