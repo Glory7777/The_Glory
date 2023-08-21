@@ -265,7 +265,7 @@ class TalDetailView(DetailView):
                 showlegend=False
             )
             #그래프를 html로 발신, 기본 사이즈 설정
-            graph_html = fig.to_html(full_html=False, default_height=400, default_width=600)
+            graph_html = fig.to_html(full_html=False, default_height=300, default_width=300)
             #데이터 리턴 --> 위의 get context에서 내용 수신
             return graph_html
         except:
