@@ -5,13 +5,7 @@
 {% block header %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/detail_new.css' %}">
 <style>
-  .blank{    
-    height: 100;
-  }
-  .td_graph>div{    
-    text-align: right;
-    align-items: right;
-  }
+
 </style>
 {% endblock %} 
 {% block contents %}
@@ -22,6 +16,7 @@
 
 <table border="0" style="width: 100%;">
   <tr>
+
     <td colspan="2" >
       <h3 style="text-align: left; display: inline;">{{ tal_detail.name }}</h3>  
       <div style="text-align: right; display: inline;">❤️ {{tal_detail.like}}</div>
@@ -47,22 +42,40 @@
                   {% endif %}
                   <!-- 클립보드 주소 복사 -->
                   <button type="button" class="btn btn-success" id="copyButton" value="{{page_path}}" style="text-align: right; display: inline;">📋 </button>
+                  <a href="https://search.shopping.naver.com/search/all?query={{ tal_detail.name }} {{ tal_detail.company }}"><button type="button" class="btn btn-danger" style="text-align: right; display: inline;">가격 검색</button></a>
                 </div>
               </form>
               <!-- 즐겨찾기용 부분 끝-->
     </td>
   </tr>
+
   <tr>
-    <td style="width: 15%; height: 300px;"><img src="{{tal_detail.img}}" alt="" style="height: 150px;"></td>
-    <td style="width: 70%; height: 300px;"">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">제조사: {{ tal_detail.company }}</li>
-        <li class="list-group-item">원재료: {{ tal_detail.mtrl }}</li>
-        <li class="list-group-item">용량/도수: {{ tal_detail.std }}</li>
-        <li class="list-group-item">상세설명: {{ tal_detail.dsc }}</li>   
-      </ul>
+
+    <td style="width: 250px; height: 300px; object-fit: contain; text-align: center;"><img src="{{tal_detail.img}}" alt="" style="height: 250px;"></td>
+
+    <td style="width: 620px; height: 300px;">
+      <table class="small_table" style="width: 100%;" border="0">        
+          <tr>
+            <td style="width: 15%;">제조사 </td>
+            <td> | {{ tal_detail.company }}</td>            
+          </tr>
+          <tr>
+            <td>원재료</td>
+            <td> | {{ tal_detail.mtrl }}</td>            
+          </tr>        
+          <tr>
+            <td>용량/도수</td>
+            <td> | {{ tal_detail.std }}</td>            
+          </tr>        
+          <tr>
+            <td>상세설명</td>
+            <td>{{ tal_detail.dsc }}</td>            
+          </tr>                
+      </table>
     </td>
-    <td class="td_graph" style="width: 15%; height: 300px;">{{ graph_html | safe }}</td>
+
+    <td class="td_graph" style="width: 300px; height: 300px;">{{ graph_html | safe }}</td>
+
   </tr>
 </table>
 
@@ -78,7 +91,7 @@
       <div class="table-container" style="display: flex; justify-content: space-between;">
         <div class="left-side" style="width: 50%;">
           <h5>그래프</h5>
-          <table>
+          <table class="comment_table">
             {% for comment in comments_graph %}
             <tr>    
                 <td style="height: 350px;">{{ comment | safe }}</td>    
@@ -89,7 +102,7 @@
 
         <div class="right-side" style="width: 50%;">
           <h5>코멘트</h5>
-          <table>
+          <table class="comment_table">
             {% for comment in comments_write %}
             <tr>
               <td style="height: 350px;">
@@ -164,7 +177,7 @@
           </div>
         </div>
         <div class="right-side" style="width:60%;">
-          <table>
+          <table class="comment_table">
             <tr>
               <td>색</td>
               <td>{{ comment_form.color }}</td>

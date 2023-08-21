@@ -1,3 +1,21 @@
+.blank {    
+    height: 100;
+  }
+  .td_graph>div {    
+    text-align: right;
+    align-items: right;
+  }
+  
+  .small_table {
+    padding: 0;
+    margin: 0;
+  }
+
+  .small_table td{
+    padding: 5px;
+    margin: 5px;
+  }
+
 .radio-group {
     text-align: center;
 }
@@ -8,12 +26,8 @@ tr > td > div > div {
     width: 40px;
 }
 
-tbody > tr > td:nth-child(1) {
-    width: 35%;
-    font-size: 20px;
-}
 
-table td {
+.comment_table td {
     height: 60px; /* 적절한 높이 값으로 변경하세요 */
 }
 

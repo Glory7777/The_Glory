@@ -268,7 +268,7 @@ class TalDetailView(DetailView):
                 'staticPlot': True
             }
             #그래프를 html로 발신, 기본 사이즈 설정
-            graph_html = fig.to_html(full_html=False, default_height=300, default_width=300, config=config)
+            graph_html = fig.to_html(full_html=False, default_height=278, default_width=278, config=config)
             #데이터 리턴 --> 위의 get context에서 내용 수신
             return graph_html
         except:
@@ -319,7 +319,7 @@ class TalDetailView(DetailView):
             
             config = {'staticPlot': True}
             #그래프를 html로 발신, 기본 사이즈 설정
-            graph_html_comment = fig.to_html(full_html=False, default_height=300, default_width=300, config=config)
+            graph_html_comment = fig.to_html(full_html=False, default_height=278, default_width=278, config=config)
             #데이터 리턴 --> 위의 get context에서 내용 수신
             return graph_html_comment
         except:
