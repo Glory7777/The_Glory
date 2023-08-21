@@ -3,6 +3,8 @@
 {% block header %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/recommend.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/star.css' %}">
+
 <title>주류 추천 서비스</title>
 
 {% endblock %}
@@ -17,23 +19,73 @@
                     <table>
                         <tr>
                             <td>색</td>
-                            <td>{{ form.input_0 }}</td>
+                            <td>
+                                <div id="id_input_0">
+                                    <fieldset class="rate">
+                                      <input type="radio" id="id_input_0_4" name="input_0" value="5" required=""><label for="id_input_0_4" title="5점"></label>                
+                                      <input type="radio" id="id_input_0_3" name="input_0" value="4" required=""><label for="id_input_0_3" title="4점"></label>                  
+                                      <input type="radio" id="id_input_0_2" name="input_0" value="3" required=""><label for="id_input_0_2" title="3점"></label>                  
+                                      <input type="radio" id="id_input_0_1" name="input_0" value="2" required=""><label for="id_input_0_1" title="2점"></label>                  
+                                      <input type="radio" id="id_input_0_0" name="input_0" value="1" required=""><label for="id_input_0_0" title="1점"></label>                  
+                                    </fieldset>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <td>탄산감</td>
-                            <td>{{ form.input_1 }}</td>
+                            <td>
+                                <div id="id_input_1">
+                                    <fieldset class="rate">
+                                      <input type="radio" id="id_input_1_4" name="input_1" value="5" required=""><label for="id_input_1_4" title="5점"></label>                
+                                      <input type="radio" id="id_input_1_3" name="input_1" value="4" required=""><label for="id_input_1_3" title="4점"></label>                  
+                                      <input type="radio" id="id_input_1_2" name="input_1" value="3" required=""><label for="id_input_1_2" title="3점"></label>                  
+                                      <input type="radio" id="id_input_1_1" name="input_1" value="2" required=""><label for="id_input_1_1" title="2점"></label>                  
+                                      <input type="radio" id="id_input_1_0" name="input_1" value="1" required=""><label for="id_input_1_0" title="1점"></label>                  
+                                    </fieldset>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <td>향</td>
-                            <td>{{ form.input_2 }}</td>
+                            <td>
+                                <div id="id_input_2">
+                                    <fieldset class="rate">
+                                      <input type="radio" id="id_input_2_4" name="input_2" value="5" required=""><label for="id_input_2_4" title="5점"></label>                
+                                      <input type="radio" id="id_input_2_3" name="input_2" value="4" required=""><label for="id_input_2_3" title="4점"></label>                  
+                                      <input type="radio" id="id_input_2_2" name="input_2" value="3" required=""><label for="id_input_2_2" title="3점"></label>                  
+                                      <input type="radio" id="id_input_2_1" name="input_2" value="2" required=""><label for="id_input_2_1" title="2점"></label>                  
+                                      <input type="radio" id="id_input_2_0" name="input_2" value="1" required=""><label for="id_input_2_0" title="1점"></label>                  
+                                    </fieldset>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <td>산미</td>
-                            <td>{{ form.input_3 }}</td>
+                            <td>
+                                <div id="id_input_3">
+                                    <fieldset class="rate">
+                                      <input type="radio" id="id_input_3_4" name="input_3" value="5" required=""><label for="id_input_3_4" title="5점"></label>                
+                                      <input type="radio" id="id_input_3_3" name="input_3" value="4" required=""><label for="id_input_3_3" title="4점"></label>                  
+                                      <input type="radio" id="id_input_3_2" name="input_3" value="3" required=""><label for="id_input_3_2" title="3점"></label>                  
+                                      <input type="radio" id="id_input_3_1" name="input_3" value="2" required=""><label for="id_input_3_1" title="2점"></label>                  
+                                      <input type="radio" id="id_input_3_0" name="input_3" value="1" required=""><label for="id_input_3_0" title="1점"></label>                  
+                                    </fieldset>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <td>당도</td>
-                            <td>{{ form.input_4 }}</td>
+                            <td>
+                                <div id="id_input_4">
+                                    <fieldset class="rate">
+                                      <input type="radio" id="id_input_4_4" name="input_4" value="5" required=""><label for="id_input_4_4" title="5점"></label>                
+                                      <input type="radio" id="id_input_4_3" name="input_4" value="4" required=""><label for="id_input_4_3" title="4점"></label>                  
+                                      <input type="radio" id="id_input_4_2" name="input_4" value="3" required=""><label for="id_input_4_2" title="3점"></label>                  
+                                      <input type="radio" id="id_input_4_1" name="input_4" value="2" required=""><label for="id_input_4_1" title="2점"></label>                  
+                                      <input type="radio" id="id_input_4_0" name="input_4" value="1" required=""><label for="id_input_4_0" title="1점"></label>                  
+                                    </fieldset>
+                                </div>
+                            </td>
                         </tr>
                     </table>
                 </div>
