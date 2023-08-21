@@ -1,13 +1,10 @@
 /* 기본 스타일 */
-.container {
-    position: absolute;
-    top: 20;
-}
+
 body > div.container > div > div.container{
     position: relative;
 }
 .row{
-    margin-bottom: 0px;
+    margin-bottom: 30px;
 }
 .col-md-6{
     margin-bottom: 10;
@@ -19,7 +16,7 @@ body {
     height: 100vh; /* 세로 중앙 정렬을 위해 */
     background-image: url('../막걸리_사진1.jpg'); /* 원하는 배경 이미지로 변경 */
     background-size: cover;
-    background-repeat: no-repeat; 
+    /* background-repeat: no-repeat;  */
     background-position: center;
 }
 
