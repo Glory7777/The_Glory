@@ -1,4 +1,4 @@
-@set "VIRTUAL_ENV=C:\Users\nike7\Documents\GitHub\Django\apcBoardSite\The_Glory\venv"
+@set "VIRTUAL_ENV=C:\Users\mkh08\OneDrive\문서\uipath\alphaco5_teamproject2\The_Glory\venv"
 
 @set "VIRTUAL_ENV_PROMPT="
 @if NOT DEFINED VIRTUAL_ENV_PROMPT (

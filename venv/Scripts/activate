@@ -45,7 +45,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV='C:\Users\nike7\Documents\GitHub\Django\apcBoardSite\The_Glory\venv'
+VIRTUAL_ENV='C:\Users\mkh08\OneDrive\문서\uipath\alphaco5_teamproject2\The_Glory\venv'
 if ([ "$OSTYPE" = "cygwin" ] || [ "$OSTYPE" = "msys" ]) && $(command -v cygpath &> /dev/null) ; then
     VIRTUAL_ENV=$(cygpath -u "$VIRTUAL_ENV")
 fi
