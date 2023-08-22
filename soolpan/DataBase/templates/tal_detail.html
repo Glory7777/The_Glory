@@ -2,10 +2,32 @@
 {% load static %}
 {% load humanize %}
 {% block header %}
-
 <link rel="stylesheet" type="text/css" href="{% static 'css/detail_new.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/star.css' %}">
-
+<style>
+  .comment-container, .comment-graph-container{
+    background-color: #ffffff;
+  border: 1px solid #e1e1e1;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  border-radius: 5px;
+  margin: 10px;
+  z-index: 10000;
+  margin-bottom: 30px;
+  }
+  .right-side{
+    text-align: right;
+    align-items: right;
+  }
+  .plotly-graph-div{
+    /* width: 100%;
+    max-width: 100%; */
+    text-align: right;
+    align-items: right;
+    margin: 0;
+  }
+  
+</style>
 {% endblock %} 
 {% block contents %}
 
@@ -21,34 +43,32 @@
     
     <td>       
             <!-- 즐겨찾기용 부분 -->      
-            <form action="/favorite/create" method="POST">
-              {% csrf_token %}                    
-              {% for field in form %}
-                <div class="form-group">
-                  <input type="{{ field.field.widget.input_type }}" class="form-control" 
-                  id="{{ field.id_for_label }}"  placeholder="{{ field.label }}" name="{{ field.name }}" 
-                  value="{% if field.name == 'like' %}{{ '1' }}{% else %}{{tal_detail.id}}{% endif %}"/> 
-                </div>                       
-                {% endfor %}
-                <div class="float-right">
-                  {% if search.like == 1 %}
-                  <button type="submit" class="btn btn-warning" style="text-align: right; display: inline;">💔</button>
-                  {% else %}
-                  <button type="submit" class="btn btn-primary" style="text-align: right; display: inline;">❤️</button>
-                  {% endif %}
-                  <!-- 클립보드 주소 복사 -->
-                  <button type="button" class="btn btn-success" id="copyButton" value="{{page_path}}" style="text-align: right; display: inline;">📋 </button>
-                  <a href="https://search.shopping.naver.com/search/all?query={{ tal_detail.name }} 전통주" target="_blank"><button type="button" class="btn btn-danger" style="text-align: right; display: inline;">가격 검색</button></a>
-                </div>
-              </form>
+        <form action="/favorite/create" method="POST">
+          {% csrf_token %}                    
+          {% for field in form %}
+            <div class="form-group">
+              <input type="{{ field.field.widget.input_type }}" class="form-control" 
+              id="{{ field.id_for_label }}"  placeholder="{{ field.label }}" name="{{ field.name }}" 
+              value="{% if field.name == 'like' %}{{ '1' }}{% else %}{{tal_detail.id}}{% endif %}"/> 
+            </div>                       
+            {% endfor %}
+            <div class="float-right">
+              {% if search.like == 1 %}
+              <button type="submit" class="btn btn-warning" style="text-align: right; display: inline;">💔</button>
+              {% else %}
+              <button type="submit" class="btn btn-primary" style="text-align: right; display: inline;">❤️</button>
+              {% endif %}
+              <!-- 클립보드 주소 복사 -->
+              <button type="button" class="btn btn-success" id="copyButton" value="{{page_path}}" style="text-align: right; display: inline;">📋 </button>
+              <a href="https://search.shopping.naver.com/search/all?query={{ tal_detail.name }} 전통주" target="_blank"><button type="button" class="btn btn-danger" style="text-align: right; display: inline;">가격 검색</button></a>
+            </div>
+          </form>
               <!-- 즐겨찾기용 부분 끝-->
     </td>
   </tr>
 
   <tr>
-
     <td style="width: 200px; height: 300px; object-fit: contain; text-align: center;"><img src="{{tal_detail.img}}" alt="" style="height: 250px;"></td>
-
     <td style="width: 620px; height: 300px;">
       <table class="small_table" style="width: 100%;" border="0">        
           <tr>
@@ -69,54 +89,61 @@
           </tr>                
       </table>
     </td>
-
     <td class="td_graph" style="width: 300px; height: 300px;">{{ graph_html | safe }}</td>
-
   </tr>
 </table>
-</div>
+
 
 <!-- 댓글 전체 내용 -->
 <div class="row mt-5">
   <div class="col-12">
     <div class="comment">
-      <h5>&#35; 댓글</h5>
-      <br/>
-      <!-- 직렬로 for문 돌림(페이지네이터 작동하고 높이 조절 이슈 있음.) -->
-
-      <div class="table-container" style="display: flex; justify-content: space-between;">
-        <div class="left-side" style="width: 50%;">
-          <h5>그래프</h5>
-          <table class="comment_table">
-            {% for comment in comments_graph %}
-            <tr>    
-                <td style="height: 350px;">{{ comment | safe }}</td>    
-            </tr>
-            {% endfor %}
-          </table>
-        </div>
-
-        <div class="right-side" style="width: 50%;">
-          <h5>코멘트</h5>
-          <table class="comment_table">
+      <hr>      
+      <br>
+      <h3>&#35; 댓글 주류 평가</h3>      
+        <br/>   
+        <!-- 코멘트 -->
+        <div class="table-container" style="display: flex; justify-content: space-between;">
+          <div class="left-side" style="width: 70%; max-width: 70%;">
             {% for comment in comments_write %}
-            <tr>
-              <td style="height: 350px;">
-                {{ comment.name }}
-                <br>
-                <br>
-                {{ comment.body }}
-              </td>
-            </tr>
+            <div class="comment-container" style="width: 100%; overflow: auto; max-height: 300px; height: 300px;">            
+              <div class="c-head" style="max-height: 20%; height: 20%; ">
+              작성자 | {{ comment.name }}              
+              <br>
+              작성일 | {{ comment.created_at |date:'Y-m-d H:i'}}
+              <br>
+              <br>
+              </div>
+              <div class="c-body" style="max-height: 70%; height: 70%; overflow: auto;">
+              <p>
+              {{ comment.body }}              
+              </p>
+              </div>
+              <div class="c-tail" style="max-height: 10%; height: 10%; text-align: right;">
+                {% if comment.name.email == email %}
+                <a href="{% url 'comment_update' pk=comment.pk %}" >📝</a>
+                <a href="{% url 'comment_delete' pk=comment.pk %}" >🗑️</a>
+                {% endif %}
+              </div>
+            </div>            
             {% endfor %}
-          </table>
+          </div>
+        
+          <div class="right-side" style="width: 30%; max-width: 30%;">
+              <!-- 그래프 -->
+              {% for comment in comments_graph %}            
+                <div class="comment-graph-container" style="width: 100%; max-width: 100%; max-height: 300px; height: 300px; margin-left: 20px;"  >
+                  {{comment|safe}}
+                </div>
+              {% endfor %}        
+          </div>
         </div>
+        
       </div>
     </div>        
   </div>
-</div>
-<hr/>
-<div>
+
+<div class="paginator" style="margin-top: 30px;">
 <!-- Pagination -->
 {% if comments_write.has_other_pages %}
   <nav aria-label="Comment navigation">
@@ -156,111 +183,113 @@
   </nav>
 {% endif %}
 </div>
+
 <!-- 댓글 작성 폼 -->
 <div class="row mt-5">
   <div class="col-12">
     <form method="POST">
-      {% csrf_token %}
-      <div class="table-container" style="display: flex; justify-content: space-between;">
-        <div class="left-side" style="width:50%;">
-          <br>
-          <h3>댓글 작성</h3>
-          <br>
-          <p>{{ comment_form.body }}</p>
-          <div class="float-right">
-            <button type="submit" class="btn btn-primary">댓글작성</button>
+    {% csrf_token %}
+    <table border="0" style="width: 100%;" >
+      <tr>
+        <td rowspan="2" style="width: 55%;"> <h3>댓글 작성</h3> </td>
+        <td rowspan="2"> 
+          <td>색 </td>
+        <td>           
+              <div id="id_color"> 
+                <fieldset class="rate"> 
+                  <input type="radio" id="id_color_4" name="color" required value="5"><label for="id_color_4" title="5점"></label>                
+                  <input type="radio" id="id_color_3" name="color" required value="4"><label for="id_color_3" title="4점"></label>                  
+                  <input type="radio" id="id_color_2" name="color" required value="3"><label for="id_color_2" title="3점"></label>                  
+                  <input type="radio" id="id_color_1" name="color" required value="2"><label for="id_color_1" title="2점"></label>                  
+                  <input type="radio" id="id_color_0" name="color" required value="1"><label for="id_color_0" title="1점"></label>                  
+                </fieldset>
+              </div>
+        </td>
+        <td>탄산감</td>
+        <td>
+          <div id="id_carbon">
+            <fieldset class="rate">
+              <input type="radio" id="id_carbon_4" name="carbon" required value="5"><label for="id_carbon_4" title="5점"></label>                
+              <input type="radio" id="id_carbon_3" name="carbon" required value="4"><label for="id_carbon_3" title="4점"></label>                  
+              <input type="radio" id="id_carbon_2" name="carbon" required value="3"><label for="id_carbon_2" title="3점"></label>                  
+              <input type="radio" id="id_carbon_1" name="carbon" required value="2"><label for="id_carbon_1" title="2점"></label>                  
+              <input type="radio" id="id_carbon_0" name="carbon" required value="1"><label for="id_carbon_0" title="1점"></label>                  
+            </fieldset>
           </div>
-        </div>
-        <div class="right-side" style="width:60%;">
-          <table class="comment_table">
-            <tr>
-              <td>색</td>
-              <td>                
-                <div id="id_color">
-                  <fieldset class="rate">
-                    <input type="radio" id="id_color_4" name="color" value="5"><label for="id_color_4" title="5점"></label>                
-                    <input type="radio" id="id_color_3" name="color" value="4"><label for="id_color_3" title="4점"></label>                  
-                    <input type="radio" id="id_color_2" name="color" value="3"><label for="id_color_2" title="3점"></label>                  
-                    <input type="radio" id="id_color_1" name="color" value="2"><label for="id_color_1" title="2점"></label>                  
-                    <input type="radio" id="id_color_0" name="color" value="1"><label for="id_color_0" title="1점"></label>                  
-                  </fieldset>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>탄산감</td>
-              <td>
-                <div id="id_carbon">
-                  <fieldset class="rate">
-                    <input type="radio" id="id_carbon_4" name="carbon" value="5"><label for="id_carbon_4" title="5점"></label>                
-                    <input type="radio" id="id_carbon_3" name="carbon" value="4"><label for="id_carbon_3" title="4점"></label>                  
-                    <input type="radio" id="id_carbon_2" name="carbon" value="3"><label for="id_carbon_2" title="3점"></label>                  
-                    <input type="radio" id="id_carbon_1" name="carbon" value="2"><label for="id_carbon_1" title="2점"></label>                  
-                    <input type="radio" id="id_carbon_0" name="carbon" value="1"><label for="id_carbon_0" title="1점"></label>                  
-                  </fieldset>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>향</td>
-              <td>
-                <div id="id_flavor">
-                  <fieldset class="rate">
-                    <input type="radio" id="id_flavor_4" name="flavor" value="5"><label for="id_flavor_4" title="5점"></label>                
-                    <input type="radio" id="id_flavor_3" name="flavor" value="4"><label for="id_flavor_3" title="4점"></label>                  
-                    <input type="radio" id="id_flavor_2" name="flavor" value="3"><label for="id_flavor_2" title="3점"></label>                  
-                    <input type="radio" id="id_flavor_1" name="flavor" value="2"><label for="id_flavor_1" title="2점"></label>                  
-                    <input type="radio" id="id_flavor_0" name="flavor" value="1"><label for="id_flavor_0" title="1점"></label>                  
-                  </fieldset>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>산미</td>
-              <td>
-                <div id="id_sour">
-                  <fieldset class="rate">
-                    <input type="radio" id="id_sour_4" name="sour" value="5"><label for="id_sour_4" title="5점"></label>                
-                    <input type="radio" id="id_sour_3" name="sour" value="4"><label for="id_sour_3" title="4점"></label>                  
-                    <input type="radio" id="id_sour_2" name="sour" value="3"><label for="id_sour_2" title="3점"></label>                  
-                    <input type="radio" id="id_sour_1" name="sour" value="2"><label for="id_sour_1" title="2점"></label>                  
-                    <input type="radio" id="id_sour_0" name="sour" value="1"><label for="id_sour_0" title="1점"></label>                  
-                  </fieldset>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>당도</td>
-              <td>
-                <div id="id_sweet">
-                  <fieldset class="rate">
-                    <input type="radio" id="id_sweet_4" name="sweet" value="5"><label for="id_sweet_4" title="5점"></label>                
-                    <input type="radio" id="id_sweet_3" name="sweet" value="4"><label for="id_sweet_3" title="4점"></label>                  
-                    <input type="radio" id="id_sweet_2" name="sweet" value="3"><label for="id_sweet_2" title="3점"></label>                  
-                    <input type="radio" id="id_sweet_1" name="sweet" value="2"><label for="id_sweet_1" title="2점"></label>                  
-                    <input type="radio" id="id_sweet_0" name="sweet" value="1"><label for="id_sweet_0" title="1점"></label>                  
-                  </fieldset>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>종합평가</td>
-              <td>                
-                <div id="id_total">
-                  <fieldset class="rate">
-                    <input type="radio" id="id_total_4" name="total" value="5"><label for="id_total_4" title="5점"></label>                
-                    <input type="radio" id="id_total_3" name="total" value="4"><label for="id_total_3" title="4점"></label>                  
-                    <input type="radio" id="id_total_2" name="total" value="3"><label for="id_total_2" title="3점"></label>                  
-                    <input type="radio" id="id_total_1" name="total" value="2"><label for="id_total_1" title="2점"></label>                  
-                    <input type="radio" id="id_total_0" name="total" value="1"><label for="id_total_0" title="1점"></label>                  
-                  </fieldset>
-                </div>
-              </td>
-            </tr>
-          </table>
-        </div>
+        </td>
+        <td>향</td>
+            <td><div id="id_flavor">
+                <fieldset class="rate">
+                  <input type="radio" id="id_flavor_4" name="flavor" required value="5"><label for="id_flavor_4" title="5점"></label>                
+                  <input type="radio" id="id_flavor_3" name="flavor" required value="4"><label for="id_flavor_3" title="4점"></label>                  
+                  <input type="radio" id="id_flavor_2" name="flavor" required value="3"><label for="id_flavor_2" title="3점"></label>                  
+                  <input type="radio" id="id_flavor_1" name="flavor"  required required  value="2"><label for="id_flavor_1" title="2점"></label>                  
+                  <input type="radio" id="id_flavor_0" name="flavor" required value="1"><label for="id_flavor_0" title="1점"></label>                  
+                </fieldset>
+              </div>
+            </td>
+      </tr>
+
+      <!-- 2번로우 -->
+      <tr>
+        <td>
+          산미
+        </td>
+        <td><div id="id_sour">
+          <fieldset class="rate">
+            <input type="radio" id="id_sour_4" name="sour" required  value="5"><label for="id_sour_4" title="5점"></label>                
+            <input type="radio" id="id_sour_3" name="sour" required value="4"><label for="id_sour_3" title="4점"></label>                  
+            <input type="radio" id="id_sour_2" name="sour" required  value="3"><label for="id_sour_2" title="3점"></label>                  
+            <input type="radio" id="id_sour_1" name="sour" required  value="2"><label for="id_sour_1" title="2점"></label>                  
+            <input type="radio" id="id_sour_0" name="sour" required  value="1"><label for="id_sour_0" title="1점"></label>                  
+          </fieldset>
+        </div></td>
+      
+        <td>
+          당도
+        </td>
+        <td>
+          <div id="id_sweet">
+            <fieldset class="rate">
+              <input type="radio" id="id_sweet_4" name="sweet" required  value="5"><label for="id_sweet_4" title="5점"></label>                
+              <input type="radio" id="id_sweet_3" name="sweet" required  value="4"><label for="id_sweet_3" title="4점"></label>                  
+              <input type="radio" id="id_sweet_2" name="sweet" required  value="3"><label for="id_sweet_2" title="3점"></label>                  
+              <input type="radio" id="id_sweet_1" name="sweet" required  value="2"><label for="id_sweet_1" title="2점"></label>                  
+              <input type="radio" id="id_sweet_0" name="sweet" required  value="1"><label for="id_sweet_0" title="1점"></label>                  
+            </fieldset>
+          </div>
+        </td>
+      
+        <td>
+          종합
+        </td>
+        <td>
+          <div id="id_total">
+            <fieldset class="rate">
+              <input type="radio" id="id_total_4" name="total" required value="5"><label for="id_total_4" title="5점"></label>                
+              <input type="radio" id="id_total_3" name="total" required value="4"><label for="id_total_3" title="4점"></label>                  
+              <input type="radio" id="id_total_2" name="total" required value="3"><label for="id_total_2" title="3점"></label>                  
+              <input type="radio" id="id_total_1" name="total" required value="2"><label for="id_total_1" title="2점"></label>                  
+              <input type="radio" id="id_total_0" name="total" required value="1"><label for="id_total_0" title="1점"></label>                  
+            </fieldset>
+          </div>
+        </td>
+      </tr>
+    </table>  
+        </td>
+      </tr>
+    </table>
+        
+      
+    <div class="comment_write">      
+      <p>{{ comment_form.body }}</p>
+      <div class="float-right">
+        <button type="submit" class="btn btn-primary">댓글작성</button>
       </div>
-    </form>
+    </div>
+  </div>
+  </form>
+
   </div>
 </div>
 <div style="height: 150px;"></div>

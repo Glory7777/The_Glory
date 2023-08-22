@@ -131,3 +131,4 @@ def run_conversation(input):
     
     except:
         assistant_reply = "요청하신 정보를 찾을 수 없습니다. 다른 질문을 해주세요!"
+        return assistant_reply

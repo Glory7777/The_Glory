@@ -1,6 +1,7 @@
 {% extends 'base1.html' %}
 {% load static %}
 {% block header %}
+
 <!-- 검색결과 팝업 -->
 <script>
     function product_detail(id){
@@ -84,6 +85,7 @@
     }, 5000); // 5초 딜레이
 };
     </script>
+    
 <style>
     .list-group-item {
       white-space: nowrap; /* 글자 줄바꿈 방지 */
@@ -91,7 +93,8 @@
           text-overflow: ellipsis; /* 넘친 부분을 ...으로 표시 */
     }
     
-  </style>
+</style>
+
 <link rel="stylesheet" type="text/css" href="{% static '/css/index.css' %}">
 {% endblock%}
 {% block contents %}
@@ -131,7 +134,7 @@
                         {% endif %}
                     {% endfor %}
                 </div>
-            {% endif %}
+                {% endif %}
             </div>
         </div>
         
@@ -146,7 +149,7 @@
                                 <div class="sub-card">
                                     <a href="detail/{{ best.id }}"><img src="{{ best.img }}" alt="{{ best.name }}" id="best-{{ best.id }}" onmouseenter="product_detail1({{ best.id }});" onmouseleave="product_leave1({{ best.id }});" ></a>
                                     <div class="sub-card-text">
-                                        <a href="detail/{{ best.id }}">{{ forloop.counter }}. {{ best.name }}</a>
+                                        <a href="detail/{{ best.id }}">{{ best.name }}</a>
                                     </div>
                                 </div>
                             {% endfor %}

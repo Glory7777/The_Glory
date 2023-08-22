@@ -21,13 +21,6 @@
     text-align: center;
 }
 
-tr > td > div > div {
-    display: inline-block;
-    margin-right: 20px;
-    width: 40px;
-}
-
-
 .comment_table td {
     height: 60px; /* 적절한 높이 값으로 변경하세요 */
 }
@@ -55,6 +48,7 @@ button[type="button"] {
 button[type="submit"]:hover {
     background-color: #0056b3;
 }
+
 input, label, fieldset{
   margin: 0;
   padding: 0;

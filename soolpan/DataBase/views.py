@@ -64,9 +64,9 @@ def index(request):
     like = tals.order_by('-like')
     best5 = like[:4]
 
+    #
     top_comments = Comment.objects.values('post_id').annotate(avg_total=Avg('total')).order_by('-avg_total')[:4]
     top_comment_ids = [item['post_id'] for item in top_comments]
-
     top_comments_queryset = Comment.objects.filter(post_id__in=top_comment_ids)
     tal_objects_for_top_comments = Tal.objects.filter(comments__in=top_comments_queryset).distinct()
 
