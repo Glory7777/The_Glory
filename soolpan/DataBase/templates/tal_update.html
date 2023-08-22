@@ -13,7 +13,7 @@
     {% csrf_token %}
     <table border="0" style="width: 100%;" >
       <tr>
-        <td rowspan="2" style="width: 55%;"> <h3>댓글 작성</h3> </td>
+        <td rowspan="2" style="width: 55%;"> <h3>댓글 수정</h3> </td>
         <td rowspan="2"> 
           <td>색 </td>
         <td>           
@@ -104,14 +104,13 @@
         
       
     <div class="comment_write">      
-        <p>{{form.body}} </p>           
+        <p>{{form.body}}</p>           
         <button type="submit" class="btn btn-primary">댓글 수정</button>
         <button type="submit" class="btn btn-primary" onclick="location.href='/detail/{{comment.post_id}}/'">돌아가기</button>
       </div>
     </div>
   </div>
   </form>
-
   </div>
 </div>
 {% endblock %}
