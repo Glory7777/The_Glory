@@ -4,30 +4,7 @@
 {% block header %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/detail_new.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/star.css' %}">
-<style>
-  .comment-container, .comment-graph-container{
-    background-color: #ffffff;
-  border: 1px solid #e1e1e1;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  border-radius: 5px;
-  margin: 10px;
-  z-index: 10000;
-  margin-bottom: 30px;
-  }
-  .right-side{
-    text-align: right;
-    align-items: right;
-  }
-  .plotly-graph-div{
-    /* width: 100%;
-    max-width: 100%; */
-    text-align: right;
-    align-items: right;
-    margin: 0;
-  }
-  
-</style>
+
 {% endblock %} 
 {% block contents %}
 
@@ -114,12 +91,12 @@
               <br>
               <br>
               </div>
-              <div class="c-body" style="max-height: 70%; height: 70%; overflow: auto;">
-              <p>
-              {{ comment.body }}              
-              </p>
+              <div class="c-body" style="max-height: 70%; height: 70%; overflow: auto; ">
+              
+                <textarea readonly style="max-height: 95%; height: 95%;  resize: none; border: none;">{{ comment.body }}</textarea>         
+              
               </div>
-              <div class="c-tail" style="max-height: 10%; height: 10%; text-align: right;">
+              <div class="c-tail" style="max-height: 10%; height: 10%; text-align: right; ">
                 {% if comment.name.email == email %}
                 <a href="{% url 'comment_update' pk=comment.pk %}" >📝</a>
                 <a href="{% url 'comment_delete' pk=comment.pk %}" >🗑️</a>
