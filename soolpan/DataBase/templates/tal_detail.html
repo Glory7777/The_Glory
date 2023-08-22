@@ -4,16 +4,22 @@
 {% block header %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/detail_new.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/star.css' %}">
-<style>
-  textarea{
-    resize: none;
-  }
-</style>
+
+<style> 
+    .card {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    </style>
 {% endblock %} 
 {% block contents %}
 
 <div class="container">  
 <h1 style="text-align: center; margin-bottom: 50px;">상세설명</h1>
+<div class="card">
 <table border="0" style="width: 100%;">
   <tr>
     <td colspan="2" >
@@ -73,7 +79,7 @@
     <td class="td_graph" style="width: 300px; height: 300px;">{{ graph_html | safe }}</td>
   </tr>
 </table>
-
+</div>
 
 <!-- 댓글 전체 내용 -->
 <div class="row mt-5">
