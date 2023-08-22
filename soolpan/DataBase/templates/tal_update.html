@@ -1,16 +1,117 @@
-{% extends "base.html" %}
+{% extends "base1.html" %}
+{% load static %}
 {% load humanize %}
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/detail_new.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/star.css' %}">
+{% endblock %}
+
 {% block contents %}
 <div class="row mt-5">
-    <div class="col-12">
-        <h3>댓글 수정</h3>
-        <form method="POST">
-            {% csrf_token %}
-            {{form.as_p}}            
-            <button type="submit" class="btn btn-primary">댓글 수정</button>
-            <button type="submit" class="btn btn-primary" onclick="location.href='/'">돌아가기</button>
-          
-        </form>
+  <div class="col-12">
+    <form method="POST">
+    {% csrf_token %}
+    <table border="0" style="width: 100%;" >
+      <tr>
+        <td rowspan="2" style="width: 55%;"> <h3>댓글 작성</h3> </td>
+        <td rowspan="2"> 
+          <td>색 </td>
+        <td>           
+              <div id="id_color"> 
+                <fieldset class="rate"> 
+                  <input type="radio" id="id_color_4" name="color" required value="5"><label for="id_color_4" title="5점"></label>                
+                  <input type="radio" id="id_color_3" name="color" required value="4"><label for="id_color_3" title="4점"></label>                  
+                  <input type="radio" id="id_color_2" name="color" required value="3"><label for="id_color_2" title="3점"></label>                  
+                  <input type="radio" id="id_color_1" name="color" required value="2"><label for="id_color_1" title="2점"></label>                  
+                  <input type="radio" id="id_color_0" name="color" required value="1"><label for="id_color_0" title="1점"></label>                  
+                </fieldset>
+              </div>
+        </td>
+        <td>탄산감</td>
+        <td>
+          <div id="id_carbon">
+            <fieldset class="rate">
+              <input type="radio" id="id_carbon_4" name="carbon" required value="5"><label for="id_carbon_4" title="5점"></label>                
+              <input type="radio" id="id_carbon_3" name="carbon" required value="4"><label for="id_carbon_3" title="4점"></label>                  
+              <input type="radio" id="id_carbon_2" name="carbon" required value="3"><label for="id_carbon_2" title="3점"></label>                  
+              <input type="radio" id="id_carbon_1" name="carbon" required value="2"><label for="id_carbon_1" title="2점"></label>                  
+              <input type="radio" id="id_carbon_0" name="carbon" required value="1"><label for="id_carbon_0" title="1점"></label>                  
+            </fieldset>
+          </div>
+        </td>
+        <td>향</td>
+            <td><div id="id_flavor">
+                <fieldset class="rate">
+                  <input type="radio" id="id_flavor_4" name="flavor" required value="5"><label for="id_flavor_4" title="5점"></label>                
+                  <input type="radio" id="id_flavor_3" name="flavor" required value="4"><label for="id_flavor_3" title="4점"></label>                  
+                  <input type="radio" id="id_flavor_2" name="flavor" required value="3"><label for="id_flavor_2" title="3점"></label>                  
+                  <input type="radio" id="id_flavor_1" name="flavor"  required required  value="2"><label for="id_flavor_1" title="2점"></label>                  
+                  <input type="radio" id="id_flavor_0" name="flavor" required value="1"><label for="id_flavor_0" title="1점"></label>                  
+                </fieldset>
+              </div>
+            </td>
+      </tr>
+
+      <!-- 2번로우 -->
+      <tr>
+        <td>
+          산미
+        </td>
+        <td><div id="id_sour">
+          <fieldset class="rate">
+            <input type="radio" id="id_sour_4" name="sour" required  value="5"><label for="id_sour_4" title="5점"></label>                
+            <input type="radio" id="id_sour_3" name="sour" required value="4"><label for="id_sour_3" title="4점"></label>                  
+            <input type="radio" id="id_sour_2" name="sour" required  value="3"><label for="id_sour_2" title="3점"></label>                  
+            <input type="radio" id="id_sour_1" name="sour" required  value="2"><label for="id_sour_1" title="2점"></label>                  
+            <input type="radio" id="id_sour_0" name="sour" required  value="1"><label for="id_sour_0" title="1점"></label>                  
+          </fieldset>
+        </div></td>
+      
+        <td>
+          당도
+        </td>
+        <td>
+          <div id="id_sweet">
+            <fieldset class="rate">
+              <input type="radio" id="id_sweet_4" name="sweet" required  value="5"><label for="id_sweet_4" title="5점"></label>                
+              <input type="radio" id="id_sweet_3" name="sweet" required  value="4"><label for="id_sweet_3" title="4점"></label>                  
+              <input type="radio" id="id_sweet_2" name="sweet" required  value="3"><label for="id_sweet_2" title="3점"></label>                  
+              <input type="radio" id="id_sweet_1" name="sweet" required  value="2"><label for="id_sweet_1" title="2점"></label>                  
+              <input type="radio" id="id_sweet_0" name="sweet" required  value="1"><label for="id_sweet_0" title="1점"></label>                  
+            </fieldset>
+          </div>
+        </td>
+      
+        <td>
+          종합
+        </td>
+        <td>
+          <div id="id_total">
+            <fieldset class="rate">
+              <input type="radio" id="id_total_4" name="total" required value="5"><label for="id_total_4" title="5점"></label>                
+              <input type="radio" id="id_total_3" name="total" required value="4"><label for="id_total_3" title="4점"></label>                  
+              <input type="radio" id="id_total_2" name="total" required value="3"><label for="id_total_2" title="3점"></label>                  
+              <input type="radio" id="id_total_1" name="total" required value="2"><label for="id_total_1" title="2점"></label>                  
+              <input type="radio" id="id_total_0" name="total" required value="1"><label for="id_total_0" title="1점"></label>                  
+            </fieldset>
+          </div>
+        </td>
+      </tr>
+    </table>  
+        </td>
+      </tr>
+    </table>
+        
+      
+    <div class="comment_write">      
+        <p>{{form.body}} </p>           
+        <button type="submit" class="btn btn-primary">댓글 수정</button>
+        <button type="submit" class="btn btn-primary" onclick="location.href='/detail/{{comment.post_id}}/'">돌아가기</button>
+      </div>
     </div>
+  </div>
+  </form>
+
+  </div>
 </div>
 {% endblock %}
