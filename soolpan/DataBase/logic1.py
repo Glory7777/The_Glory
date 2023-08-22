@@ -5,6 +5,8 @@ import os
 from django.urls import reverse
 from django.contrib.sites.shortcuts import get_current_site
 import Levenshtein
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
 
 # OpenAI API 키 설정
 openai.api_key = os.getenv('API_KEY')

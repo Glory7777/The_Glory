@@ -56,8 +56,8 @@ input, label, fieldset{
 }
 textarea{
   width: 100%;
+  resize: none;
 }
-
 .comment-container, .comment-graph-container{
   background-color: #ffffff;
 border: 1px solid #e1e1e1;

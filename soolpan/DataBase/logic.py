@@ -16,6 +16,7 @@ def return_api_url(api_url):
     global_api_url = api_url #전역 변수 할당
     return global_api_url #전역 변수로 api 리턴
 
+# levenshtein ver
 def get_Liqueur_info(name):
 
     """Describe the description about a given liqueur name"""
@@ -30,7 +31,7 @@ def get_Liqueur_info(name):
 
     response = requests.get(api_url, params=api_params, headers=headers)
     api_data = response.json()
-    threshold = 1
+    threshold = 0
     for data in api_data:     
         if Levenshtein.distance(data['name'], name) <= threshold:
             liqueur_info ={
@@ -68,7 +69,7 @@ def run_conversation(input):
                             "discription": "description of the liqueur in a given description.",
                         },
                     },
-                    "required": ["name", "description"],                
+                    "required": ["name"],                
                 },
             }
         ]
