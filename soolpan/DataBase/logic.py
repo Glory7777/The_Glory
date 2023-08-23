@@ -18,17 +18,13 @@ def return_api_url(api_url):
 
 # levenshtein ver
 def get_Liqueur_info(name):
-
-    """Describe the description about a given liqueur name"""
-    
+    """Describe the description about a given liqueur name"""    
     api_url = return_api_url(global_api_url) #전역변수 입력 후 api데이터 호출(정상적동 확인완료)
     api_params = {}
-
     headers = {
         "Content-Type": "application/json; charset=utf-8",
         "Accept-Charset": "utf-8"
     }
-
     response = requests.get(api_url, params=api_params, headers=headers)
     api_data = response.json()
     threshold = 0
@@ -38,8 +34,7 @@ def get_Liqueur_info(name):
                 "name": name,
                 "description": data['dsc']
             }    
-            return json.dumps(liqueur_info, ensure_ascii=False)
-        
+            return json.dumps(liqueur_info, ensure_ascii=False)        
     else:
         liqueur_info ={
             "name": None,
